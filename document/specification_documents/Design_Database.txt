@@ -1,0 +1,19 @@
+Bảng 1: Admin
+- ID :PRIMARY KEY
+- Name
+- Email
+- Password
+- LastLogin
+- Role (chỉ là 1 thuộc tính của người dùng admin không có vai trò để phân giữa 2 loại: ql hệ thống và quanr lý tkhoan
+- Status (check active) - do không được xóa tài khoản nên để một thuộc tính như 1 flag
+
+Bảng 2: Teacher
+- ID: PRIMARY KEY
+- Name
+- Email
+- Password
+- Phone
+- Rank
+- Work unit (IT, ACC, ADM, ...)
+- Status
+Bảng 3: User
