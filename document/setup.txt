@@ -1,0 +1,16 @@
+Bài 1. Dowload Library
+- Auto Rename Tag
+- Babel Javascript
+- Bookmarks
+- DotENV
+- ESLint
+- Javascript (ES6) code snippets
+- Prettier
+- ReactJs code snippets
+- styled-components-snippets
+- Taiwind CSS Intellisense
+- Turbo Console Log
+- Visual Studio IntelliCode
+- vscoded-styled-components
+
+Bài 2: design topbar with reactJs
