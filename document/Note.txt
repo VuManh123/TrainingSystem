@@ -1,7 +1,0 @@
-- Day 1: Training Rules in Factory
-- Day 2: Software Building Process
-- Day 3: Training IT objects, some systems in factory, M-Core, F-secure
-- Day 4: Training Network in factory 1 and 2, Having required specification documents for TM software
-	https://github.com/heisenbuggs/Quiziify
-	https://github.com/anuragbehura/Quizify-mern-app.git
-	https://github.com/adilmohak/django-lms.git

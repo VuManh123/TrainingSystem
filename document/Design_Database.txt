@@ -1,0 +1,153 @@
+Bảng 1: Admin
+- ID :PRIMARY KEY
+- Name
+- Email
+- Password
+- LastLogin
+- Role (chỉ là 1 thuộc tính của người dùng admin không có vai trò để phân giữa 2 loại: ql hệ thống và quanr lý tkhoan
+- Status (check active) - do không được xóa tài khoản nên để một thuộc tính như 1 flag
+
+Bảng 2: Teacher
+- ID: PRIMARY KEY
+- Code
+- Name
+- Email
+- Password
+- Phone
+- Rank
+- Work unit (IT, ACC, ADM, ...)
+- Status
+
+Bảng 3: User
+- ID
+- Code
+- Name
+- Email
+- Password
+- Phone
+- Address
+- Status 
+
+Bảng 4: Course
+- ID
+- Title
+- Description
+- Image
+- CreatedBy: ID của người tạo khóa học
+- CreatedDate
+- StartDate
+- EndDate
+
+Bảng 5: Chapter
+- ID
+- Title
+- Description
+- CreatedDate
+- CourseID: FOREIGN KEY
+
+Bảng 6: Course_User
+- ID
+- CourseID
+- UserID
+- DateJoin
+- Status
+
+Bảng 7: Document (tài liệu cho từng chương)
+- ID
+- ChapterID: FOREIGN KEY
+- NameDocument: tên tài liệu
+- LinkDocument
+- Description
+- DateFile
+
+Bảng 8: Videos (video cho từng chương)
+- ID
+- ChapterID: FOREIGN KEY
+- Name
+- Link
+- Description
+- DateVideos
+
+Bảng 9: TestCourse
+- ID
+- CourseID
+- Name
+- StartDate
+- EndDate
+- Attemps: số lần được phép làm
+
+Bảng 10: Result_TestCourse
+- ID
+- UserID
+- TestCourseID
+- Result
+- TurnInTime: Thời gian nộp bài
+
+Bảng 11: TestChapter
+- ID
+- ChapterID: FOREIGN KEY
+- Name
+- StartDate
+- EndDate
+- Attemps: số lần được phép làm
+
+Bảng 10: Result_TestChapter
+- ID
+- UserID
+- TestChapterID
+- Result
+- TurnInTime: Thời gian nộp bài
+
+Bảng 12: Question
+- ID
+- Description
+- Type: (onechoice-1, multichoice-2, nochoice-0) INT
+- TestChapterID: FOREIGN KEY
+- TestCourseID: FOREIGN KEY
+
+Bảng 13: AnswerForQuestion
+- ID
+- Description
+- QuestionID: FOREIGN KEY
+- AnswerText
+- IsCorrect
+
+Bảng 14: AnswerOfUser
+- ID
+- QuestionID
+- UserID
+- AnswerChoice
+- AnswerText
+
+Bảng 14: Reviews
+- ID
+- Content
+- Rating
+- ReviewText
+- ReviewsDate
+- UserID: FOREIGN KEY
+- CourseID: FOREIGN KEY
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
