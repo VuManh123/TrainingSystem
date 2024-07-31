@@ -4,6 +4,7 @@
   box-sizing: border-box;
   font-family: sans-serif;
 }
+/* Topbar css */
 .container{
   width: 100vw;
   min-height: 100vh;
@@ -11,5 +12,10 @@
   transition: 1s;
 }
 .container.dark{
-  background: #222;
+  background: #0f074896;
+}
+
+/* Sidebar CSS */
+.sidebar{
+  color: #fff;
 }

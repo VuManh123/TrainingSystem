@@ -30,6 +30,9 @@ const Navbar = ({theme, setTheme}) => {
         <img src={theme == 'light' ? search_icon_light : search_icon_dark} alt='' />
       </div>
 
+      <button className='register-button'>Đăng ký</button>
+      <button className='login-button'>Đăng nhập</button>
+
       <img onClick={() => {toggle_mode()}} src={theme == 'light' ? toggle_light : toggle_dark} alt='' className='toggle-icon' />
     </div>
   )
