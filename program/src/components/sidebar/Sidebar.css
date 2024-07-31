@@ -1,5 +1,6 @@
 .sidebar{
     height: 100%;
+    transition: 0.3s;
 }
 .logo{
     width: 160px;
@@ -14,9 +15,10 @@
     gap: 15px;
     font-size: 1rem;
     position: relative;
+    transition: 0.3s;
 }
 .createButton {
-    margin: 1.5rem 0 0 50px;
+    margin: 3rem 0 0 50px;
     padding: 10px 12px;
     font-size: 16px;
     color: #fff;
@@ -31,3 +33,14 @@
     background-color: #40a9ff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
+
+.toggle-btn{
+    position: absolute;
+    bottom: 30px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    margin-left: 50px;
+}
