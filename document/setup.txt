@@ -13,4 +13,4 @@ Bài 1. Dowload Library
 - Visual Studio IntelliCode
 - vscoded-styled-components
 
-Bài 2: design topbar with reactJs
+Bài 2: design topbar/ sidebar with reactJs
