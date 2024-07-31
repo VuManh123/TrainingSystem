@@ -4,14 +4,14 @@ import Sidebar from './components/sidebar/Sidebar'
 
 const Teacher = () => {
     const current_theme = localStorage.getItem('current_theme');
-    const [theme, setTheme] = useState(current_theme ? current_theme : 'light');
+    const [theme1, setTheme] = useState(current_theme ? current_theme : 'light');
     useEffect(() => {
-        localStorage.setItem('current_theme', theme);
-    },[theme])
+        localStorage.setItem('current_theme', theme1);
+    },[theme1])
 
   return (
     <div>
-      <Sidebar theme={theme} setTheme={setTheme}/>
+      <Sidebar theme1={theme1} setTheme={setTheme}/>
     </div>
   )
 }

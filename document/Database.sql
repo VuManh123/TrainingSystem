@@ -223,7 +223,7 @@ VALUES
 (4, 1, 1),
 (4, 2, 1),
 (4, 3, 1),
-(6, 1, 1),
+(1, 1, 1),
 (5, 5, 1);
 
 -- Insert data into Document table
@@ -233,7 +233,7 @@ VALUES
 (3, 'Document 2', 'link2.doc', 'Description for Document 2'),
 (4, 'Document 3', 'link3.doc', 'Description for Document 3'),
 (5, 'Document 4', 'link4.doc', 'Description for Document 4'),
-(6, 'Document 5', 'link5.doc', 'Description for Document 5');
+(1, 'Document 5', 'link5.doc', 'Description for Document 5');
 
 -- Insert data into Videos table
 INSERT INTO Videos (ChapterID, Name, Link, Description)
@@ -247,19 +247,19 @@ VALUES
 -- Insert data into TestCourse table
 INSERT INTO TestCourse (CourseID, Name, StartDate, EndDate, Attemps)
 VALUES
-(4, 'Test Course 1', '2024-01-15', '2024-01-20', 3),
-(5, 'Test Course 2', '2024-02-15', '2024-02-20', 3),
-(6, 'Test Course 3', '2024-03-15', '2024-03-20', 3),
-(7, 'Test Course 4', '2024-04-15', '2024-04-20', 3),
-(8, 'Test Course 5', '2024-05-15', '2024-05-20', 3);
+(1, 'Test Course 1', '2024-01-15', '2024-01-20', 3),
+(2, 'Test Course 2', '2024-02-15', '2024-02-20', 3),
+(3, 'Test Course 3', '2024-03-15', '2024-03-20', 3),
+(4, 'Test Course 4', '2024-04-15', '2024-04-20', 3),
+(5, 'Test Course 5', '2024-05-15', '2024-05-20', 3);
 
 -- Insert data into Result_TestCourse table
 INSERT INTO Result_TestCourse (UserID, TestCourseID, Result)
 VALUES
-(1, 1, 40),
-(2, 2, 32),
-(3, 3, 35),
-(4, 4, 30),
+(1, 4, 40),
+(2, 4, 32),
+(3, 4, 35),
+(4, 5, 30),
 (5, 5, 38);
 
 -- Insert data into TestChapter table
@@ -269,7 +269,7 @@ VALUES
 (3, 'Test Chapter 2', '2024-02-10', '2024-02-15', 2),
 (4, 'Test Chapter 3', '2024-03-10', '2024-03-15', 2),
 (5, 'Test Chapter 4', '2024-04-10', '2024-04-15', 2),
-(6, 'Test Chapter 5', '2024-05-10', '2024-05-15', 2);
+(1, 'Test Chapter 5', '2024-05-10', '2024-05-15', 2);
 
 -- Insert data into Result_TestChapter table
 INSERT INTO Result_TestChapter (UserID, TestChapterID, Result)
@@ -287,7 +287,7 @@ VALUES
 ('Question 2', 2, 6, NULL),
 ('Question 3', 1, 6, NULL),
 ('Question 4', 2, 6, NULL),
-('Question 5', 0, NULL, 4);
+('Question 5', 0, NULL, 6);
 
 -- Insert data into AnswerForQuestion table
 INSERT INTO AnswerForQuestion (Description, QuestionID, AnswerText, IsCorrect)

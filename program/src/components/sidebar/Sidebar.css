@@ -1,46 +1,41 @@
 .sidebar{
     height: 100%;
-    transition: 0.3s;
 }
 .logo{
-    width: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
     cursor: pointer;
-    margin: 20px 0 0 20px;
+    padding: 10px;
+    margin-top: 30px;
+}
+.logo-icon {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    border-radius: 50%;
+    background: rgba(28, 17, 41, 0.88);
 }
 .menu {
-    height: 88vh;
-    margin-top: 0.6rem;
+    height: 76vh;
+    margin-top: 4rem;
     display: flex;
     flex-direction: column;
     gap: 15px;
     font-size: 1rem;
     position: relative;
-    transition: 0.3s;
 }
-.createButton {
-    margin: 3rem 0 0 50px;
-    padding: 10px 12px;
-    font-size: 16px;
-    color: #fff;
-    background-color: #1890ff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .createButton:hover {
-    background-color: #40a9ff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
 
 .toggle-btn{
-    position: absolute;
     bottom: 30px;
     left: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1rem;
-    margin-left: 50px;
+    margin-bottom: 20px;
 }
