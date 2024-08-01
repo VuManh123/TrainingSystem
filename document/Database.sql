@@ -111,6 +111,10 @@ CREATE TABLE TestCourse (
     FOREIGN KEY (CourseID) REFERENCES Course(ID)
 );
 
+-- Thêm thuộc tính Status cho bảng để check ẩn hay hiện câu hỏi đó
+ALTER TABLE TestCourse
+ADD Status BIT NOT NULL DEFAULT 1
+
 -- 10. Tạo bảng kết quả của ài kiểm tra tổng cho từng người dùng
 CREATE TABLE Result_TestCourse (
     ID INT PRIMARY KEY IDENTITY(1,1),

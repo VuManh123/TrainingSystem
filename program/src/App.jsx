@@ -1,19 +1,22 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useEffect, useState } from 'react'
-import Navbar from './components/navbar/Navbar'
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Teacher from './components/pages/Teacher';
+import Home from './components/pages/Home';
+import Login from './components/pages/Login';
+import Register from './components/pages/Register';
 
-const App = () => {
-  const current_theme = localStorage.getItem('current_theme');
-  const [theme, setTheme] = useState(current_theme ? current_theme : 'light');
-  useEffect(() => {
-    localStorage.setItem('current_theme', theme);
-  },[theme])
-
+function App() {
   return (
-    <div className={`container ${theme}`}>
-      <Navbar theme={theme} setTheme={setTheme}/>
-    </div>
-  )
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path='/login' element={<Login />} />
+        <Route path="/teacher" element={<Teacher />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;

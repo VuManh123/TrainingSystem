@@ -1,10 +1,8 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react'
 import {Button, Layout, Menu, theme} from 'antd'
-import {OpenAIFilled, MenuFoldOutlined, MenuUnfoldOutlined, HomeOutlined, PlusOutlined, AuditOutlined, ProductOutlined, FormOutlined, SettingOutlined, LineChartOutlined} from '@ant-design/icons'
+import {OpenAIFilled, MenuFoldOutlined, MenuUnfoldOutlined, HomeOutlined, AuditOutlined, ProductOutlined, FormOutlined, SettingOutlined, LineChartOutlined} from '@ant-design/icons'
 import {HiOutlineSun, HiOutlineMoon} from 'react-icons/hi'
-import logo_light from '../../assets/logo-black.png'
-import logo_dark from '../../assets/logo-white.png'
 import './Sidebar.css'
 
 const {Sider, Header} = Layout;
@@ -32,7 +30,7 @@ const Sidebar = ({theme1, setTheme}) => {
             <PlusOutlined style={{ marginRight: 8 }} />
                 Create
             </button> */}
-            <div className='logo'>
+            <div className='logoGpt'>
                 <div className='logo-icon'>
                     <OpenAIFilled />
                 </div>

@@ -1,13 +1,15 @@
 // Định nghĩa các thư mục sẽ sử dụng
-const express = require('express');
+import express from 'express';
+import bodyParser from 'body-parser';
+import path from 'path';
+import sql from 'mssql';
+import consoleTable from 'console.table';
+import fs from 'fs';
+import { connect } from 'http2';
+import session from 'express-session';
+
 const app = express();
-const bodyParser = require('body-parser');
-const path = require('path');
-var sql = require('mssql');
-var consoleTable = require('console.table');
-const fs = require('fs');
-const { connect } = require('http2');
-const session = require('express-session');
+
 
 // Sử dụng body-parser middleware
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -22,14 +24,14 @@ app.use(session({
 
 // Thiết lập Db cho trang đăng nhập
 const configForLogIn = {
-  server: 'MANHVU',
+  server: 'S-PC392',
   database: 'TrainingManagement',
   port: 1433,
   authentication: {
     type: 'default',
     options: {
       userName: 'sa',
-      password: 'manhvu123'
+      password: 'Manhvu123@@'
     }
   },
   options: {
