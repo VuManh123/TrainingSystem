@@ -1,3 +1,5 @@
+/* Sidebar.module.css */
+
 @keyframes right {
     from {
         opacity: 0;
@@ -9,13 +11,17 @@
     }
 }
 
-.sidebar{
+.sidebar {
     height: 100%;
     opacity: 0;
-    animation: 1s right forwards;
+    animation: right 1s forwards;
 }
 
-.logoGpt{
+.dark {
+    background-color: #0a112b; /* Màu nền cho chế độ tối */
+}
+
+.logoGpt {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -23,11 +29,12 @@
     cursor: pointer;
     margin-top: 30px;
 }
-.dark .logoGpt{
+
+.dark .logoGpt {
     color: #fff;
 }
 
-.logo-icon {
+.logoIcon {
     width: 60px;
     height: 60px;
     display: flex;
@@ -38,9 +45,10 @@
     background: #fff;
 }
 
-.dark .logo-icon{
+.dark .logoIcon {
     background: #0a112b;
 }
+
 .menu {
     height: 76vh;
     margin-top: 4rem;
@@ -51,7 +59,7 @@
     position: relative;
 }
 
-.toggle-btn{
+.toggleBtn {
     bottom: 30px;
     left: 20px;
     display: flex;
