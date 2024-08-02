@@ -1,15 +1,32 @@
+@keyframes right {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
 .sidebar{
     height: 100%;
+    opacity: 0;
+    animation: 1s right forwards;
 }
+
 .logoGpt{
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
+    color: #0a112b;
     cursor: pointer;
-    padding: 10px;
     margin-top: 30px;
 }
+.dark .logoGpt{
+    color: #fff;
+}
+
 .logo-icon {
     width: 60px;
     height: 60px;
@@ -18,7 +35,11 @@
     justify-content: center;
     font-size: 2.5rem;
     border-radius: 50%;
-    background: rgba(28, 17, 41, 0.88);
+    background: #fff;
+}
+
+.dark .logo-icon{
+    background: #0a112b;
 }
 .menu {
     height: 76vh;

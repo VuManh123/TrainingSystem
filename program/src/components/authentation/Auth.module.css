@@ -1,17 +1,44 @@
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateZ(-100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateZ(0);
+    }
+}
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
 .wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 80vh;
     padding: 30px 40px;
+    opacity: 0;
+    animation: zoomIn 2s forwards;
 }
 form {
-    padding: 20px;
+    /* padding: 20px; */
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 420px;
+    /* width: 420px; */
     text-align: center;
-    padding: 30px 40px;
+    padding: 0 40px 30px 40px;
+    background: #fff;
+}
+.dark form {
+    background: #0a112b;
+    box-shadow: 0 0 10px #fff;
 }
 .wrapper h1{
     font-size: 36px;
@@ -33,8 +60,16 @@ form {
     border-radius: 40px;
     padding: 20px 45px 20px 20px;
 }
+
+.dark .input_row .input_box_half input {
+    color: #fff;
+    border: 2px solid #fff;
+}
 .input_box input::placeholder{
     color: #00021DDD;
+}
+.dark .input_box_half input::placeholder{
+    color: #fff;
 }
 .input_box .icon_Login{
     position: absolute;
@@ -42,6 +77,12 @@ form {
     top: 50%;
     transform: translateY(-50%);
     font-size: 16px;
+}
+.dark .input_box .icon_Login{
+    color: #fff;
+}
+.dark .input_box_half .icon_Login{
+    color: #fff;
 }
 .wrapper .remember_forgot{
     display: flex;
@@ -53,8 +94,12 @@ form {
     accent-color: #fff;
     margin-right: 4px;
 }
-.remember_forgot a{
+.dark .remember_forgot label{
     color: #fff;
+}
+
+.remember_forgot a{
+    color: #6a74c9;
     text-decoration: none;
 }
 .remember_forgot a:hover{
@@ -63,7 +108,7 @@ form {
 .wrapper button{
     width: 100%;
     height: 45px;
-    background: #00021DDD;
+    background: #0a112b;
     border: none;
     outline: none;
     border-radius: 40px;
@@ -76,6 +121,7 @@ form {
 .wrapper button:hover{
     background: #fff;
     color: #00021DDD;
+    border: 2px solid #00021DDD;
 }
 
   .roleOptions {
@@ -87,6 +133,12 @@ form {
     list-style-type: none;
     padding-left: 0;
   }
+  .dark .roleOptions{
+    color: #fff;
+  }
+  .dark .roleOptions li {
+    color: #fff;
+  }
   
   .roleOptions li {
     margin-right: 10px;
@@ -97,3 +149,55 @@ form {
   .roleOptions label {
     margin-right: 10px;
   }
+
+  .roleOptions label input {
+    margin-right: 5px;
+  }
+  .input_row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.input_box_half {
+    flex: 0 0 48%;
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.input_box_half input{       
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    border: 2px solid #00021DDD;
+    border-radius: 40px;
+    padding: 15px 45px 15px 20px;
+}
+.input_box_half .icon_Login{
+    position: absolute;
+    margin-left: 12rem; 
+}
+.dark h1{
+    color: #fff;
+}
+.dark .input_box input{       
+    border: 2px solid #fff;
+
+}
+.dark .input_box input::placeholder{
+    color: #fff;
+}
+.dark .wrapper button:hover{
+    background: #fff;
+    color: #fff;
+    border: 2px solid #fff;
+}
+.dark button{
+    background: #6a74c9;
+}
+.wrapper #register-button{
+    margin-top: 30px;
+}

@@ -1,19 +1,17 @@
+// Home.js
 // eslint-disable-next-line no-unused-vars
-import React, { useEffect, useState } from 'react'
-import Navbar from '../navbar/Navbar'
+import React, { useContext } from 'react';
+import Navbar from '../navbar/Navbar';
+import { ThemeContext } from '../ThemeContext';
 
 const Home = () => {
-  const current_theme = localStorage.getItem('current_theme');
-  const [theme, setTheme] = useState(current_theme ? current_theme : 'light');
-  useEffect(() => {
-    localStorage.setItem('current_theme', theme);
-  },[theme])
+    const { theme } = useContext(ThemeContext);
 
-  return (
-    <div className={`container ${theme}`}>
-      <Navbar theme={theme} setTheme={setTheme}/>
-    </div>
-  )
-}
+    return (
+        <div className={`container ${theme}`}>
+            <Navbar />
+        </div>
+    );
+};
 
-export default Home
+export default Home;

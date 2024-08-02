@@ -1,17 +1,17 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useState } from 'react'
-import {Button, Layout, Menu, theme} from 'antd'
+import React, { useState, useContext } from 'react'
+import {Button, Layout, Menu} from 'antd'
 import {OpenAIFilled, MenuFoldOutlined, MenuUnfoldOutlined, HomeOutlined, AuditOutlined, ProductOutlined, FormOutlined, SettingOutlined, LineChartOutlined} from '@ant-design/icons'
 import {HiOutlineSun, HiOutlineMoon} from 'react-icons/hi'
 import './Sidebar.css'
+import { ThemeContext } from '../ThemeContext'
 
 const {Sider, Header} = Layout;
 
 // eslint-disable-next-line react/prop-types
-const Sidebar = ({theme1, setTheme}) => {
-    const toggle_mode = () => {
-        theme1 == 'light' ? setTheme('dark') : setTheme('light')
-    }
+const Sidebar = () => {
+    const { theme, toggleTheme } = useContext(ThemeContext);
+    //theme1 = {darkmode};
 
     const [collapsed, setCollapsed] = useState(false);
 
@@ -22,21 +22,14 @@ const Sidebar = ({theme1, setTheme}) => {
   return (
     <div>
       <Layout>
-        <Sider className='sidebar' collapsed={collapsed} collapsible trigger={null} theme={theme1 == 'light' ? 'light' : 'dark'}>
-            {/* <img src={theme1 == 'light' ? logo_light : logo_dark} alt='' className='logo'></img> */}
-
-            {/* <button className='createButton' icon={<PlusOutlined />}>Create</button>
-            <button className='createButton'>
-            <PlusOutlined style={{ marginRight: 8 }} />
-                Create
-            </button> */}
+        <Sider className={`sidebar ${theme}`} collapsed={collapsed} collapsible trigger={null} theme={theme}>
             <div className='logoGpt'>
                 <div className='logo-icon'>
                     <OpenAIFilled />
                 </div>
             </div>
 
-            <Menu theme={theme1 == 'light' ? 'light' : 'dark'} className='menu' mode='inline'>
+            <Menu theme={theme} className='menu' mode='inline'>
                 <Menu.Item key='home' icon={<HomeOutlined />}>Home</Menu.Item>
                 <Menu.Item key='student' icon={<AuditOutlined />}>Student</Menu.Item>
                 <Menu.SubMenu key='course' icon={<ProductOutlined />} title='Course'>
@@ -52,8 +45,8 @@ const Sidebar = ({theme1, setTheme}) => {
             </Menu>
 
             <div className='toggle-btn'>
-                <Button onClick={() => {toggle_mode()}}>
-                    {theme1 == 'light' ? <HiOutlineMoon /> : <HiOutlineSun />}
+                <Button onClick={toggleTheme}>
+                    {theme == 'light' ? <HiOutlineMoon /> : <HiOutlineSun />}
                 </Button>
             </div>
         </Sider>

@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import React from 'react'
+import React, { useContext } from 'react'
 import './Navbar.css'
 import logo_light from '../../assets/logo-black.png'
 import logo_dark from '../../assets/logo-white.png'
@@ -8,13 +8,12 @@ import search_icon_dark from '../../assets/search-b.png'
 import toggle_light from '../../assets/night.png'
 import toggle_dark from '../../assets/day.png'
 import { useNavigate } from 'react-router-dom';
+import { ThemeContext } from '../ThemeContext';
 
 // eslint-disable-next-line react/prop-types
-const Navbar = ({theme, setTheme}) => {
+const Navbar = () => {
 
-    const toggle_mode = () => {
-        theme == 'light' ? setTheme('dark') : setTheme('light')
-    }
+    const { theme, toggleTheme } = useContext(ThemeContext);
     const navigate = useNavigate();
 
     const handleLoginClick = () => {
@@ -46,7 +45,7 @@ const Navbar = ({theme, setTheme}) => {
       <button className='register-button' onClick={handleRegisterClick}>Đăng ký</button>
       <button className='login-button' onClick={handleLoginClick}>Đăng nhập</button>
 
-      <img onClick={() => {toggle_mode()}} src={theme == 'light' ? toggle_light : toggle_dark} alt='' className='toggle-icon' />
+      <img onClick={toggleTheme} src={theme == 'light' ? toggle_light : toggle_dark} alt='' className='toggle-icon' />
     </div>
   )
 }

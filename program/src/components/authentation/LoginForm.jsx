@@ -1,24 +1,31 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react';
 import {OpenAIFilled} from '@ant-design/icons'
 import {FaUser, FaLock} from "react-icons/fa"
 import styles from './Auth.module.css'
+import { ThemeContext } from '../ThemeContext';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
+    const { theme } = useContext(ThemeContext);
+    const navigate = useNavigate();
     const [role, setRole] = useState('');
 
     const handleRoleChange = (event) => {
       setRole(event.target.value);
     };
   
-    const handleSubmit = (event) => {
-      event.preventDefault();
-      // Xử lý đăng nhập ở đây
-      console.log('Role:', role);
+    // const handleSubmit = (event) => {
+    //   event.preventDefault();
+    //   // Xử lý đăng nhập ở đây
+    //   console.log('Role:', role);
+    // };
+    const handleSubmit = () => {
+      navigate('/teacher');
     };
 
   return (
-    <div className={styles.wrapper}>
+    <div className={`${styles.wrapper} ${theme === 'dark' ? styles.dark : ''}`}>
       <form action=''>
             <div className='logoGpt'>
                 <div className='logo-icon'>

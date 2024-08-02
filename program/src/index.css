@@ -8,20 +8,11 @@
 .container{
   width: 100vw;
   min-height: 100vh;
-  background: #ced8ff;
+  background: #eff2f9;
   transition: 1s;
 }
 .container.dark{
-  background: #0f074896;
+  background: #161f3e;
 }
 
 /* Sidebar CSS */
-.sidebar{
-  color: #fff;
-}
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-width: 100vh;
-}
