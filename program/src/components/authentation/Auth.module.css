@@ -201,3 +201,30 @@ form {
 .wrapper #register-button{
     margin-top: 30px;
 }
+.wrapper .logoGpt {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0a112b;
+    cursor: pointer;
+    margin-top: 30px;
+}
+
+.dark .logoGpt {
+    color: #fff;
+}
+
+.logoIcon {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    border-radius: 50%;
+    background: #fff;
+}
+
+.dark .logoIcon {
+    background: #0a112b;
+}

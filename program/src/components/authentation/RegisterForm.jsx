@@ -22,8 +22,8 @@ const RegisterForm = () => {
   return (
     <div className={`${styles.wrapper} ${theme === 'dark' ? styles.dark : ''}`}>
       <form action=''>
-            <div className='logoGpt'>
-                <div className='logo-icon'>
+            <div className={styles.logoGpt}>
+                <div className={styles.logoIcon}>
                     <OpenAIFilled />
                 </div>
             </div>
