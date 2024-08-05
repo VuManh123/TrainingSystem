@@ -5,6 +5,7 @@ import { OpenAIFilled, MenuFoldOutlined, MenuUnfoldOutlined, HomeOutlined, Audit
 import { HiOutlineSun, HiOutlineMoon } from 'react-icons/hi';
 import { ThemeContext } from '../ThemeContext';
 import styles from './Sidebar.module.css';
+import { BodyHome } from '../admin/home';
 
 const { Sider, Header } = Layout;
 
@@ -56,6 +57,9 @@ const Sidebar = () => {
           <Header style={{ padding: 0, background: '#fff' }}>
             <Button type="text" className={styles.toggle} onClick={() => setCollapsed(!collapsed)} icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />} />
           </Header>
+          {/* Trang Home */}
+          <BodyHome /> 
+          {/*  */}
         </Layout>
       </Layout>
     </div>

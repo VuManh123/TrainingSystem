@@ -48,6 +48,24 @@ sql.connect(configForLogIn, function(err) {
     console.log("Connected to database to get Users table info");
   }
 });
+// Khởi động máy chủ
+app.listen(5000, () => {
+  console.log('Server is running on port 5000');
+});
+
+// 1. List projects
+app.get('/projects', (req, res) => {
+  //const userName = req.session.userName;
+  const query = `SELECT * FROM Student`;
+  sql.query(query)
+    .then((result) => {
+      res.json(result.recordset);
+    })
+    .catch((error) => {
+      console.log('Error executing SQL query:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
 
 // // Endpoint đăng xuất
 // app.post('/logout', function(req, res) {
