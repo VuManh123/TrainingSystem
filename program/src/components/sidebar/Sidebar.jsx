@@ -6,61 +6,9 @@ import { HiOutlineSun, HiOutlineMoon } from 'react-icons/hi';
 import { ThemeContext } from '../ThemeContext';
 import styles from './Sidebar.module.css';
 import { BodyHome } from '../admin/home';
+import {Avatar as AntdAvater} from 'antd'
 
 const { Sider, Header } = Layout;
-
-const menuItems = [
-  {
-    key: 'home',
-    icon: <HomeOutlined />,
-    label: 'Home',
-  },
-  {
-    key: 'student',
-    icon: <AuditOutlined />,
-    label: 'Student',
-  },
-  {
-    key: 'course',
-    icon: <ProductOutlined />,
-    label: 'Course',
-    children: [
-      {
-        key: 'listcourse',
-        label: 'List Course',
-      },
-      {
-        key: 'addcourse',
-        label: 'Add Course',
-      },
-    ],
-  },
-  {
-    key: 'quiz',
-    icon: <FormOutlined />,
-    label: 'Quiz',
-    children: [
-      {
-        key: 'listquiz',
-        label: 'List Quiz',
-      },
-      {
-        key: 'addquiz',
-        label: 'Add Quiz',
-      },
-    ],
-  },
-  {
-    key: 'settings',
-    icon: <SettingOutlined />,
-    label: 'Settings',
-  },
-  {
-    key: 'analysis',
-    icon: <LineChartOutlined />,
-    label: 'Analysis',
-  },
-];
 
 const Sidebar = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
@@ -76,7 +24,28 @@ const Sidebar = () => {
             </div>
           </div>
 
-          <Menu theme={theme} className={styles.menu} mode="inline" items={menuItems} />
+          <Menu theme={theme} className={styles.menu} mode="inline">
+            <Menu.Item key="home" icon={<HomeOutlined />}>
+              Home
+            </Menu.Item>
+            <Menu.Item key="student" icon={<AuditOutlined />}>
+              Student
+            </Menu.Item>
+            <Menu.SubMenu key="course" icon={<ProductOutlined />} title="Course">
+              <Menu.Item key="listcourse">List Course</Menu.Item>
+              <Menu.Item key="addcourse">Add Course</Menu.Item>
+            </Menu.SubMenu>
+            <Menu.SubMenu key="quiz" icon={<FormOutlined />} title="Quiz">
+              <Menu.Item key="listquiz">List Quiz</Menu.Item>
+              <Menu.Item key="addquiz">Add Quiz</Menu.Item>
+            </Menu.SubMenu>
+            <Menu.Item key="settings" icon={<SettingOutlined />}>
+              Settings
+            </Menu.Item>
+            <Menu.Item key="analysis" icon={<LineChartOutlined />}>
+              Analysis
+            </Menu.Item>
+          </Menu>
 
           <div className={styles.toggleBtn}>
             <Button onClick={toggleTheme}>
@@ -85,17 +54,15 @@ const Sidebar = () => {
           </div>
         </Sider>
         <Layout>
-          <Header style={{ padding: 0, background: '#fff' }}>
-            <Button 
-              type="text" 
-              className={styles.toggle} 
-              onClick={() => setCollapsed(!collapsed)} 
-              icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />} 
+          <Header className={`${styles.header} ${theme === 'dark' ? styles.dark : ''}`}>
+            <Button
+              type="text"
+              onClick={() => setCollapsed(!collapsed)}
+              icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+              className={`${styles.button} ${theme === 'dark' ? styles.darkButton : ''}`}
             />
+            <AntdAvater className={`${styles.avatar} ${theme === 'dark' ? styles.dark : ''}`}>US</AntdAvater>
           </Header>
-          {/* Trang Home */}
-          <BodyHome />
-          {/*  */}
         </Layout>
       </Layout>
     </div>

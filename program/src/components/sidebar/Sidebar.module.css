@@ -3,11 +3,11 @@
 @keyframes right {
     from {
         opacity: 0;
-        transform: translateY(-30px);
+        transform: translateX(-30px);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateX(0);
     }
 }
 
@@ -16,10 +16,6 @@
     opacity: 0;
     animation: right 1s forwards;
     background: #fff;
-}
-
-.dark {
-    background: #0a112b; /* Màu nền cho chế độ tối */
 }
 
 .logoGpt {
@@ -52,6 +48,15 @@
     background: #0a112b;
 }
 
+.menu {
+    height: 85vh;
+    padding-top: 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    font-size: 1rem;
+    position: relative;
+}
 
 .toggleBtn {
     bottom: 30px;
@@ -74,13 +79,29 @@
 .dark .toggleBtn{
     background: #0a112b;
 }
-
-.menu {
-    height: 88vh;
-    padding-top: 4rem;
+.header{
+    padding: 0;
+    background: #fff;
     display: flex;
-    flex-direction: column;
-    gap: 15px;
-    font-size: 1rem;
-    position: relative;
+    justify-content: space-between;
+    align-items: center;
+}
+.dark{
+    background: #0a112b;
+}
+.avatar{
+    background-color: #0a112b;
+    color: #fff;
+    margin-right: 10px; 
+    border: 1px solid #fff;
+    cursor: pointer;
+}
+.button{
+    color: #0a112b;
+}
+.darkButton{
+    color: #fff;
+}
+.darkButton:hover{
+    color: aliceblue;
 }
