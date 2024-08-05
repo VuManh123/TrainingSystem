@@ -2,9 +2,10 @@ import { Card, List } from 'antd'
 import {CalendarOutlined} from '@ant-design/icons'
 import React, { useState } from 'react'
 import { Text } from '../text'
+import { UpcommingEventsSkeleton } from './skeleton/upcomming-events'
 
 const UpcommingEvent = () => {
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
   return (
     <div>
@@ -28,10 +29,14 @@ const UpcommingEvent = () => {
                 itemLayout='horizontal'
                 dataSource={Array.from({length: 5}).map((_, index)=> ({
                     id: index,
-                }))}></List>
+                }))}
+                  renderItem = {() => <UpcommingEventsSkeleton/>}>
+                </List>
             ) : (
-                <List>
-
+                <List
+                  itemLayout='horizontal'
+                >
+                  
 
                 </List>
             )}

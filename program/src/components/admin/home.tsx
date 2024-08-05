@@ -1,6 +1,6 @@
 import {Col, Row} from 'antd'
 import React from 'react'
-import UpcommingEvent from './upcomming-event'
+import UpcommingEvent from './upcomming-events'
 import DashboardChart from './dashboard-chart'
 
 export const BodyHome = () => {
@@ -9,7 +9,8 @@ export const BodyHome = () => {
             <Row
                 gutter={[32,32]}
                 style={{
-                    marginTop: '32px'
+                    marginTop: '32px',
+                    marginLeft: '20px',
                 }}
                 >
                 <Col
