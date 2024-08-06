@@ -10,13 +10,15 @@ CREATE TABLE Admin (
     Role VARCHAR(50) NOT NULL CHECK (Role IN ('System Manager', 'Account Manager')),
     Active BIT NOT NULL
 );
+ALTER TABLE Admin
+ADD Code VARCHAR(50) NOT NULL UNIQUE DEFAULT 0
 
 INSERT INTO Admin(Name, Email, Password, LastLogin, Role, Active)
 VALUES
-('Dev Vu', 'vuducmanh11a@gmail.com', '12345678', '2024-07-30 12:34:56.789', 'System Manager', '1')
+('Dev Vu', 'vuducmanh11a@gmail.com', '12345678', N'2024-07-30 12:34:56.789', 'System Manager', '1')
 
 -- 2. Tạo bảng giáo viên dậy môn học
-CREATE TABLE Teacher (
+CREATE TABLE Teacher (	
     ID INT PRIMARY KEY IDENTITY(1,1),
     Code VARCHAR(50) NOT NULL UNIQUE, -- Mã giáo viên/ học viên
     Name VARCHAR(100) NOT NULL,
