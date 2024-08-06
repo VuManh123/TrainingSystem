@@ -63,6 +63,7 @@ const Sidebar = () => {
             />
             <AntdAvater className={`${styles.avatar} ${theme === 'dark' ? styles.dark : ''}`}>US</AntdAvater>
           </Header>
+          <BodyHome/>
         </Layout>
       </Layout>
     </div>

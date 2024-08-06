@@ -28,6 +28,9 @@ const LoginForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log(role);
+    console.log(email);
+    console.log(password);
 
     if (!role || !email || !password) {
       setError('All fields are required');

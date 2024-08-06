@@ -1,10 +1,11 @@
 /* eslint-disable no-undef */
 import express from 'express';
 import session from 'express-session';
-import bcrypt from 'bcrypt';
-import { getStudents, getCourses, poolPromise } from './query.mjs';
+//import bcrypt from 'bcrypt';
+import { getStudents, getCourses, poolPromise, getAdminByEmail, getTeacherByEmail } from './query.mjs';
 import sql from 'mssql';
 import cors from 'cors'
+//import { message } from 'antd';
 
 
 
@@ -21,15 +22,16 @@ app.use(express.json());
 
 // Cấu hình express-session
 app.use(session({
-    secret: 'your_secret_key', // Thay thế bằng khóa bí mật của bạn
+    secret: 'manhvu', // Thay thế bằng khóa bí mật của bạn
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false } // Đặt `true` nếu bạn đang sử dụng HTTPS
+    cookie: { secure: true } // Đặt `true` nếu bạn đang sử dụng HTTPS
 }));
 
-// API đăng nhập cho sinh viên, admin và giáo viên
+// 1. CHỨC NĂNG ĐĂNG NHẬP
 app.post('/api/login', async (req, res) => {
     const { email, password, role } = req.body;
+    console.log(email, password);
 
     if (!email || !password || !role) {
         return res.status(400).send('Email, password and role are required');
@@ -51,13 +53,17 @@ app.post('/api/login', async (req, res) => {
             return res.status(400).send('Invalid role');
         }
 
-        if (!user) {
-            return res.status(401).send('Invalid email or password');
-        }
+         if (!user) {
+             return res.status(401).send('Invalid email or password');
+         }
 
-        const isMatch = await bcrypt.compare(password, user.Password);
+        //const isMatch = await bcrypt.compare(password, user.Password);
+        
+        console.log(user.Password);
+        console.log(password);
+        //console.log(isMatch)
 
-        if (isMatch) {
+        if (password === user.Password) {
             // Lưu thông tin người dùng vào phiên làm việc
             req.session.user = { id: user.ID, name: user.Name, role: role };
             if (role === 'teacher') {
@@ -68,11 +74,74 @@ app.post('/api/login', async (req, res) => {
             res.status(401).send('Invalid email or password');
         }
     } catch (err) {
+        console.error('Error during login process:', err); // Ghi log lỗi chi tiết
         res.status(500).send(err.message);
     }
 });
 
-// API đăng xuất
+
+// 2. CHỨC NĂNG ĐĂNG KÝ
+app.post('/api/register', async (req, res) => {
+    const { email, password, role, username, phone, address, employeeId, rank, workUnit } = req.body;
+    console.log(role, email, password, username, phone, address, employeeId, rank, workUnit)
+  
+    try {
+      const pool = await poolPromise;
+      let result;
+  
+      switch (role) {       
+        case 'admin':
+          result = await pool.request()
+            .input('Name', sql.VarChar, username)
+            .input('Email', sql.VarChar, email)
+            .input('Password', sql.VarChar, password)
+            .input('Role', sql.VarChar, 'Account Manager')
+            .input('Active', sql.Bit, 1)
+            .input('Code', sql.VarChar, employeeId)
+            .query(`INSERT INTO Admin (Name, Email, Password, Role, Code, Active) 
+                    VALUES (@Name, @Email, @Password, @Role, @Code, @Active)`);
+          break;
+  
+        case 'teacher':
+          result = await pool.request()
+            .input('Code', sql.VarChar, employeeId)
+            .input('Name', sql.VarChar, username)
+            .input('Email', sql.VarChar, email)
+            .input('Password', sql.VarChar, password)
+            .input('Phone', sql.VarChar, phone)
+            .input('Rank', sql.VarChar, rank)
+            .input('WorkUnit', sql.VarChar, workUnit)
+            .input('Active', sql.Bit, 1)
+            .query(`INSERT INTO Teacher (Code, Name, Email, Password, Phone, Rank, WorkUnit, Active) 
+                    VALUES (@Code, @Name, @Email, @Password, @Phone, @Rank, @WorkUnit, @Active)`);
+          break;
+  
+        case 'student':
+          // eslint-disable-next-line no-unused-vars
+          result = await pool.request()
+            .input('Code', sql.VarChar, employeeId)
+            .input('Name', sql.VarChar, username)   
+            .input('Email', sql.VarChar, email)
+            .input('Password', sql.VarChar, password)
+            .input('Phone', sql.VarChar, phone)
+            .input('Address', sql.VarChar, address)
+            .input('Status', sql.Bit, 1)
+            .query(`INSERT INTO Student (Code, Name, Email, Password, Phone, Address, Status) 
+                    VALUES (@Code, @Name, @Email, @Password, @Phone, @Address, @Status)`);
+          break;
+  
+        default:
+          return res.status(400).json({ error: 'Invalid role' });
+      }
+  
+      res.json({ success: true });
+    } catch (error) {
+      console.error('Error during registration:', error);
+      res.status(500).json({ error: 'An error occurred during registration' });
+    }
+  });
+
+//  API ĐĂNG XUẤT
 app.post('/api/logout', (req, res) => {
     req.session.destroy(err => {
         if (err) {

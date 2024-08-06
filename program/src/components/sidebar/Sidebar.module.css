@@ -3,11 +3,11 @@
 @keyframes right {
     from {
         opacity: 0;
-        transform: translateX(-30px);
+        transform: translateY(-30px);
     }
     to {
         opacity: 1;
-        transform: translateX(0);
+        transform: translateY(0);
     }
 }
 
