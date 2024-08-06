@@ -5,6 +5,7 @@ import { FaUser, FaLock } from "react-icons/fa";
 import styles from './Auth.module.css';
 import { ThemeContext } from '../ThemeContext';
 import { useNavigate } from 'react-router-dom';
+import { notify } from '../notification/Notification';
 
 const LoginForm = () => {
   const { theme } = useContext(ThemeContext);
@@ -12,7 +13,7 @@ const LoginForm = () => {
   const [role, setRole] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [error] = useState('');
 
   const handleRoleChange = (event) => {
     setRole(event.target.value);
@@ -33,7 +34,8 @@ const LoginForm = () => {
     console.log(password);
 
     if (!role || !email || !password) {
-      setError('All fields are required');
+      //setError('All fields are required');
+      notify('Please fill all fields of infomation', 'error')
       return;
     }
 
@@ -45,23 +47,21 @@ const LoginForm = () => {
       });
 
       if (response.ok) {
-        const result = await response.json();
-        console.log('Login successful:', result);
+        notify('Login successful!', 'success')
         // Điều hướng tới trang tương ứng dựa trên vai trò
         if (role === 'teacher') {
           navigate('/teacher');
         } else if (role === 'admin') {
-          navigate('/admin');
+          navigate('/adminAM');
         } else {
           navigate('/student');
         }
       } else {
         const errorText = await response.text();
-        setError(errorText);
+        notify(errorText, 'error')
       }
     } catch (error) {
-      console.error('Error during login:', error);
-      console.log('An error occurred. Please try again later.');
+      notify('Error during login:' + error, 'error')
     }
   };
 

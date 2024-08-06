@@ -5,27 +5,17 @@ import session from 'express-session';
 import { getStudents, getCourses, poolPromise, getAdminByEmail, getTeacherByEmail } from './query.mjs';
 import sql from 'mssql';
 import cors from 'cors'
-//import { message } from 'antd';
-
-
 
 const app = express();
 app.use(cors());
 app.use(express.json());
-// const corsOptions = {
-//     origin: 'http://localhost:5173', // Địa chỉ frontend của bạn
-//     methods: ['GET', 'POST'], // Các phương thức HTTP được phép
-//     allowedHeaders: ['Content-Type'] // Các header được phép
-//   };
-  
-//   app.use(cors(corsOptions));
 
 // Cấu hình express-session
 app.use(session({
-    secret: 'manhvu', // Thay thế bằng khóa bí mật của bạn
+    secret: 'manhvu', 
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true } // Đặt `true` nếu bạn đang sử dụng HTTPS
+    cookie: { secure: true } 
 }));
 
 // 1. CHỨC NĂNG ĐĂNG NHẬP
@@ -56,23 +46,22 @@ app.post('/api/login', async (req, res) => {
          if (!user) {
              return res.status(401).send('Invalid email or password');
          }
-
-        //const isMatch = await bcrypt.compare(password, user.Password);
-        
-        console.log(user.Password);
-        console.log(password);
-        //console.log(isMatch)
-
-        if (password === user.Password) {
-            // Lưu thông tin người dùng vào phiên làm việc
-            req.session.user = { id: user.ID, name: user.Name, role: role };
-            if (role === 'teacher') {
-                req.session.user.workUnit = user.WorkUnit;
+        console.log(user.ID, user.Status, user.Active)
+        if(user.Status === false || user.Active === false) {
+            res.status(401).send('This account is not active!')
+        } else{
+            if (password === user.Password) {
+                // Lưu thông tin người dùng vào phiên làm việc
+                req.session.user = { id: user.ID, name: user.Name, role: role };
+                if (role === 'teacher') {
+                    req.session.user.workUnit = user.WorkUnit;
+                }
+                res.json({ message: 'Login successful', user: req.session.user });
+            } else {
+                res.status(401).send('Invalid email or password');
             }
-            res.json({ message: 'Login successful', user: req.session.user });
-        } else {
-            res.status(401).send('Invalid email or password');
         }
+
     } catch (err) {
         console.error('Error during login process:', err); // Ghi log lỗi chi tiết
         res.status(500).send(err.message);
@@ -96,12 +85,12 @@ app.post('/api/register', async (req, res) => {
             .input('Email', sql.VarChar, email)
             .input('Password', sql.VarChar, password)
             .input('Role', sql.VarChar, 'Account Manager')
-            .input('Active', sql.Bit, 1)
+            .input('Active', sql.Bit, 0)
             .input('Code', sql.VarChar, employeeId)
             .query(`INSERT INTO Admin (Name, Email, Password, Role, Code, Active) 
                     VALUES (@Name, @Email, @Password, @Role, @Code, @Active)`);
           break;
-  
+
         case 'teacher':
           result = await pool.request()
             .input('Code', sql.VarChar, employeeId)
@@ -111,7 +100,7 @@ app.post('/api/register', async (req, res) => {
             .input('Phone', sql.VarChar, phone)
             .input('Rank', sql.VarChar, rank)
             .input('WorkUnit', sql.VarChar, workUnit)
-            .input('Active', sql.Bit, 1)
+            .input('Active', sql.Bit, 0)
             .query(`INSERT INTO Teacher (Code, Name, Email, Password, Phone, Rank, WorkUnit, Active) 
                     VALUES (@Code, @Name, @Email, @Password, @Phone, @Rank, @WorkUnit, @Active)`);
           break;

@@ -7,6 +7,9 @@ import Login from './components/pages/Login';
 import Register from './components/pages/Register';
 import { ThemeProvider } from './components/ThemeContext';
 import { ToastContainer } from 'react-toastify';
+import Student from './components/pages/Student';
+import AdminAM from './components/pages/AdminAM';
+import AdminSM from './components/pages/AdminSM';
 
 function App() {
   return (
@@ -18,6 +21,9 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path="/teacher" element={<Teacher />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/student" element={<Student />} />
+          <Route path="/adminAM" element={<AdminAM />} />
+          <Route path="/adminSM" element={<AdminSM />} />
         </Routes>
       </Router>
     </ThemeProvider>
