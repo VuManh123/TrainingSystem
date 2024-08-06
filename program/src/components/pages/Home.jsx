@@ -1,7 +1,8 @@
 // Home.js
 // eslint-disable-next-line no-unused-vars
 import React, { useContext } from 'react';
-import Navbar from '../navbar/Navbar';
+import Navbar from '../dashboard/Navbar';
+import Body from '../dashboard/Body'
 import { ThemeContext } from '../ThemeContext';
 
 const Home = () => {
@@ -10,6 +11,7 @@ const Home = () => {
     return (
         <div className={`container ${theme}`}>
             <Navbar />
+            <Body />
         </div>
     );
 };

@@ -185,7 +185,7 @@ form {
 }
 .dark .input_box input{       
     border: 2px solid #fff;
-
+    color: #fff;
 }
 .dark .input_box input::placeholder{
     color: #fff;
