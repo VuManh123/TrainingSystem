@@ -196,6 +196,77 @@ CREATE TABLE Reviews (
 );
 
 -- II. INSERT DỮ LIỆU
+INSERT INTO Course (Title, Description, Image, CreatedBy, StartDate, EndDate) VALUES
+('Lập trình Web với React.js', 
+ 'Khóa học này cung cấp kiến thức toàn diện về việc xây dựng ứng dụng web hiện đại bằng React.js, một thư viện JavaScript phổ biến. Bạn sẽ học cách tạo các thành phần React, quản lý trạng thái ứng dụng với hooks, và sử dụng các công cụ phát triển hiện đại để xây dựng ứng dụng web tương tác và hiệu quả.', 
+ 'images/banner1.png', 
+ 1, 
+ '2024-08-15', 
+ '2024-12-15'),
+
+('Quản lý cơ sở dữ liệu với SQL Server', 
+ 'Khóa học này sẽ giúp bạn nắm vững các kỹ năng cần thiết để quản lý và tối ưu hóa cơ sở dữ liệu SQL Server. Bạn sẽ học cách tạo và quản lý cơ sở dữ liệu, viết các truy vấn SQL phức tạp, và áp dụng các phương pháp tối ưu hóa hiệu suất để đảm bảo cơ sở dữ liệu của bạn hoạt động hiệu quả.', 
+ 'images/banner1.png', 
+ 2, 
+ '2024-09-01', 
+ '2024-12-01'),
+
+('Nhập môn Trí tuệ nhân tạo', 
+ 'Khóa học này cung cấp cái nhìn tổng quan về trí tuệ nhân tạo (AI), bao gồm các thuật toán học máy cơ bản, mạng nơ-ron, và các ứng dụng của AI trong thực tế. Bạn sẽ học cách xây dựng các mô hình AI đơn giản và áp dụng chúng vào các bài toán thực tế.', 
+ 'images/banner1.png', 
+ 1, 
+ '2024-10-01', 
+ '2025-01-01'),
+
+('Xây dựng ứng dụng di động với Flutter', 
+ 'Khóa học này sẽ giúp bạn nắm vững cách xây dựng ứng dụng di động đa nền tảng bằng Flutter, một framework phát triển ứng dụng di động được Google phát triển. Bạn sẽ học cách tạo giao diện người dùng đẹp mắt, quản lý trạng thái ứng dụng, và triển khai ứng dụng của bạn lên các nền tảng di động khác nhau.', 
+ 'images/banner1.png', 
+ 2, 
+ '2024-11-01', 
+ '2025-02-01'),
+
+('Phân tích dữ liệu với Python', 
+ 'Khóa học này cung cấp kỹ năng phân tích dữ liệu sử dụng Python, bao gồm các thư viện quan trọng như Pandas và NumPy. Bạn sẽ học cách xử lý và phân tích dữ liệu lớn, tạo các báo cáo và trực quan hóa dữ liệu để hỗ trợ các quyết định kinh doanh.', 
+ 'images/banner1.png', 
+ 1, 
+ '2024-09-15', 
+ '2024-12-15'),
+
+('Phát triển phần mềm với Java', 
+ 'Khóa học này tập trung vào việc phát triển ứng dụng phần mềm bằng ngôn ngữ lập trình Java. Bạn sẽ học các khái niệm cơ bản về lập trình hướng đối tượng, xây dựng ứng dụng Java, và các kỹ thuật nâng cao như lập trình đa luồng và xử lý ngoại lệ.', 
+ 'images/banner1.png', 
+ 1, 
+ '2024-08-20', 
+ '2024-12-20'),
+
+('Quản lý dự án phần mềm với Agile', 
+ 'Khóa học này cung cấp cái nhìn sâu sắc về phương pháp quản lý dự án phần mềm Agile, bao gồm Scrum và Kanban. Bạn sẽ học cách áp dụng các phương pháp Agile để quản lý các dự án phần mềm hiệu quả, từ lập kế hoạch đến triển khai và theo dõi tiến độ.', 
+ 'images/banner1.png', 
+ 1, 
+ '2024-10-15', 
+ '2025-01-15'),
+
+('Kỹ thuật bảo mật mạng', 
+ 'Khóa học này giúp bạn hiểu về các phương pháp và kỹ thuật bảo mật mạng, bao gồm mã hóa, phát hiện xâm nhập và phòng chống tấn công mạng. Bạn sẽ học cách bảo vệ hệ thống mạng khỏi các mối đe dọa an ninh và duy trì sự an toàn cho dữ liệu và tài nguyên mạng.', 
+ 'images/banner1.png', 
+ 2, 
+ '2024-11-10', 
+ '2025-02-10'),
+
+('Thiết kế trải nghiệm người dùng (UX)', 
+ 'Khóa học này tập trung vào việc thiết kế trải nghiệm người dùng hiệu quả. Bạn sẽ học cách nghiên cứu người dùng, tạo wireframes, và thực hiện kiểm tra người dùng để cải thiện giao diện và trải nghiệm người dùng cho các sản phẩm phần mềm.', 
+ 'images/banner1.png', 
+ 2, 
+ '2024-12-01', 
+ '2025-03-01'),
+
+('Kỹ thuật học máy nâng cao', 
+ 'Khóa học này là sự tiếp nối của khóa học trí tuệ nhân tạo cơ bản, cung cấp cái nhìn sâu về các kỹ thuật học máy nâng cao như học sâu, mạng nơ-ron tích chập và học máy không giám sát. Bạn sẽ học cách triển khai các mô hình học máy phức tạp và áp dụng chúng vào các bài toán thực tế.', 
+ 'images/banner1.png', 
+ 1, 
+ '2024-12-15', 
+ '2025-03-15');
+
 -- Insert data into Student table
 INSERT INTO Student (Code, Name, Email, Password, Phone, Address, Status)
 VALUES

@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useContext, useEffect, useState } from 'react'
-import NavbarLogin from '../dashboard/NavbarLogin'
+import NavbarLogin from '../dashboard/navbar/NavbarLogin'
 import LoginForm from '../authentation/LoginForm';
 import { ThemeContext } from '../ThemeContext';
 
