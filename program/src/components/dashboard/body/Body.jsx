@@ -1,13 +1,21 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import React, { useContext, useState, useEffect } from 'react';
 import { Layout, Row, Col, Carousel, Card, Button } from 'antd';
 import './Body.css';
 import { ThemeContext } from '../../ThemeContext';
+import { useNavigate } from 'react-router-dom';
 
 const { Content } = Layout;
 
 const App = () => {
   const { theme } = useContext(ThemeContext);
   const [courseData, setCourseData] = useState([]);
+  const navigate = useNavigate();
+
+  const handleDetailClick = (ID) => {
+    navigate(`/course-details/${ID}`);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,13 +41,14 @@ const App = () => {
       <Content>
         <div className="site-layout-content">
           <Slider theme={theme} />
-          <CourseList courses={courseData} theme={theme} />
+          <CourseList courses={courseData} theme={theme} onDetailClick={handleDetailClick} />
         </div>
       </Content>
     </Layout>
   );
 };
 
+// eslint-disable-next-line react/prop-types
 const Slider = ({ theme }) => (
   <Carousel autoplay>
     <div>
@@ -66,10 +75,11 @@ const Slider = ({ theme }) => (
   </Carousel>
 );
 
-const CourseList = ({ courses, theme }) => (
+// eslint-disable-next-line react/prop-types
+const CourseList = ({ courses, theme, onDetailClick }) => (
   <Row gutter={16} style={{ marginTop: '20px' }}>
     {courses.map(course => (
-      <Col span={6} key={course.ID}>
+      <Col xs={24} sm={12} md={8} lg={6} xl={6} key={course.ID}>
         <div className={`course-card-wrapper ${theme === 'dark' ? 'dark-theme' : ''}`}>
           <Card
             hoverable
@@ -78,12 +88,14 @@ const CourseList = ({ courses, theme }) => (
             <Card.Meta title={course.Title} description={`Bắt đầu: ${course.StartDate} - Kết thúc: ${course.EndDate}`} />
           </Card>
           <div className="course-overlay">
-            <Button type="primary">Tìm hiểu thêm</Button>
+              <Button type="primary" onClick={() => onDetailClick(course.ID)}>Tìm hiểu thêm</Button>
           </div>
         </div>
       </Col>
     ))}
   </Row>
 );
+
+
 
 export default App;

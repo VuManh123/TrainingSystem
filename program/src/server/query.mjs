@@ -1,3 +1,5 @@
+// eslint-disable-next-line no-unused-vars
+import { Polygon } from '@react-google-maps/api';
 import sql from 'mssql';
 
 //MANHVU - manhvu123
@@ -76,3 +78,19 @@ export async function getTeacherByEmail(email) {
         throw new Error('Failed to query teacher: ' + err.message);
     }
 }
+export async function getCourseByID(id) {
+    try {
+      const pool = await poolPromise;
+      // Chuyển đổi id sang kiểu số nếu cột ID là kiểu số
+      const numericId = Number(id);
+      if (isNaN(numericId)) {
+        throw new Error('ID must be a valid number');
+      }
+      const result = await pool.request()
+        .input('id', sql.Int, numericId) // Sử dụng sql.Int nếu ID là kiểu số nguyên
+        .query('SELECT * FROM Course WHERE ID = @id');
+      return result.recordset[0];
+    } catch (err) {
+      throw new Error('Failed to query get course by id: ' + err.message);
+    }
+  }

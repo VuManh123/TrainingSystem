@@ -1,0 +1,46 @@
+.footer {
+    background-color: #fff;
+    padding: 20px;
+    border-top: 1px solid #dee2e6;
+  }
+.footer.dark{
+    background: #0a112b;
+    color: #fff;
+}
+  
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  
+  .footer-info {
+    flex: 1;
+    padding: 0 20px;
+  }
+  
+  .footer-info h3 {
+    margin-bottom: 10px;
+    font-size: 24px;
+  }
+  
+  .footer-info p {
+    margin: 0;
+    font-size: 16px;
+  }
+  
+  .footer-map {
+    flex: 2;
+  }
+  
+  .footer-bottom {
+    text-align: center;
+    padding-top: 10px;
+    font-size: 14px;
+    color: #6c757d;
+  }
+  .footer-content p .anticon {
+    margin-right: 8px; /* Thêm khoảng cách giữa icon và văn bản */
+    vertical-align: middle; /* Đảm bảo icon và văn bản căn chỉnh chính giữa */
+  }
+  

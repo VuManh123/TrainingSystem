@@ -10,6 +10,7 @@ import { ToastContainer } from 'react-toastify';
 import Student from './components/pages/Student';
 import AdminAM from './components/pages/AdminAM';
 import AdminSM from './components/pages/AdminSM';
+import CourseDetails from './components/dashboard/detail/CourseDetails';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/student" element={<Student />} />
           <Route path="/adminAM" element={<AdminAM />} />
           <Route path="/adminSM" element={<AdminSM />} />
+          <Route path="/course-details/:ID" element={<CourseDetails/>} />
         </Routes>
       </Router>
     </ThemeProvider>

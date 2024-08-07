@@ -36,23 +36,21 @@
   font-size: 16px;
 }
 
-/* Course card with shadow */
 .course-card-wrapper {
   position: relative;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adding shadow */
   transition: box-shadow 0.3s ease; /* Adding transition for shadow */
-}
-.course-card-wrapper {
-  display: flex;
-  flex-direction: column; /* Để căn chỉnh nội dung theo chiều dọc */
-  align-items: center; /* Căn chỉnh nội dung theo chiều ngang */
-  justify-content: center; /* Căn chỉnh nội dung theo chiều dọc */
-  position: relative; /* Để các phần tử overlay có thể được đặt đúng */
   margin: 20px 10px 10px 0;
 }
 
 .course-card-wrapper:hover {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Adding stronger shadow on hover */
+}
+
+/* Đảm bảo hình ảnh và card không bị kéo dài */
+.course-card-wrapper img {
+  width: 100%;
+  height: auto;
 }
 
 .course-overlay {

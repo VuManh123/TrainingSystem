@@ -2,7 +2,7 @@
 import express from 'express';
 import session from 'express-session';
 //import bcrypt from 'bcrypt';
-import { getStudents, getCourses, poolPromise, getAdminByEmail, getTeacherByEmail } from './query.mjs';
+import { getStudents, getCourses, poolPromise, getAdminByEmail, getTeacherByEmail, getCourseByID } from './query.mjs';
 import sql from 'mssql';
 import cors from 'cors'
 
@@ -166,6 +166,21 @@ app.get('/api/courses', async (req, res) => {
         res.json(courses);
     } catch (err) {
         res.status(500).send(err.message);
+    }
+});
+app.get('/api/course/:id', async (req, res) => {
+    const { id } = req.params;
+  
+    try {
+      const course = await getCourseByID(id);
+      if (course) {
+        res.json(course);
+      } else {
+        res.status(404).json({ message: 'Course not found' });
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Failed to get course details' });
     }
 });
 

@@ -105,3 +105,9 @@
 .darkButton:hover{
     color: aliceblue;
 }
+
+/* Ghi đè thuộc tính flex: auto với độ ưu tiên cao hơn */
+.sidebar .ant-menu-title-content {
+    flex: 0 1 !important; /* Hoặc flex: 0 1 auto; tùy thuộc vào nhu cầu của bạn */
+    left: 0;
+}

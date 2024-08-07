@@ -4,6 +4,7 @@ import React, { useContext } from 'react';
 import Navbar from '../dashboard/navbar/Navbar';
 import Body from '../dashboard/body/Body'
 import { ThemeContext } from '../ThemeContext';
+import Footer from '../dashboard/footer/Footer';
 
 const Home = () => {
     const { theme } = useContext(ThemeContext);
@@ -12,6 +13,7 @@ const Home = () => {
         <div className={`container ${theme}`}>
             <Navbar />
             <Body />
+            <Footer />
         </div>
     );
 };
