@@ -2,16 +2,16 @@
 import { Polygon } from '@react-google-maps/api';
 import sql from 'mssql';
 
-//MANHVU - manhvu123
+//S-PC392 - manhvu123
 const config = {
-    server: 'S-PC392',
+    server: 'MANHVU',
     database: 'TrainingManagement',
     port: 1433,
     authentication: {
         type: 'default',
         options: {
             userName: 'sa',
-            password: 'Manhvu123@@'
+            password: 'manhvu123'
         }
     },
     options: {
@@ -80,40 +80,52 @@ export async function getTeacherByEmail(email) {
 }
 export async function getCourseByID(id) {
     try {
-      const pool = await poolPromise;
-      // Chuyển đổi id sang kiểu số nếu cột ID là kiểu số
-      const numericId = Number(id);
-      if (isNaN(numericId)) {
-        throw new Error('ID must be a valid number');
-      }
-      const result = await pool.request()
-        .input('id', sql.Int, numericId) // Sử dụng sql.Int nếu ID là kiểu số nguyên
-        .query(`
-            SELECT 
-                c.*, 
-                t.Name, 
-                t.Rank, 
-                t.WorkUnit, 
-                t.Email,
-                (
-                    SELECT 
-                        ch.Title AS ChapterTitle,
-                        ch.Description AS ChapterDescription
-                    FROM Chapter ch
-                    WHERE ch.CourseID = c.ID
-                    FOR JSON PATH
-                ) AS Chapters
-            FROM Course c
-            JOIN Teacher t ON c.CreatedBy = t.ID
-            WHERE c.ID = @id
-            FOR JSON PATH, INCLUDE_NULL_VALUES;
-        `);
-        
-      return result.recordset[0];
+        const pool = await poolPromise;
+        const numericId = Number(id);
+        if (isNaN(numericId)) {
+            throw new Error('ID must be a valid number');
+        }
+
+        // Truy vấn thông tin khóa học
+        const courseResult = await pool.request()
+            .input('id', sql.Int, numericId)
+            .query(`
+                SELECT 
+                    c.*,
+                    t.Name, 
+                    t.Rank, 
+                    t.WorkUnit, 
+                    t.Email
+                FROM Course c
+                JOIN Teacher t ON c.CreatedBy = t.ID
+                WHERE c.ID = @id;
+            `);
+
+        // Truy vấn thông tin chương
+        const chaptersResult = await pool.request()
+            .input('id', sql.Int, numericId)
+            .query(`
+                SELECT 
+                    ch.CourseID, 
+                    ch.Title AS ChapterTitle, 
+                    ch.Description AS ChapterDescription
+                FROM Chapter ch
+                WHERE ch.CourseID = @id;
+            `);
+
+        if (courseResult.recordset.length === 0) {
+            throw new Error('Course not found');
+        }
+
+        // Tạo cấu trúc JSON kết hợp
+        const courseData = courseResult.recordset[0];
+        courseData.Chapters = chaptersResult.recordset;
+
+        return courseData;
     } catch (err) {
-      throw new Error('Failed to query get course by id: ' + err.message);
+        throw new Error('Failed to query get course by id: ' + err.message);
     }
-  }
+}
 
   export async function getCourseByUserID(userID) {
     try {
@@ -121,7 +133,7 @@ export async function getCourseByID(id) {
         const result = await pool.request()
             .input('userID', sql.Int, userID)
             .query('SELECT c.* FROM Course c JOIN Course_User cu ON c.ID = cu.CourseID WHERE cu.UserID = @userID');
-        return result.recordset[0];
+        return result.recordset;
     } catch (err) {
         throw new Error('Failed to query teacher: ' + err.message);
     }

@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useContext, useState, useEffect } from 'react';
-import { Layout, Row, Col, Carousel, Card, Button } from 'antd';
+import { Layout, Row, Col, Card, Button } from 'antd';
 import './BodyStudent.css';
 import { ThemeContext } from '../../ThemeContext';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -12,21 +12,21 @@ const BodyStudent = () => {
   const { theme } = useContext(ThemeContext);
   const [courseData, setCourseData] = useState([]);
   const navigate = useNavigate();
-  const {userID} = useParams();
-  console.log(userID);
+  const { userID } = useParams();
 
-  const handleDetailClick = (ID) => {
-    navigate(`/course-details/${ID}`);
+  const handleDetailClick = (ID, userID) => {
+    navigate(`/learning-course/${userID}/${ID}`);
   };
+  const numericID = Number(userID);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const numericID = Number(userID);
+        
         if (isNaN(numericID)) {
           throw new Error('Invalid course ID');
         }
-        const response = await fetch(`http://localhost:3000/api/coursestudent/${userID}`);
+        const response = await fetch(`http://localhost:3000/api/coursestudent/${numericID}`);
         const data = await response.json();
         const formattedCourses = data.map(course => ({
           ...course,
@@ -47,17 +47,15 @@ const BodyStudent = () => {
       <Content>
         <div className="site-layout-content">
           <h2>Khóa học của tôi</h2>
-          <CourseList courses={courseData} theme={theme} onDetailClick={handleDetailClick} />
+          <CourseList courses={courseData} theme={theme} onDetailClick={handleDetailClick} userID={numericID}/>
         </div>
       </Content>
     </Layout>
   );
 };
 
-
-// eslint-disable-next-line react/prop-types
-const CourseList = ({ courses, theme, onDetailClick }) => (
-  <Row gutter={16} style={{ marginTop: '20px' }}>
+const CourseList = ({ courses, theme, onDetailClick, userID }) => (
+  <Row gutter={[16, 24]} style={{ marginTop: '20px' }}>
     {courses.map(course => (
       <Col xs={24} sm={12} md={8} lg={6} xl={6} key={course.ID}>
         <div className={`course-card-wrapper ${theme === 'dark' ? 'dark-theme' : ''}`}>
@@ -68,14 +66,12 @@ const CourseList = ({ courses, theme, onDetailClick }) => (
             <Card.Meta title={course.Title} description={`Bắt đầu: ${course.StartDate} - Kết thúc: ${course.EndDate}`} />
           </Card>
           <div className="course-overlay">
-              <Button type="primary" onClick={() => onDetailClick(course.ID)}>Tìm hiểu thêm</Button>
+            <Button type="primary" onClick={() => onDetailClick(course.ID, userID)}>Xem khóa học</Button>
           </div>
         </div>
       </Col>
     ))}
   </Row>
 );
-
-
 
 export default BodyStudent;

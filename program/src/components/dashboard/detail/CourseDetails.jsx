@@ -22,26 +22,23 @@ const CourseDetail = () => {
         if (isNaN(numericID)) {
           throw new Error('Invalid course ID');
         }
-
+  
         const response = await fetch(`http://localhost:3000/api/course/${numericID}`);
         
         const contentType = response.headers.get('content-type');
-
+  
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-
+  
         if (!contentType || !contentType.includes('application/json')) {
           throw new TypeError('Expected JSON response');
         }
-
+  
         const data = await response.json();
         
-        // Extract and parse the JSON data from the special key
-        const rawData = data['JSON_F52E2B61-18A1-11d1-B105-00805F49916B'];
-        const parsedData = JSON.parse(rawData)[0];
-
-        setCourse(parsedData);
+        // Trực tiếp set dữ liệu JSON trả về vào state
+        setCourse(data);
       } catch (error) {
         console.error('Error fetching course details:', error);
         setError(error.message);
@@ -49,7 +46,7 @@ const CourseDetail = () => {
         setLoading(false);
       }
     };
-
+  
     fetchCourseDetail();
   }, [ID]);
 
@@ -115,7 +112,8 @@ const CourseDetail = () => {
           </Col>
           <Col span={24} id="instructor">
             <Card title="Giảng viên">
-              <Text>{course.Name} - Chức vụ: {course.Rank} - Bộ phận: {course.WorkUnit}</Text>
+              <Text>{course.Name} - Chức vụ: {course.Rank} - Bộ phận: {course.WorkUnit}  <br/></Text>
+              <Text>Email: {course.Email}</Text>
             </Card>
           </Col>
           <Col span={24} id="curriculum">

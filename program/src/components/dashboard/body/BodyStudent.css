@@ -5,3 +5,36 @@
 .dark .site-layout-content h2{
     color: #fff;
 }
+.course-card-wrapper {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  
+  .course-card-wrapper img {
+    transition: transform 0.3s ease;
+  }
+  
+  .course-card-wrapper:hover img {
+    transform: scale(1.05);
+  }
+  
+  .course-overlay {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .course-card-wrapper:hover .course-overlay {
+    opacity: 1;
+  }
+  
+  .dark-theme .course-overlay {
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+  
