@@ -22,7 +22,11 @@ const BodyStudent = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/courses');
+        const numericID = Number(userID);
+        if (isNaN(numericID)) {
+          throw new Error('Invalid course ID');
+        }
+        const response = await fetch(`http://localhost:3000/api/coursestudent/${userID}`);
         const data = await response.json();
         const formattedCourses = data.map(course => ({
           ...course,
