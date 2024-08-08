@@ -19,7 +19,6 @@
   
   .course-title {
     color: #fff;
-    background-color: #001529;
     padding: 16px;
     border-radius: 8px;
   }
@@ -65,4 +64,30 @@
     font-size: 16px;
     padding: 0 20px;
   }
+
+ .course-detail-info img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
   
+  /* CSS cho danh sách chương học */
+.chapter-list {
+  list-style-type: none; /* Loại bỏ dấu chấm đầu mục */
+  padding: 0; /* Loại bỏ khoảng cách bên trong */
+  margin: 0; /* Loại bỏ khoảng cách bên ngoài */
+  display: flex;
+  flex-direction: column;
+}
+
+.chapter-items {
+  left: 0;
+  margin-bottom: 10px; /* Khoảng cách giữa các mục */
+  padding: 10px; /* Khoảng cách bên trong */
+  border-left: 4px solid #1890ff; /* Đường viền bên trái */
+  padding-left: 15px; /* Khoảng cách từ văn bản đến đường viền */
+  font-size: 16px; /* Kích thước chữ */
+  color: #333; /* Màu chữ */
+  text-align: left;
+}

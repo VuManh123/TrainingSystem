@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Layout, Card, Row, Col, Spin, Typography, Button, Menu } from 'antd';
@@ -21,6 +22,7 @@ const CourseDetail = () => {
         }
 
         const response = await fetch(`http://localhost:3000/api/course/${numericID}`);
+        
         const contentType = response.headers.get('content-type');
 
         if (!response.ok) {
@@ -32,7 +34,12 @@ const CourseDetail = () => {
         }
 
         const data = await response.json();
-        setCourse(data);
+        
+        // Extract and parse the JSON data from the special key
+        const rawData = data['JSON_F52E2B61-18A1-11d1-B105-00805F49916B'];
+        const parsedData = JSON.parse(rawData)[0];
+
+        setCourse(parsedData);
       } catch (error) {
         console.error('Error fetching course details:', error);
         setError(error.message);
@@ -67,17 +74,15 @@ const CourseDetail = () => {
     <Layout className="course-detail-layout">
       <Content className="course-detail-content">
         <div className="course-header">
-          <Title level={1} className="course-title">Lập trình Scratch</Title>
+          <Title level={1} className="course-title" style={{ backgroundImage: `url(${course.Image})`, color: '#fff' }}>{course.Title}</Title>
           <Text className="course-short-description">
-            Ngôn ngữ lập trình Scratch đơn giản, dễ hiểu, giúp học sinh làm quen với các khối lệnh logic. 
-            Các em có thể tự tạo ra những trò chơi theo sáng tạo của mình. Nhờ đó, học sinh không chỉ được phát triển tư duy logic, 
-            tư duy tính toán mà còn phát huy khả năng sáng tạo một cách tự nhiên.
+            Khóa học thuộc một số các hoạt động của công ty Sews Components VietNam. Nhằm nâng cao hiểu biết về tập đoàn, các quy định, quy chế của tập đoàn.
+            Nâng cao kiến thưc cho nhân viên thuộc công ty về công việc và đời sống. Hãy cùng pass những khóa học cùng với hệ thống Đào Tạo SEWS-CV nhé. Thanks!
           </Text>
           <div className="course-dates">
-            <Text className="course-date">Lịch đăng ký: 15/10/2023 - 28/10/2023</Text>
-            <Text className="course-date">Lịch học: 28/10/2023 - 31/12/2023</Text>
+            <Text className="course-date">Lịch học: {course.StartDate} - {course.EndDate}</Text>
           </div>
-          <Button type="primary" className="enroll-button">Xem khóa học</Button>
+          <Button type="primary" className="enroll-button">Đăng ký học ngay</Button>
         </div>
         <Menu mode="horizontal" defaultSelectedKeys={['introduction']}>
           <Menu.Item key="introduction" onClick={() => scrollToSection('introduction')}>Giới thiệu</Menu.Item>
@@ -88,22 +93,31 @@ const CourseDetail = () => {
         <Row gutter={[16, 16]} className="course-detail-info">
           <Col span={24} id="introduction">
             <Card title="Giới thiệu về khóa học">
-              <Text>{course.Description}</Text>
+              <div dangerouslySetInnerHTML={{ __html: course.Description }} />
             </Card>
           </Col>
           <Col span={24} id="content">
             <Card title="Nội dung khóa học">
-              <Text>{course.Content}</Text>
+              <ul className='chapter-list'>
+                
+                {course.Chapters && course.Chapters.length > 0 ? (
+                  course.Chapters.map((chapter, index) => (
+                    <li key={index} className="chapter-items">{chapter.ChapterTitle}</li>
+                  ))
+                ) : (
+                <Text>Chưa có chương nào cho khóa học này.</Text>
+                )}
+              </ul>
             </Card>
           </Col>
           <Col span={24} id="instructor">
             <Card title="Giảng viên">
-              <Text>{course.Instructor}</Text>
+              <Text>{course.Name} - Chức vụ: {course.Rank} - Bộ phận: {course.WorkUnit}</Text>
             </Card>
           </Col>
           <Col span={24} id="curriculum">
             <Card title="Chương trình đào tạo">
-              <Text>{course.Curriculum}</Text>
+              <Text>Bắt đầu: {course.StartDate} - Kết thúc: {course.EndDate}</Text>
             </Card>
           </Col>
         </Row>

@@ -4,14 +4,14 @@ import sql from 'mssql';
 
 //MANHVU - manhvu123
 const config = {
-    server: 'MANHVU',
+    server: 'S-PC392',
     database: 'TrainingManagement',
     port: 1433,
     authentication: {
         type: 'default',
         options: {
             userName: 'sa',
-            password: 'manhvu123'
+            password: 'Manhvu123@@'
         }
     },
     options: {
@@ -88,7 +88,27 @@ export async function getCourseByID(id) {
       }
       const result = await pool.request()
         .input('id', sql.Int, numericId) // Sử dụng sql.Int nếu ID là kiểu số nguyên
-        .query('SELECT * FROM Course WHERE ID = @id');
+        .query(`
+            SELECT 
+                c.*, 
+                t.Name, 
+                t.Rank, 
+                t.WorkUnit, 
+                t.Email,
+                (
+                    SELECT 
+                        ch.Title AS ChapterTitle,
+                        ch.Description AS ChapterDescription
+                    FROM Chapter ch
+                    WHERE ch.CourseID = c.ID
+                    FOR JSON PATH
+                ) AS Chapters
+            FROM Course c
+            JOIN Teacher t ON c.CreatedBy = t.ID
+            WHERE c.ID = @id
+            FOR JSON PATH, INCLUDE_NULL_VALUES;
+        `);
+        
       return result.recordset[0];
     } catch (err) {
       throw new Error('Failed to query get course by id: ' + err.message);
