@@ -2,16 +2,18 @@
 /* eslint-disable react/prop-types */
 import React, { useContext, useState, useEffect } from 'react';
 import { Layout, Row, Col, Carousel, Card, Button } from 'antd';
-import './Body.css';
+import './BodyStudent.css';
 import { ThemeContext } from '../../ThemeContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const { Content } = Layout;
 
-const App = () => {
+const BodyStudent = () => {
   const { theme } = useContext(ThemeContext);
   const [courseData, setCourseData] = useState([]);
   const navigate = useNavigate();
+  const {userID} = useParams();
+  console.log(userID);
 
   const handleDetailClick = (ID) => {
     navigate(`/course-details/${ID}`);
@@ -40,7 +42,7 @@ const App = () => {
     <Layout className={`layout ${theme === 'dark' ? 'dark' : ''}`}>
       <Content>
         <div className="site-layout-content">
-          <Slider theme={theme} onDetailClick={handleDetailClick}/>
+          <h2>Khóa học của tôi</h2>
           <CourseList courses={courseData} theme={theme} onDetailClick={handleDetailClick} />
         </div>
       </Content>
@@ -48,32 +50,6 @@ const App = () => {
   );
 };
 
-// eslint-disable-next-line react/prop-types
-const Slider = ({ theme, onDetailClick }) => (
-  <Carousel autoplay>
-    <div>
-      <div className={`slide-content ${theme === 'dark' ? 'dark-theme' : ''}`} style={{ backgroundImage: `url(/images/banner1.png)` }}>
-        <h2>Hệ nhúng</h2>
-        <Button type="primary" size="large" onClick={() => onDetailClick('4')}>Tham gia học ngay</Button>
-        <p>284 người đã đăng ký</p>
-      </div>
-    </div>
-    <div>
-      <div className={`slide-content ${theme === 'dark' ? 'dark-theme' : ''}`} style={{ backgroundImage: `url(/images/banner2.png)` }}>
-        <h2>Trí tuệ nhân tạo</h2>
-        <Button type="primary" size="large" onClick={() => onDetailClick(5)}>Tham gia học ngay</Button>
-        <p>284 người đã đăng ký</p>
-      </div>
-    </div>
-    <div>
-      <div className={`slide-content ${theme === 'dark' ? 'dark-theme' : ''}`} style={{ backgroundImage: `url(/images/banner3.png)` }}>
-        <h2>Hệ mật</h2>
-        <Button type="primary" size="large" onClick={() => onDetailClick(6)}>Tham gia học ngay</Button>
-        <p>284 người đã đăng ký</p>
-      </div>
-    </div>
-  </Carousel>
-);
 
 // eslint-disable-next-line react/prop-types
 const CourseList = ({ courses, theme, onDetailClick }) => (
@@ -98,4 +74,4 @@ const CourseList = ({ courses, theme, onDetailClick }) => (
 
 
 
-export default App;
+export default BodyStudent;

@@ -1,0 +1,7 @@
+.site-layout-content h2{
+    color: #0a112b;
+}
+
+.dark .site-layout-content h2{
+    color: #fff;
+}

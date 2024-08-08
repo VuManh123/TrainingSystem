@@ -45,23 +45,27 @@ const LoginForm = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password, role }),
       });
-
+  
       if (response.ok) {
-        notify('Login successful!', 'success')
-        // Điều hướng tới trang tương ứng dựa trên vai trò
+        const data = await response.json();
+        notify('Login successful!', 'success');
+  
+        const userID = data.user.id;  // Extract the user ID from the response
+  
+        // Redirect to the appropriate page based on the role
         if (role === 'teacher') {
           navigate('/teacher');
         } else if (role === 'admin') {
           navigate('/adminAM');
         } else {
-          navigate('/student');
+          navigate(`/student/${userID}`);  // Include the user ID in the URL for students
         }
       } else {
         const errorText = await response.text();
-        notify(errorText, 'error')
+        notify(errorText, 'error');
       }
     } catch (error) {
-      notify('Error during login:' + error, 'error')
+      notify('Error during login: ' + error, 'error');
     }
   };
 

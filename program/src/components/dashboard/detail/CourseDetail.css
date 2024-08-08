@@ -2,6 +2,13 @@
     background: #f0f2f5;
     padding: 24px;
   }
+
+.darkBody{
+  background: #161f3e;
+}
+.dark .navbar{
+  background: #0a112b;
+}
   
   .course-detail-content {
     max-width: 1200px;

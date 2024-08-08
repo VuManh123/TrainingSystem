@@ -2,7 +2,7 @@
 import express from 'express';
 import session from 'express-session';
 //import bcrypt from 'bcrypt';
-import { getStudents, getCourses, poolPromise, getAdminByEmail, getTeacherByEmail, getCourseByID } from './query.mjs';
+import { getStudents, getCourses, poolPromise, getAdminByEmail, getTeacherByEmail, getCourseByID, getCourseByUserID } from './query.mjs';
 import sql from 'mssql';
 import cors from 'cors'
 
@@ -43,13 +43,13 @@ app.post('/api/login', async (req, res) => {
             return res.status(400).send('Invalid role');
         }
 
-         if (!user) {
-             return res.status(401).send('Invalid email or password');
-         }
+        if (!user) {
+            return res.status(401).send('Invalid email or password');
+        }
         console.log(user.ID, user.Status, user.Active)
-        if(user.Status === false || user.Active === false) {
+        if (user.Status === false || user.Active === false) {
             res.status(401).send('This account is not active!')
-        } else{
+        } else {
             if (password === user.Password) {
                 // Lưu thông tin người dùng vào phiên làm việc
                 req.session.user = { id: user.ID, name: user.Name, role: role };
@@ -173,6 +173,21 @@ app.get('/api/course/:id', async (req, res) => {
   
     try {
       const course = await getCourseByID(id);
+      if (course) {
+        res.json(course);
+      } else {
+        res.status(404).json({ message: 'Course not found' });
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Failed to get course details' });
+    }
+});
+app.get('/api/coursestudent/:userID', async (req, res) => {
+    const { userID } = req.params;
+  
+    try {
+      const course = await getCourseByUserID(userID);
       if (course) {
         res.json(course);
       } else {

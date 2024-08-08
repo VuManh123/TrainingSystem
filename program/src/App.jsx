@@ -11,6 +11,7 @@ import Student from './components/pages/Student';
 import AdminAM from './components/pages/AdminAM';
 import AdminSM from './components/pages/AdminSM';
 import DetailGeneral from './components/pages/DetailGeneral';
+import NotFound from './components/authentation/NotFound';
 
 function App() {
   return (
@@ -22,10 +23,11 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path="/teacher" element={<Teacher />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/student" element={<Student />} />
+          <Route path="/student/:userID" element={<Student />} />
           <Route path="/adminAM" element={<AdminAM />} />
           <Route path="/adminSM" element={<AdminSM />} />
           <Route path="/course-details/:ID" element={<DetailGeneral/>} />
+          <Route path='/pagenotfound' element = {<NotFound />} />
         </Routes>
       </Router>
     </ThemeProvider>

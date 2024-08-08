@@ -23,18 +23,25 @@ const Navbar = () => {
       navigate('/register')
     }
 
+    const handleLogo = () => {
+      navigate('/');
+    };
+
     const liStyle = {
       margin: '10px 20px'
     };
+    const handClickNotFound = () => {
+      navigate('/pagenotfound')
+    }
 
   return (
-    <div className='navbar'>
-      <img src={theme == 'light' ? logo_light : logo_dark} alt='' className='logo'></img>
+    <div className={`navbar ${theme === 'dark' ? 'darkNavbar' : ''}`}>
+      <img src={theme == 'light' ? logo_light : logo_dark} alt='' className='logo' onClick={handleLogo}></img>
       <ul>
-        <li style={liStyle}>Home</li>
-        <li style={liStyle}>News</li>
-        <li style={liStyle}>Contact</li>
-        <li style={liStyle}>About us</li>
+        <li style={liStyle} onClick={handleLogo}>Home</li>
+        <li style={liStyle} onClick={handClickNotFound}>News</li>
+        <li style={liStyle} onClick={handClickNotFound}>Contact</li>
+        <li style={liStyle} onClick={handClickNotFound}>About us</li>
       </ul>
 
       <div className='search-box'>

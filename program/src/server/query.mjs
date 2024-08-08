@@ -114,3 +114,15 @@ export async function getCourseByID(id) {
       throw new Error('Failed to query get course by id: ' + err.message);
     }
   }
+
+  export async function getCourseByUserID(userID) {
+    try {
+        const pool = await poolPromise;
+        const result = await pool.request()
+            .input('userID', sql.Int, userID)
+            .query('SELECT c.* FROM Course c JOIN Course_User cu ON c.ID = cu.CourseID WHERE cu.UserID = @userID');
+        return result.recordset[0];
+    } catch (err) {
+        throw new Error('Failed to query teacher: ' + err.message);
+    }
+}

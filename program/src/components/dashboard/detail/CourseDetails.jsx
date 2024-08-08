@@ -1,13 +1,15 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { Layout, Card, Row, Col, Spin, Typography, Button, Menu } from 'antd';
 import './CourseDetail.css';
+import { ThemeContext } from '../../ThemeContext';
 
 const { Content } = Layout;
 const { Title, Text } = Typography;
 
 const CourseDetail = () => {
+  const {theme} = useContext(ThemeContext);
   const { ID } = useParams();
   const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -71,7 +73,7 @@ const CourseDetail = () => {
   };
 
   return (
-    <Layout className="course-detail-layout">
+    <Layout className={`course-detail-layout ${theme === 'dark' ? 'darkBody' : ''}`}>
       <Content className="course-detail-content">
         <div className="course-header">
           <Title level={1} className="course-title" style={{ backgroundImage: `url(${course.Image})`, color: '#fff' }}>{course.Title}</Title>
@@ -94,6 +96,7 @@ const CourseDetail = () => {
           <Col span={24} id="introduction">
             <Card title="Giới thiệu về khóa học">
               <div dangerouslySetInnerHTML={{ __html: course.Description }} />
+              <img src={`/${course.Image}`}></img>
             </Card>
           </Col>
           <Col span={24} id="content">

@@ -20,6 +20,7 @@
     animation: 1s fadeIn forwards;
 }
 
+
 .logo{
     width: 160px;
     cursor: pointer;
@@ -71,20 +72,22 @@ ul li:hover {
     width: 20px;
     cursor: pointer;
 }
-.dark .navbar{
+.darkNavbar{
     background: #0a112b;
     color: #fff;
 }
-.dark .search-box{
+.darkNavbar .search-box{
     background: #fff;
 }
-.dark .search-box input{
+.darkNavbar .search-box input{
     color: #222;
 }
-.dark .search-box input::placeholder{
+.darkNavbar .search-box input::placeholder{
     color: #222;
 }
-
+.darkNavbar li {
+    color: #fff;
+}
 .register-button {
     margin-left: 60px;
     padding: 5px 20px;
@@ -113,4 +116,8 @@ ul li:hover {
     background-color: rgba(6, 20, 36, 0.1); /* Tùy chọn: thêm màu nền khi di chuột */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     opacity: 0.6;
+  }
+  .darkNavbar .login-button, .dark .register-button{
+    color: #fff;
+    border: 2px solid #fff;
   }
