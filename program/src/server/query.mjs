@@ -4,14 +4,14 @@ import sql from 'mssql';
 
 //S-PC392 - manhvu123
 const config = {
-    server: 'MANHVU',
+    server: 'S-PC392',
     database: 'TrainingManagement',
     port: 1433,
     authentication: {
         type: 'default',
         options: {
             userName: 'sa',
-            password: 'manhvu123'
+            password: 'Manhvu123@@'
         }
     },
     options: {
@@ -133,6 +133,48 @@ export async function getCourseByID(id) {
         const result = await pool.request()
             .input('userID', sql.Int, userID)
             .query('SELECT c.* FROM Course c JOIN Course_User cu ON c.ID = cu.CourseID WHERE cu.UserID = @userID');
+        return result.recordset;
+    } catch (err) {
+        throw new Error('Failed to query teacher: ' + err.message);
+    }
+}
+
+export async function getChapterByUserIDCourseID(userID, courseID) {
+    try {
+        const pool = await poolPromise;
+        const result = await pool.request()
+            .input('userID', sql.Int, userID)
+            .input('courseID', sql.Int, courseID)
+            .query(`SELECT 
+                    ch.*,
+                    CASE 
+                        WHEN EXISTS (
+                            SELECT 1
+                            FROM TestChapter tc
+                            LEFT JOIN Result_TestChapter rtc ON tc.ID = rtc.TestChapterID
+                            LEFT JOIN Student s ON rtc.UserID = s.ID
+                            WHERE tc.ChapterID = ch.ID AND s.ID = @userID
+                        ) THEN 1
+                        ELSE 0
+                    END AS Complete
+                FROM 
+                    Course co
+                    JOIN Chapter ch ON co.ID = ch.CourseID
+                WHERE 
+                co.ID = @courseID;`);
+        return result.recordset;
+    } catch (err) {
+        throw new Error('Failed to query teacher: ' + err.message);
+    }
+}
+
+export async function getVideoByChapterID(chapterID) {
+    try {
+        const pool = await poolPromise;
+        const result = await pool.request()
+            .input('chapterID', sql.Int, chapterID)
+            .query('SELECT * FROM Videos WHERE ChapterID = @chapterID');
+        console.log(chapterID);
         return result.recordset;
     } catch (err) {
         throw new Error('Failed to query teacher: ' + err.message);

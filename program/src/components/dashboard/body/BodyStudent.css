@@ -1,8 +1,10 @@
-.site-layout-content h2{
+.site-layout-content h1{
     color: #0a112b;
+    font-size: 20px;
+    text-decoration: underline;
 }
 
-.dark .site-layout-content h2{
+.dark .site-layout-content h1{
     color: #fff;
 }
 .course-card-wrapper {

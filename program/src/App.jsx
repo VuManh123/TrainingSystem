@@ -12,6 +12,9 @@ import AdminAM from './components/pages/AdminAM';
 import AdminSM from './components/pages/AdminSM';
 import DetailGeneral from './components/pages/DetailGeneral';
 import NotFound from './components/authentation/NotFound';
+import ChapterContent from './components/learning_course/ChapterContent';
+import Learning from './components/pages/Learning';
+import Videos from './components/learning_course/Videos';
 
 function App() {
   return (
@@ -28,6 +31,9 @@ function App() {
           <Route path="/adminSM" element={<AdminSM />} />
           <Route path="/course-details/:ID" element={<DetailGeneral/>} />
           <Route path='/pagenotfound' element = {<NotFound />} />
+          <Route path='/learning-course/:userID/:ID' element={<Learning/>} />
+          <Route path='/learning-course/:userID/:ID/details' element={<ChapterContent/>} />
+          <Route path='/learning-course/:userID/:ID/:chapterID/videos'element={<Videos />} />
         </Routes>
       </Router>
     </ThemeProvider>

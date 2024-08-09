@@ -2,7 +2,7 @@
 import express from 'express';
 import session from 'express-session';
 //import bcrypt from 'bcrypt';
-import { getStudents, getCourses, poolPromise, getAdminByEmail, getTeacherByEmail, getCourseByID, getCourseByUserID } from './query.mjs';
+import { getStudents, getCourses, poolPromise, getAdminByEmail, getTeacherByEmail, getCourseByID, getCourseByUserID, getChapterByUserIDCourseID, getVideoByChapterID } from './query.mjs';
 import sql from 'mssql';
 import cors from 'cors'
 
@@ -198,6 +198,38 @@ app.get('/api/coursestudent/:userID', async (req, res) => {
       res.status(500).json({ message: 'Failed to get course details' });
     }
 });
+
+app.get('/api/chapter-complete/:userID/:courseID', async (req, res) =>{
+  const {userID} = req.params;
+  const {courseID} = req.params;
+
+  try{
+    const chapterComplete = await getChapterByUserIDCourseID(userID, courseID);
+    if (chapterComplete) {
+      res.json(chapterComplete);
+    } else {
+      res.status(404).json({ message: 'Chapter not found'})
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to get chapter of this course'})
+  }
+})
+app.get('/api/chapter-video/:chapterID', async (req, res) =>{
+  const {chapterID} = req.params;
+
+  try{
+    const videos = await getVideoByChapterID(chapterID);
+    if (videos) {
+      res.json(videos);
+    } else {
+      res.status(404).json({ message: 'video not found'})
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to get videos of this chapter'})
+  }
+})
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

@@ -46,7 +46,7 @@ const BodyStudent = () => {
     <Layout className={`layout ${theme === 'dark' ? 'dark' : ''}`}>
       <Content>
         <div className="site-layout-content">
-          <h2>Khóa học của tôi</h2>
+          <h1>Khóa học của tôi</h1>
           <CourseList courses={courseData} theme={theme} onDetailClick={handleDetailClick} userID={numericID}/>
         </div>
       </Content>

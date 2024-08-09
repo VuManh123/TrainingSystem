@@ -19,7 +19,7 @@ const Navbar = () => {
     };
 
   return (
-    <div className='navbar'>
+    <div className={`navbar ${theme === 'dark' ? 'darkNavbar' : ''}`}>
       <img src={theme == 'light' ? logo_light : logo_dark} alt='' onClick={handleLoginLogo} className='logo'></img>
 
       <img onClick={toggleTheme} src={theme == 'light' ? toggle_light : toggle_dark} alt='' className='toggle-icon' />

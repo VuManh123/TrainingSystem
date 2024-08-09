@@ -1,0 +1,135 @@
+/* Tổng thể */
+.course-outline-container-wrapper {
+    background: #eff2f9;
+    padding: 20px 40px; /* padding giống với giá trị của margin cũ */
+}
+.darkS{
+    background: #161f3e;
+}
+
+.course-outline-container {
+    display: flex;
+    justify-content: space-between;
+    /* min-height: 750px; */
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    background: #fff; /* Màu nền thực tế của container */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Thêm shadow để tách biệt với background */
+    border-radius: 8px; /* Bo góc để nhìn đẹp hơn */
+}
+.darkS .course-outline-container{
+    background: #eff2f9;
+}
+
+/* Cụm bên trái */
+.course-outline-left {
+    flex: 1;
+    padding-right: 20px;
+}
+
+.course-outline-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Tabs */
+.ant-tabs-tab {
+    font-size: 18px;
+    padding: 12px 20px;
+}
+
+.ant-tabs-tab .anticon {
+    margin-right: 8px;
+    font-size: 20px;
+}
+
+.ant-tabs-tab .anticon + span {
+    margin-left: 8px;
+}
+
+/* Collapse */
+.ant-collapse {
+    background: #fff;
+}
+.darkS .ant-collapse{
+    background: #eff2f9;
+}
+
+.ant-collapse-item {
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+/* Style cho Panel Header */
+.ant-collapse-header {
+    display: flex;
+    align-items: center; /* Căn giữa theo chiều dọc */
+    font-size: 20px; /* Kích thước chữ cho title */
+    font-weight: bold;
+    color: #333;
+}
+
+
+/* Style cho Text trong header */
+.ant-typography {
+    flex-grow: 1; /* Đảm bảo text chiếm hết không gian còn lại */
+    margin-right: 10px; /* Tạo khoảng cách giữa text và icon */
+}
+
+/* Style cho biểu tượng mũi tên trong Collapse */
+.ant-collapse-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px; /* Tạo khoảng cách giữa mũi tên và nội dung */
+}
+
+
+.ant-collapse-header .anticon {
+    font-size: 20px;
+    color: #52c41a;
+}
+
+.ant-list-item {
+    font-size: 14px;
+    padding: 10px 20px;
+}
+
+/* Cụm bên phải */
+.course-outline-right {
+    flex: 0.5;
+}
+
+.course-outline-right-button {
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+.course-outline-button {
+    font-size: 18px;
+    padding: 10px 20px;
+}
+
+.course-outline-timestamp-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.course-outline-timestamp-text {
+    font-size: 16px;
+}
+
+.course-outline-timestamp-text strong {
+    font-weight: 700;
+    color: #ff4d4f;
+}
+
+.course-outline-timestamp-text-secondary {
+    font-size: 14px;
+    color: #999;
+    margin-top: 10px;
+}
