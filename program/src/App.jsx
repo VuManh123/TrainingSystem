@@ -14,7 +14,9 @@ import DetailGeneral from './components/pages/DetailGeneral';
 import NotFound from './components/authentation/NotFound';
 import ChapterContent from './components/learning_course/ChapterContent';
 import Learning from './components/pages/Learning';
-import Videos from './components/learning_course/Videos';
+import Videos_Learning from './components/pages/student/Videos_Learning';
+import Document_Learning from './components/pages/student/Document_Learning';
+import QuizChapter from './components/pages/student/QuizChapter';
 
 function App() {
   return (
@@ -33,7 +35,9 @@ function App() {
           <Route path='/pagenotfound' element = {<NotFound />} />
           <Route path='/learning-course/:userID/:ID' element={<Learning/>} />
           <Route path='/learning-course/:userID/:ID/details' element={<ChapterContent/>} />
-          <Route path='/learning-course/:userID/:ID/:chapterID/videos'element={<Videos />} />
+          <Route path='/learning-course/:userID/:ID/:chapterID/videos'element={<Videos_Learning />} />
+          <Route path='/learning-course/:userID/:ID/:chapterID/document'element={<Document_Learning />} />
+          <Route path='/learning-course/:userID/:ID/:chapterID/testfinalchapter'element={<QuizChapter />} />
         </Routes>
       </Router>
     </ThemeProvider>

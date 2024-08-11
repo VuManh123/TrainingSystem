@@ -4,14 +4,14 @@ import sql from 'mssql';
 
 //S-PC392 - manhvu123
 const config = {
-    server: 'S-PC392',
+    server: 'MANHVU',
     database: 'TrainingManagement',
     port: 1433,
     authentication: {
         type: 'default',
         options: {
             userName: 'sa',
-            password: 'Manhvu123@@'
+            password: 'manhvu123'
         }
     },
     options: {
