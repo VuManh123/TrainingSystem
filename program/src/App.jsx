@@ -1,18 +1,18 @@
 // eslint-disable-next-line no-unused-vars
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Teacher from './components/pages/Teacher';
-import Home from './components/pages/Home';
-import Login from './components/pages/Login';
-import Register from './components/pages/Register';
+import Teacher from './components/pages/teacher/Teacher';
+import Home from './components/pages/general/Home';
+import Login from './components/pages/general/Login';
+import Register from './components/pages/general/Register';
 import { ThemeProvider } from './components/ThemeContext';
 import { ToastContainer } from 'react-toastify';
-import Student from './components/pages/Student';
-import AdminAM from './components/pages/AdminAM';
-import AdminSM from './components/pages/AdminSM';
-import DetailGeneral from './components/pages/DetailGeneral';
+import Student from './components/pages/student/Student';
+import AdminAM from './components/pages/admin/AdminAM';
+import AdminSM from './components/pages/admin/AdminSM';
+import DetailGeneral from './components/pages/general/DetailGeneral';
 import NotFound from './components/authentation/NotFound';
-import Learning from './components/pages/Learning';
+import Learning from './components/pages/student/Learning';
 import Videos_Learning from './components/pages/student/Videos_Learning';
 import Document_Learning from './components/pages/student/Document_Learning';
 import QuizChapter from './components/pages/student/QuizChapter';

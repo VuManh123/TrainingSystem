@@ -53,7 +53,7 @@
 .ant-collapse {
     background: #fff;
 }
-.darkS .ant-collapse{
+.darkS .ant-collapse {
     background: #eff2f9;
 }
 
@@ -61,16 +61,26 @@
     border: 1px solid #d9d9d9;
     border-radius: 8px;
     margin-bottom: 10px;
+    overflow: hidden; /* Cắt phần tử khi nó phóng to ra ngoài */
 }
 
 /* Style cho Panel Header */
 .ant-collapse-header {
     display: flex;
-    align-items: center; /* Căn giữa theo chiều dọc */
-    font-size: 20px; /* Kích thước chữ cho title */
+    align-items: center; 
+    font-size: 20px; 
     font-weight: bold;
     color: #333;
+    transition: transform 0.3s ease, color 0.3s ease; 
+    transform-origin: left center; 
 }
+
+/* Hiệu ứng khi di chuột vào tiêu đề */
+.ant-collapse-header:hover {
+    transform: scale(1.1) translateX(5px); /* Phóng to và di chuyển nhẹ về phía bên phải */
+    color: #cd1b1b;
+}
+
 
 
 /* Style cho Text trong header */

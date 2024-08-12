@@ -53,7 +53,7 @@
     }
     .document-content iframe {
         width: 100%;
-        height: 700px; /* Tăng chiều dài của iframe để hiển thị toàn bộ tệp PDF */
+        height: 800px; /* Tăng chiều dài của iframe để hiển thị toàn bộ tệp PDF */
         border: none; /* Loại bỏ đường viền */
     }
     

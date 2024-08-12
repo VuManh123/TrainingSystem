@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState, useContext } from 'react';
-import { Collapse, Button, List, Space, Typography } from 'antd';
+import { Collapse, List, Space, Typography } from 'antd';
 import { CheckCircleOutlined, FileTextOutlined } from '@ant-design/icons';
 import { Tabs } from 'antd';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -126,7 +126,7 @@ const CourseOutline = () => {
         {/* Cụm bên phải */}
         <div className="course-outline-right">
           <div className="course-outline-right-button">
-            <Button type="primary" className="course-outline-button">Tiếp tục học</Button>
+            {/* <Button type="primary" className="course-outline-button">Tiếp tục học</Button> */}
           </div>
           <div>
             <Typography.Title level={5} className="course-outline-timestamp-title">Lưu ý các mốc thời gian</Typography.Title>

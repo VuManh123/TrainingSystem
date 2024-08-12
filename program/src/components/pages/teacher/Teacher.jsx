@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from 'react'
-import Sidebar from '../sidebar/Sidebar'
+import Sidebar from '../../sidebar/Sidebar'
 
 const Teacher = () => {
     const current_theme = localStorage.getItem('current_theme');
