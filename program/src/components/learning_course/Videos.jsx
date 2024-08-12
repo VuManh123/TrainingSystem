@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from 'react';
+// eslint-disable-next-line no-unused-vars
+import React, { useState, useEffect, useContext } from 'react';
 import { Tabs, Button } from 'antd';
 import './Videos.css';
+import {FileTextOutlined } from '@ant-design/icons';
 import { useParams } from 'react-router-dom';
+import { ThemeContext } from '../ThemeContext';
 
 const { TabPane } = Tabs;
 
 const Videos = () => {
+  const {theme} = useContext(ThemeContext)
   const [videos, setVideos] = useState([]);
   const [activeTab, setActiveTab] = useState('0');
   const {chapterID} = useParams();
@@ -35,36 +39,38 @@ const Videos = () => {
   };
 
   return (
-    <div className="videos-container">
-      {videos.length > 0 ? (
-        <>
-          <Tabs activeKey={activeTab} onChange={handleTabChange} centered>
-            {videos.map((video, index) => (
-              <TabPane tab={video.Name} key={index.toString()}>
-                <div className="video-content">
-                    <h2>{video.Name}</h2>
-                  <video width="100%" controls>
-                    <source src={`/${video.Link}`} type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                  <p>Hướng dẫn: <br/>{video.Description}</p>
-                  <p>Ngày tạo: {new Date(video.DateVideos).toLocaleDateString()}</p>
-                </div>
-              </TabPane>
-            ))}
-          </Tabs>
-          <div className="video-navigation">
-            <Button onClick={handlePrev} disabled={activeTab === '0'}>
-              Previous
-            </Button>
-            <Button onClick={handleNext} disabled={activeTab === (videos.length - 1).toString()}>
-              Next
-            </Button>
-          </div>
-        </>
-      ) : (
-        <p>No videos available</p>
-      )}
+    <div className={`videos ${theme === 'dark' ? 'darkS' : ''}`}>
+      <div className="videos-container">  
+        {videos.length > 0 ? (
+          <>
+            <Tabs activeKey={activeTab} onChange={handleTabChange} centered>
+              {videos.map((video, index) => (
+                <TabPane tab={<FileTextOutlined></FileTextOutlined>} key={index.toString()}>
+                  <div className="video-content">
+                      <h2>{video.Name}</h2>
+                    <video width="100%" controls>
+                      <source src={`/${video.Link}`} type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                    <p><strong>Hướng dẫn: </strong><br/>{video.Description}</p>
+                    <p><strong>Ngày tạo: </strong>{new Date(video.DateVideos).toLocaleDateString()}</p>
+                  </div>
+                </TabPane>  
+              ))}
+            </Tabs>
+            <div className="video-navigation">
+              <Button onClick={handlePrev} disabled={activeTab === '0'}>
+                Previous
+              </Button>
+              <Button onClick={handleNext} disabled={activeTab === (videos.length - 1).toString()}>
+                Next
+              </Button>
+            </div>
+          </>
+        ) : (
+          <p>No videos available</p>
+        )}
+      </div>
     </div>
   );
 };

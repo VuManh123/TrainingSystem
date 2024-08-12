@@ -24,8 +24,8 @@ const Navbar = () => {
     }
 
     const handleLogo = () => {
-      navigate('/');
-    };
+      navigate(-1); // Quay về trang trước
+  };
 
     const liStyle = {
       margin: '10px 20px'

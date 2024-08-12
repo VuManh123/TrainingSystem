@@ -2,7 +2,7 @@
 import express from 'express';
 import session from 'express-session';
 //import bcrypt from 'bcrypt';
-import { getStudents, getCourses, poolPromise, getAdminByEmail, getTeacherByEmail, getCourseByID, getCourseByUserID, getChapterByUserIDCourseID, getVideoByChapterID } from './query.mjs';
+import { getStudents, getCourses, poolPromise, getAdminByEmail, getTeacherByEmail, getCourseByID, getCourseByUserID, getChapterByUserIDCourseID, getVideoByChapterID, getDocumentByChapterID, getTestByChapterID } from './query.mjs';
 import sql from 'mssql';
 import cors from 'cors'
 
@@ -230,6 +230,105 @@ app.get('/api/chapter-video/:chapterID', async (req, res) =>{
     res.status(500).json({ message: 'Failed to get videos of this chapter'})
   }
 })
+app.get('/api/chapter-document/:chapterID', async (req, res) =>{
+  const {chapterID} = req.params;
+
+  try{
+    const documents = await getDocumentByChapterID(chapterID);
+    if (documents) {
+      res.json(documents);
+    } else {
+      res.status(404).json({ message: 'document not found'})
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to get videos of this chapter'})
+  }
+})
+app.get('/api/chapter-test/:chapterID', async (req, res) =>{
+  const {chapterID} = req.params;
+
+  try{
+    const videos = await getTestByChapterID(chapterID);
+    if (videos) {
+      res.json(videos);
+    } else {
+      res.status(404).json({ message: 'test not found'})
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to get videos of this chapter'})
+  }
+})
+app.get('/api/test-question/:testChapterID', async (req, res) =>{
+  const {chapterID} = req.params;
+
+  try{
+    const videos = await getVideoByChapterID(chapterID);
+    if (videos) {
+      res.json(videos);
+    } else {
+      res.status(404).json({ message: 'video not found'})
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to get videos of this chapter'})
+  }
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

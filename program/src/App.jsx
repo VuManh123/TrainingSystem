@@ -12,7 +12,6 @@ import AdminAM from './components/pages/AdminAM';
 import AdminSM from './components/pages/AdminSM';
 import DetailGeneral from './components/pages/DetailGeneral';
 import NotFound from './components/authentation/NotFound';
-import ChapterContent from './components/learning_course/ChapterContent';
 import Learning from './components/pages/Learning';
 import Videos_Learning from './components/pages/student/Videos_Learning';
 import Document_Learning from './components/pages/student/Document_Learning';
@@ -34,7 +33,6 @@ function App() {
           <Route path="/course-details/:ID" element={<DetailGeneral/>} />
           <Route path='/pagenotfound' element = {<NotFound />} />
           <Route path='/learning-course/:userID/:ID' element={<Learning/>} />
-          <Route path='/learning-course/:userID/:ID/details' element={<ChapterContent/>} />
           <Route path='/learning-course/:userID/:ID/:chapterID/videos'element={<Videos_Learning />} />
           <Route path='/learning-course/:userID/:ID/:chapterID/document'element={<Document_Learning />} />
           <Route path='/learning-course/:userID/:ID/:chapterID/testfinalchapter'element={<QuizChapter />} />

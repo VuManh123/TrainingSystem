@@ -1,16 +1,26 @@
+.videos {
+  background: #eff2f9;
+  padding: 20px 80px;
+}
 .videos-container {
-    max-width: 800px;
-    margin: 0 auto;
+    max-width: 900px;
+    min-height: 400px;
+    margin: auto;
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
-  
+  .darkS{
+    background: #161f3e;
+}
+.darkS .videos-container {
+  background: #eff2f9;
+}
   .video-content {
     text-align:justify;
     margin-top: 20px;
-  }
+  } 
   
   .video-content video {
     max-width: 100%;

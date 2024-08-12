@@ -17,8 +17,8 @@ const NavbarStudent = () => {
     const navigate = useNavigate();
 
     const handleLoginLogo = () => {
-      navigate('/');
-    };
+      navigate(-1); // Quay về trang trước
+  };
 
   return (
     <div className={`navbar ${theme === 'dark' ? 'darkNavbar' : ''}`}>

@@ -15,16 +15,25 @@ const Navbar = () => {
     const navigate = useNavigate();
 
     const handleLoginLogo = () => {
-      navigate('/');
-    };
+      navigate(-1); // Quay về trang trước
+  };
 
   return (
-    <div className={`navbar ${theme === 'dark' ? 'darkNavbar' : ''}`}>
-      <img src={theme == 'light' ? logo_light : logo_dark} alt='' onClick={handleLoginLogo} className='logo'></img>
-
-      <img onClick={toggleTheme} src={theme == 'light' ? toggle_light : toggle_dark} alt='' className='toggle-icon' />
-    </div>
-  )
+      <div className={`navbar ${theme === 'dark' ? 'darkNavbar' : ''}`}>
+          <img 
+              src={theme === 'light' ? logo_light : logo_dark} 
+              alt='logo' 
+              onClick={handleLoginLogo} 
+              className='logo'
+          />
+          <img 
+              onClick={toggleTheme} 
+              src={theme === 'light' ? toggle_light : toggle_dark} 
+              alt='toggle theme' 
+              className='toggle-icon' 
+          />
+      </div>
+  );
 }
 
 export default Navbar

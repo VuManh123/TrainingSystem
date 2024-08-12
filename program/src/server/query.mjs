@@ -4,14 +4,14 @@ import sql from 'mssql';
 
 //S-PC392 - manhvu123
 const config = {
-    server: 'MANHVU',
+    server: 'S-PC392',
     database: 'TrainingManagement',
     port: 1433,
     authentication: {
         type: 'default',
         options: {
             userName: 'sa',
-            password: 'manhvu123'
+            password: 'Manhvu123@@'
         }
     },
     options: {
@@ -178,5 +178,51 @@ export async function getVideoByChapterID(chapterID) {
         return result.recordset;
     } catch (err) {
         throw new Error('Failed to query teacher: ' + err.message);
+    }
+}
+export async function getDocumentByChapterID(chapterID) {
+    try {
+        const pool = await poolPromise;
+        const result = await pool.request()
+            .input('chapterID', sql.Int, chapterID)
+            .query('SELECT * FROM Document WHERE ChapterID = @chapterID');
+        return result.recordset;
+    }catch(err) {
+        throw new Error('Failed to query document' + err.message);
+    }
+}
+export async function getTestByChapterID(chapterID) {
+    try {
+        const pool = await poolPromise;
+        const result = await pool.request()
+            .input('chapterID', sql.Int, chapterID)
+            .query('SELECT * FROM TestChapter WHERE ChapterID = @chapterID');
+        return result.recordset;
+    }catch(err) {
+        throw new Error('Failed to query test' + err.message);
+    }
+}
+// Lay ra list cau hoi va cac lua chon cua cac cau hoi do
+export async function getQuestionforTestChapter(chapterID) {
+    try {
+        const pool = await poolPromise;
+        const result = await pool.request()
+            .input('chapterID', sql.Int, chapterID)
+            .query('');
+        return result.recordset;
+    } catch(err) {
+        throw new Error('Failed to query question test chapter' + err.message);
+    }
+}
+// List cau hoi cua khoa hoc
+export async function getQuestionforTestCourse(courseID) {
+    try {
+        const pool = await poolPromise;
+        const result = await pool.request()
+            .input('courseID', sql.Int, courseID)
+            .query('');
+        return result.recordset;
+    } catch(err) {
+        throw new Error('Failed to query question test chapter' + err.message);
     }
 }

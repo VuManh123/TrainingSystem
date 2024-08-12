@@ -1,0 +1,59 @@
+.documents {
+    background: #eff2f9;
+    padding: 20px 80px;
+  }
+  .documents-container {
+      max-width: 900px;
+      min-height: 400px;
+      margin: auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .darkS{
+      background: #161f3e;
+  }
+  .darkS .documents-container {
+    background: #eff2f9;
+  }
+    .document-content {
+      text-align:justify;
+      margin-top: 20px;
+    } 
+    
+    .document-content p {
+      margin-top: 10px;
+      font-size: 16px;
+    }
+    
+    .document-navigation {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+    
+    .document-navigation button {
+      background-color: #1890ff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 8px 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    
+    .document-navigation button:hover {
+      background-color: #40a9ff;
+    }
+    
+    .document-navigation button:disabled {
+      background-color: #d9d9d9;
+      cursor: not-allowed;
+    }
+    .document-content iframe {
+        width: 100%;
+        height: 700px; /* Tăng chiều dài của iframe để hiển thị toàn bộ tệp PDF */
+        border: none; /* Loại bỏ đường viền */
+    }
+    
