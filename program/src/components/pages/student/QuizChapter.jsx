@@ -2,13 +2,13 @@
 import React from 'react'
 import Footer from '../../dashboard/footer/Footer'
 import Navbar from '../../dashboard/navbar/NavbarLogin'
-import ListTest from '../../learning_course/ListTest'
+import ChapterTests from '../../learning_course/ChapterTests'
 
 const QuizChapter = () => {
   return (
     <div>
       <Navbar />
-      <ListTest />
+      <ChapterTests />
       <Footer />
     </div>
   )

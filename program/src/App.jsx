@@ -16,6 +16,7 @@ import Learning from './components/pages/student/Learning';
 import Videos_Learning from './components/pages/student/Videos_Learning';
 import Document_Learning from './components/pages/student/Document_Learning';
 import QuizChapter from './components/pages/student/QuizChapter';
+import ListQuestion_TestChapter from './components/pages/student/ListQuestion_TestChapter';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route path='/learning-course/:userID/:ID/:chapterID/videos'element={<Videos_Learning />} />
           <Route path='/learning-course/:userID/:ID/:chapterID/document'element={<Document_Learning />} />
           <Route path='/learning-course/:userID/:ID/:chapterID/testfinalchapter'element={<QuizChapter />} />
+          <Route path='/learning-course/:userID/:ID/:chapterID/testfinalchapter/:testChapterID' element={<ListQuestion_TestChapter />} />
         </Routes>
       </Router>
     </ThemeProvider>

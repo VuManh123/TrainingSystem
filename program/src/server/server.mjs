@@ -2,8 +2,9 @@
 import express from 'express';
 import session from 'express-session';
 //import bcrypt from 'bcrypt';
-import { getStudents, getCourses, poolPromise, getAdminByEmail, getTeacherByEmail, getCourseByID, getCourseByUserID, getChapterByUserIDCourseID, getVideoByChapterID, getDocumentByChapterID, getTestByChapterID } from './query.mjs';
+import { getCourses, getAdminByEmail, getTeacherByEmail, getCourseByID, getCourseByUserID, getChapterByUserIDCourseID, getVideoByChapterID, getDocumentByChapterID, getTestByChapterID, getQuestionforTestChapter, postAddAnswerOfUser } from './query.mjs';
 import sql from 'mssql';
+import poolPromise from './dbConfig.mjs';
 import cors from 'cors'
 
 const app = express();
@@ -15,7 +16,7 @@ app.use(session({
     secret: 'manhvu', 
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true } 
+    cookie: { secure: false } 
 }));
 
 // 1. CHỨC NĂNG ĐĂNG NHẬP
@@ -52,7 +53,10 @@ app.post('/api/login', async (req, res) => {
         } else {
             if (password === user.Password) {
                 // Lưu thông tin người dùng vào phiên làm việc
+                console.log('User ID trước khi lưu vào session:', user.ID);
                 req.session.user = { id: user.ID, name: user.Name, role: role };
+                console.log('User ID sau khi lưu vào session:', req.session.user.id);
+
                 if (role === 'teacher') {
                     req.session.user.workUnit = user.WorkUnit;
                 }
@@ -149,16 +153,6 @@ app.get('/api/status', (req, res) => {
     }
 });
 
-// API lấy danh sách học sinh
-app.get('/api/students', async (req, res) => {
-    try {
-        const students = await getStudents();
-        res.json(students);
-    } catch (err) {
-        res.status(500).send(err.message);
-    }
-});
-
 // API lấy danh sách khóa học
 app.get('/api/courses', async (req, res) => {
     try {
@@ -249,32 +243,46 @@ app.get('/api/chapter-test/:chapterID', async (req, res) =>{
   const {chapterID} = req.params;
 
   try{
-    const videos = await getTestByChapterID(chapterID);
-    if (videos) {
-      res.json(videos);
+    const tests = await getTestByChapterID(chapterID);
+    if (tests) {
+      res.json(tests);
     } else {
       res.status(404).json({ message: 'test not found'})
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Failed to get videos of this chapter'})
+    res.status(500).json({ message: 'Failed to get tests of this chapter'})
   }
 })
 app.get('/api/test-question/:testChapterID', async (req, res) =>{
-  const {chapterID} = req.params;
+  const {testChapterID} = req.params;
 
   try{
-    const videos = await getVideoByChapterID(chapterID);
-    if (videos) {
-      res.json(videos);
+    const questions = await getQuestionforTestChapter(testChapterID);
+    if (questions) {
+      res.json(questions);
     } else {
-      res.status(404).json({ message: 'video not found'})
+      res.status(404).json({ message: 'question not found'})
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Failed to get videos of this chapter'})
+    res.status(500).json({ message: 'Failed to get questions of this chapter'})
   }
 })
+
+app.post('/api/addAnswerOfUser', async (req, res) => {
+    const answers = req.body.answers;
+    const userID = req.body.userID;
+
+    try {
+        const result = await postAddAnswerOfUser(answers, userID);
+        res.json(result);
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+
 
 
 

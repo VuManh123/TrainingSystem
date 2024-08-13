@@ -1,0 +1,147 @@
+@keyframes toRight {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+.test-questions-wrapper{
+    padding: 20px 80px;
+    background-color: #eff2f9;
+}
+.test-questions-wrapper.dark{
+    background: #161f3e;
+}
+.dark .test-questions{
+    background-color: #eff2f9;
+}
+/* .dark .question-item{
+    background-color: #eff2f9;
+} */
+/* Cấu hình chung cho khung chính */
+.test-questions {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    border: 2px solid #ddd; 
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Căn lề các câu hỏi và tab về bên trái */
+}
+
+h1 {
+    text-align: center;
+}
+
+/* Cấu hình cho từng câu hỏi */
+.question-item {
+    width: 50em;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    animation: toRight 1s forwards;
+}
+
+h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+/* Cấu hình cho các câu hỏi kiểu single và multiple */
+.single-choice, .multiple-choice {
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+    margin-top: 10px;
+}
+
+/* Cấu hình cho input text */
+.text-input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 1rem;
+}
+
+/* Cấu hình cho nút submit */
+.submit-button {
+    width: auto;
+    padding: 0 20px;
+    height: 40px;
+    margin-top: 20px;
+    align-self: flex-end;
+    font-size: 1rem;
+}
+
+/* Căn lề các tab về bên trái */
+.ant-tabs-nav {
+    margin-bottom: 20px;
+    justify-content: flex-start;
+}
+
+/* Responsive styles */
+@media (max-width: 1200px) {
+    .test-questions {
+        padding: 15px;
+    }
+
+    .question-item {
+        width: 90%;
+        padding: 15px;
+    }
+}
+
+@media (max-width: 900px) {
+    .test-questions {
+        padding: 10px;
+    }
+
+    .question-item {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+    }
+
+    .text-input {
+        font-size: 0.9rem;
+    }
+
+    .submit-button {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .test-questions {
+        margin: 20px auto;
+        padding: 10px;
+    }
+
+    .question-item {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    h3 {
+        font-size: 1rem;
+    }
+}
+
+
+.question-item.darkS{
+    background: #161f3e;
+}

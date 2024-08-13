@@ -1,0 +1,77 @@
+/* TestQuestion.css */
+
+/* Cấu hình cho container chính */
+.chapter-tests-wrapper {
+    padding: 20px 40px;
+    background-color: #eff2f9;
+}
+.chapter-tests-wrapper.dark{
+    background: #161f3e;
+}
+.dark .chapter-tests{
+    background-color: #eff2f9;
+}
+.chapter-tests {
+    max-width: 1000px;
+    margin: auto;
+    padding: 20px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Cấu hình cho các tab */
+.ant-tabs {
+    margin-bottom: 20px;
+}
+
+.ant-tabs-tab {
+    font-weight: bold;
+}
+
+.ant-tabs-tab:hover {
+    color: #1890ff; /* Màu sắc khi hover */
+}
+
+.ant-tabs-tab-active {
+    color: #1890ff; /* Màu sắc của tab đang hoạt động */
+}
+
+/* Cấu hình cho nội dung từng tab */
+.ant-tabs-content {
+    padding: 20px;
+    /* border: 1px solid #ddd; */
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+/* Cấu hình cho thông báo trong từng tab */
+.chapter-tests p {
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.5;
+}
+
+.chapter-tests ol {
+    list-style-type: none;
+    margin: 20px 0;
+    padding-left: 20px;
+}
+
+.chapter-tests li {
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+}
+
+/* Cấu hình cho thông tin ngày */
+.chapter-tests .date-info {
+    margin-bottom: 15px;
+}
+
+/* Cấu hình cho nút "Bắt đầu làm bài" */
+.chapter-tests .start-button-container {
+    text-align: right; /* Căn chỉnh nút về phía bên phải */
+}
+
+

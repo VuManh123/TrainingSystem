@@ -129,10 +129,10 @@ const CourseOutline = () => {
             {/* <Button type="primary" className="course-outline-button">Tiếp tục học</Button> */}
           </div>
           <div>
-            <Typography.Title level={5} className="course-outline-timestamp-title">Lưu ý các mốc thời gian</Typography.Title>
+            <Typography.Title level={5} className="course-outline-timestamp-title">Lưu ý các mốc thời gian:</Typography.Title>
             <Space direction="vertical">
               <Text className="course-outline-timestamp-text">
-                <strong>{courseData1.EndDate}</strong> - Kết thúc khóa học
+                <strong>{new Date(courseData1.EndDate).toLocaleDateString()}</strong> - Kết thúc khóa học
               </Text>
               <Text type="secondary" className="course-outline-timestamp-text-secondary">
                 Khóa học này đã kết thúc, nghĩa là bạn chỉ có thể xem nội dung đã ghi lại của khóa học.

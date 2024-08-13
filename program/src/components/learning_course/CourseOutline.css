@@ -78,7 +78,7 @@
 /* Hiệu ứng khi di chuột vào tiêu đề */
 .ant-collapse-header:hover {
     transform: scale(1.1) translateX(5px); /* Phóng to và di chuyển nhẹ về phía bên phải */
-    color: #cd1b1b;
+    color: #666;
 }
 
 
