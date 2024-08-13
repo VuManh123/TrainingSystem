@@ -150,37 +150,37 @@ CREATE TABLE Result_TestChapter (
     FOREIGN KEY (TestChapterID) REFERENCES TestChapter(ID)
 );
 
--- 13. Tạo bảng câu hỏi cho bài test
-CREATE TABLE Question (
-    ID INT PRIMARY KEY IDENTITY(1,1),
-    Description TEXT NOT NULL,
-    Type INT NOT NULL, -- 0: nochoice, 1: onechoice, 2: multichoice
-    TestChapterID INT,
-    TestCourseID INT,
-    FOREIGN KEY (TestChapterID) REFERENCES TestChapter(ID),
-    FOREIGN KEY (TestCourseID) REFERENCES TestCourse(ID)
-);
--- 14. Tạo bảng dáp án đúng cho câu hỏi
-CREATE TABLE AnswerForQuestion (
-    ID INT PRIMARY KEY IDENTITY(1,1),
-    Description TEXT,
-    QuestionID INT NOT NULL,
-    AnswerText TEXT,
-    IsCorrect BIT,
-    FOREIGN KEY (QuestionID) REFERENCES Question(ID)
-);
--- 15. Tạo bảng câu trả lời của học viên cho từng câu hỏi
-CREATE TABLE AnswerOfUser (
-    ID INT PRIMARY KEY IDENTITY(1,1),
-    QuestionID INT NOT NULL,
-    UserID INT NOT NULL,
-    AnswerChoice INT,
-    AnswerText TEXT,
-    FOREIGN KEY (QuestionID) REFERENCES Question(ID),
-    FOREIGN KEY (UserID) REFERENCES Student(ID)
-);
-ALTER TABLE AnswerOfUser
-ADD CONSTRAINT fk_answer FOREIGN KEY (AnswerChoice) REFERENCES AnswerForQuestion(ID);
+	-- 13. Tạo bảng câu hỏi cho bài test
+	CREATE TABLE Question (
+		ID INT PRIMARY KEY IDENTITY(1,1),
+		Description TEXT NOT NULL,
+		Type INT NOT NULL, -- 0: nochoice, 1: onechoice, 2: multichoice
+		TestChapterID INT,
+		TestCourseID INT,
+		FOREIGN KEY (TestChapterID) REFERENCES TestChapter(ID),
+		FOREIGN KEY (TestCourseID) REFERENCES TestCourse(ID)
+	);
+	-- 14. Tạo bảng dáp án đúng cho câu hỏi
+	CREATE TABLE AnswerForQuestion (
+		ID INT PRIMARY KEY IDENTITY(1,1),
+		Description TEXT,
+		QuestionID INT NOT NULL,
+		AnswerText TEXT,
+		IsCorrect BIT,
+		FOREIGN KEY (QuestionID) REFERENCES Question(ID)
+	);
+	-- 15. Tạo bảng câu trả lời của học viên cho từng câu hỏi
+	CREATE TABLE AnswerOfUser (
+		ID INT PRIMARY KEY IDENTITY(1,1),
+		QuestionID INT NOT NULL,
+		UserID INT NOT NULL,
+		AnswerChoice NVARCHAR(255),
+		AnswerText TEXT,
+		FOREIGN KEY (QuestionID) REFERENCES Question(ID),
+		FOREIGN KEY (UserID) REFERENCES Student(ID)
+	);
+
+
 
 -- 16. Tạo bảng đánh giá khóa học cho học viên
 CREATE TABLE Reviews (
@@ -194,6 +194,61 @@ CREATE TABLE Reviews (
     FOREIGN KEY (UserID) REFERENCES Student(ID),
     FOREIGN KEY (CourseID) REFERENCES Course(ID)
 );
+
+
+-- UPDATE
+CREATE TABLE TestSession (
+    ID INT PRIMARY KEY IDENTITY(1,1),
+    UserID INT NOT NULL,
+    TestChapterID INT NOT NULL,
+    StartTime DATETIME NOT NULL,
+    EndTime DATETIME,
+	Score Float,
+    FOREIGN KEY (UserID) REFERENCES Student(ID),
+    FOREIGN KEY (TestChapterID) REFERENCES TestChapter(ID)
+);
+
+ALTER TABLE AnswerOfUser
+ADD TestSessionID INT NOT NULL DEFAULT 0,
+FOREIGN KEY (TestSessionID) REFERENCES TestSession(ID);
+
+CREATE TRIGGER trg_UpdateScore
+ON AnswerOfUser
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    -- Biến lưu điểm số
+    DECLARE @UserID INT;
+    DECLARE @TestChapterID INT;
+    DECLARE @TestSessionID INT;
+    DECLARE @Score INT;
+
+    -- Lấy thông tin từ bản ghi được chèn hoặc cập nhật
+    SELECT @UserID = i.UserID,
+           @TestChapterID = q.TestChapterID,
+           @TestSessionID = i.TestSessionID
+    FROM inserted i
+    JOIN Question q ON i.QuestionID = q.ID;
+
+    -- Tính điểm số dựa trên số câu trả lời đúng
+    SET @Score = (SELECT COUNT(*)
+                  FROM AnswerOfUser aou
+                  JOIN AnswerForQuestion afq ON aou.QuestionID = afq.QuestionID
+                  WHERE aou.TestSessionID = @TestSessionID
+                    AND aou.AnswerChoice = afq.Description
+                    AND afq.IsCorrect = 1);
+
+    -- Cập nhật điểm số vào bảng TestSession
+    UPDATE TestSession
+    SET Score = @Score
+    WHERE ID = @TestSessionID;
+END;
+
+
+
+
+
+
 
 -- II. INSERT DỮ LIỆU
 INSERT INTO Course (Title, Description, Image, CreatedBy, StartDate, EndDate) VALUES

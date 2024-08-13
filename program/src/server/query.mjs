@@ -216,15 +216,13 @@ export async function getQuestionforTestCourse(courseID) {
         throw new Error('Failed to query question test chapter' + err.message);
     }
 }
+
 export async function postAddAnswerOfUser(answers, userID) {
     try {
         const pool = await poolPromise;
-        console.log(userID);
         const userIDInt = parseInt(userID, 10);
-        console.log(userIDInt);
         const queries = answers.map(answer => {
             const { QuestionID, AnswerChoice, AnswerText } = answer;
-            console.log(QuestionID, AnswerChoice, AnswerText);
 
             // Kiểm tra nếu QuestionID không phải là chuỗi rỗng và chuyển sang số nguyên
             if (QuestionID === '') {
@@ -240,19 +238,13 @@ export async function postAddAnswerOfUser(answers, userID) {
                 throw new Error('QuestionID không hợp lệ');
             }
 
-            // Nếu AnswerChoice không có giá trị (null hoặc chuỗi rỗng), bỏ qua nó
-            if (AnswerChoice === null || AnswerChoice === '') {
-                return `INSERT INTO AnswerOfUser (QuestionID, UserID, AnswerChoice, AnswerText) VALUES (${questionIDInt}, '${userIDInt}', NULL, N'${AnswerText}');`;
-            }
+            // Nếu AnswerChoice không có giá trị, sử dụng NULL trong câu truy vấn
+            const answerChoiceValue = (AnswerChoice === null || AnswerChoice === '') ? 'NULL' : `'${AnswerChoice}'`;
 
-            // Chuyển AnswerChoice sang số nguyên và kiểm tra
-            const answerChoiceInt = parseInt(AnswerChoice, 10);
-            if (isNaN(answerChoiceInt)) {
-                console.log(`Invalid data: AnswerChoice = ${AnswerChoice}`);
-                throw new Error('AnswerChoice không hợp lệ');
-            }
+            // Nếu AnswerText không có giá trị, sử dụng NULL trong câu truy vấn
+            const answerTextValue = (AnswerText === null || AnswerText === '') ? 'NULL' : `N'${AnswerText}'`;
 
-            return `INSERT INTO AnswerOfUser (QuestionID, UserID, AnswerChoice, AnswerText) VALUES (${questionIDInt}, '${userIDInt}', ${answerChoiceInt}, NULL);`;
+            return `INSERT INTO AnswerOfUser (QuestionID, UserID, AnswerChoice, AnswerText) VALUES (${questionIDInt}, ${userIDInt}, ${answerChoiceValue}, ${answerTextValue});`;
         }).join(' ');
 
         await pool.request().query(queries);  // Thực hiện các truy vấn
@@ -262,5 +254,6 @@ export async function postAddAnswerOfUser(answers, userID) {
         throw new Error('Có lỗi xảy ra khi thêm câu trả lời: ' + error.message);
     }
 }
+
 
 
