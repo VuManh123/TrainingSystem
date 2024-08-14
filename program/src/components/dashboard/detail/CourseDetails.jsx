@@ -73,13 +73,13 @@ const CourseDetail = () => {
     <Layout className={`course-detail-layout ${theme === 'dark' ? 'darkBody' : ''}`}>
       <Content className="course-detail-content">
         <div className="course-header">
-          <Title level={1} className="course-title" style={{ backgroundImage: `url(${course.Image})`, color: '#fff' }}>{course.Title}</Title>
+          <Title level={1} className="course-title" style={{ backgroundImage: `url(/${course.Image})`, color: '#fff' }}>{course.Title}</Title>
           <Text className="course-short-description">
             Khóa học thuộc một số các hoạt động của công ty Sews Components VietNam. Nhằm nâng cao hiểu biết về tập đoàn, các quy định, quy chế của tập đoàn.
             Nâng cao kiến thưc cho nhân viên thuộc công ty về công việc và đời sống. Hãy cùng pass những khóa học cùng với hệ thống Đào Tạo SEWS-CV nhé. Thanks!
           </Text>
           <div className="course-dates">
-            <Text className="course-date">Lịch học: {course.StartDate} - {course.EndDate}</Text>
+            <Text className="course-date"><strong>Lịch học: </strong> {new Date(course.StartDate).toLocaleDateString()} - {new Date(course.EndDate).toLocaleDateString()}</Text>
           </div>
           <Button type="primary" className="enroll-button">Đăng ký học ngay</Button>
         </div>
@@ -118,7 +118,7 @@ const CourseDetail = () => {
           </Col>
           <Col span={24} id="curriculum">
             <Card title="Chương trình đào tạo">
-              <Text>Bắt đầu: {course.StartDate} - Kết thúc: {course.EndDate}</Text>
+              <Text>Bắt đầu: { new Date(course.StartDate).toLocaleDateString()} - Kết thúc: {new Date(course.EndDate).toLocaleDateString()}</Text>
             </Card>
           </Col>
         </Row>

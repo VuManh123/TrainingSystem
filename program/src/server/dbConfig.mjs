@@ -3,7 +3,7 @@ import sql from 'mssql';
 // Cấu hình kết nối
 const config = {
     server: 'S-PC392',
-    database: 'TrainingManagement',
+    database: 'Training_Management',
     port: 1433,
     authentication: {
         type: 'default',

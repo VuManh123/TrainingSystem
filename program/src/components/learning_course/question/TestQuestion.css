@@ -35,10 +35,6 @@
     align-items: flex-start; /* Căn lề các câu hỏi và tab về bên trái */
 }
 
-h1 {
-    text-align: center;
-}
-
 /* Cấu hình cho từng câu hỏi */
 .question-item {
     width: 50em;

@@ -122,7 +122,7 @@ export async function getChapterByUserIDCourseID(userID, courseID) {
                         WHEN EXISTS (
                             SELECT 1
                             FROM TestChapter tc
-                            LEFT JOIN Result_TestChapter rtc ON tc.ID = rtc.TestChapterID
+                            LEFT JOIN TestChapterSession rtc ON tc.ID = rtc.TestChapterID
                             LEFT JOIN Student s ON rtc.UserID = s.ID
                             WHERE tc.ChapterID = ch.ID AND s.ID = @userID
                         ) THEN 1
