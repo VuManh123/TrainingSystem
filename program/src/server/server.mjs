@@ -2,7 +2,7 @@
 import express from 'express';
 import session from 'express-session';
 //import bcrypt from 'bcrypt';
-import { getCourses, getAdminByEmail, getTeacherByEmail, getCourseByID, getCourseByUserID, getChapterByUserIDCourseID, getVideoByChapterID, getDocumentByChapterID, getTestByChapterID, getQuestionforTestChapter, postAddAnswerOfUser } from './query.mjs';
+import { getCourses, getAdminByEmail, getTeacherByEmail, getCourseByID, getCourseByUserID, getChapterByUserIDCourseID, getVideoByChapterID, getDocumentByChapterID, getTestByChapterID, getQuestionforTestChapter, postAddSessionTestChapter, postAddAnswerOfUser } from './query.mjs';
 import sql from 'mssql';
 import poolPromise from './dbConfig.mjs';
 import cors from 'cors'
@@ -273,14 +273,31 @@ app.get('/api/test-question/:testChapterID', async (req, res) =>{
 app.post('/api/addAnswerOfUser', async (req, res) => {
     const answers = req.body.answers;
     const userID = req.body.userID;
+    const testChapterSessionID = req.body.testChapterSessionID;
 
     try {
-        const result = await postAddAnswerOfUser(answers, userID);
+        const result = await postAddAnswerOfUser(answers, userID, testChapterSessionID);
         res.json(result);
     } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
-    }
+      console.error('Error adding answers:', error);
+      res.status(500).json({ success: false, message: 'Có lỗi xảy ra khi thêm câu trả lời: ' + error.message });
+  }  
 });
+
+app.post('/api/addTestChapterSession', async (req, res) => {
+  const { userID, testChapterID } = req.body;
+
+  try {
+      const testChapterSessionID = await postAddSessionTestChapter(userID, testChapterID);
+      res.json({ testChapterSessionID });
+  } catch (error) {
+      console.error('Error creating session:', error); // Log thêm chi tiết lỗi
+      res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+
+
 
 
 

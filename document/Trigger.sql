@@ -34,7 +34,7 @@ BEGIN
     SELECT @CorrectMultiChoice = COUNT(*)
     FROM (
         SELECT aou.QuestionID
-        FROM AnswerOfUser_TestChapter aou[TrainingSystem]
+        FROM AnswerOfUser_TestChapter aou
         INNER JOIN Question q ON aou.QuestionID = q.ID
         INNER JOIN AnswerForQuestion afq ON CONVERT(NVARCHAR(MAX), aou.AnswerChoice) = CONVERT(NVARCHAR(MAX), afq.Description)
         WHERE q.Type = 2

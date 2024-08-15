@@ -4,7 +4,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Tabs, Button, Radio, Checkbox, Input, Modal } from 'antd';
 import './TestQuestion.css';
 import { ThemeContext } from '../../ThemeContext';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const { TabPane } = Tabs;
 
@@ -62,7 +62,8 @@ const TestQuestions = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const { testChapterID } = useParams();
     const [answers, setAnswers] = useState({});
-    const {userID} = useParams();
+    const {userID, testChapterSessionID} = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch(`http://localhost:3000/api/test-question/${testChapterID}`)
@@ -95,26 +96,56 @@ const answersArray = Object.keys(answers).map(questionID => {
     };
 });
 
-// Gửi yêu cầu POST đến API
-fetch('http://localhost:3000/api/addAnswerOfUser', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ userID, answers: answersArray }) // Gửi userID cùng với answers
-})
-.then(response => response.json())
-.then(data => {
-    if (data.success) {
-        alert('Gửi câu trả lời thành công!');
-        // Bạn có thể điều hướng hoặc làm gì đó sau khi thành công
-    } else {
-        alert('Có lỗi xảy ra, vui lòng thử lại.');
-    }
-})
-.catch(error => {
-    console.error('Error submitting answers:', error);
-});
+        // Gửi yêu cầu POST đến API
+        fetch('http://localhost:3000/api/addAnswerOfUser', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ answers: answersArray, userID, testChapterSessionID }) 
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const modal = Modal.success({
+                    title: 'Cảm ơn bạn đã hoàn thành bài thi!',
+                    content: (
+                        <div>
+                            <p>Bạn có thể chọn chuyển hướng hoặc xem kết quả.</p>
+                        </div>
+                    ),
+                    okText: 'Xem kết quả',
+                    onOk: () => {
+                        Modal.destroyAll(); // Đóng popup trước khi chuyển hướng
+                        navigate(`/results/${testChapterSessionID}`);
+                    },
+                    footer: [
+                        <Button key="results" type="primary" onClick={() => {
+                            Modal.destroyAll(); // Đóng popup trước khi chuyển hướng
+                            navigate(`/results/${testChapterSessionID}`);
+                        }}>
+                            Xem kết quả
+                        </Button>,
+                        <Button key="home" onClick={() => {
+                            Modal.destroyAll(); // Đóng popup trước khi chuyển hướng
+                            navigate('/home');
+                        }}>
+                            Trở về trang chủ
+                        </Button>,
+                    ],
+                    className: 'custom-modal',  // Thêm class tùy chỉnh cho modal
+                });
+            } else {
+                Modal.error({
+                    title: 'Có lỗi xảy ra',
+                    content: 'Vui lòng thử lại.',
+                    className: 'custom-modal-error',  // Thêm class tùy chỉnh cho modal lỗi
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error submitting answers:', error);
+        });
     };
 
     const handleCancel = () => {

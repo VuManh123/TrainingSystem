@@ -133,7 +133,7 @@ CREATE TABLE TestChapterSession (
     TestChapterID INT NOT NULL,	
     Result FLOAT,
 	StartTime DATETIME,
-    TurnInTime DATETIME DEFAULT GETDATE(),
+    TurnInTime DATETIME,
     FOREIGN KEY (UserID) REFERENCES Student(ID),
     FOREIGN KEY (TestChapterID) REFERENCES TestChapter(ID)
 );
