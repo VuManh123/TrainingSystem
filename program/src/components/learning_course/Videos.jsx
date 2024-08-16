@@ -52,7 +52,9 @@ const Videos = () => {
                       <source src={`/${video.Link}`} type="video/mp4" />
                       Your browser does not support the video tag.
                     </video>
-                    <p><strong>Hướng dẫn: </strong><br/>{video.Description}</p>
+                    <p><strong>Hướng dẫn: </strong><br/>
+                      <div dangerouslySetInnerHTML={{ __html: video.Description }} />
+                    </p>
                     <p><strong>Ngày tạo: </strong>{new Date(video.DateVideos).toLocaleDateString()}</p>
                   </div>
                 </TabPane>  

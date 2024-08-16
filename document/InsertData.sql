@@ -74,14 +74,6 @@ VALUES
 (4, N'Test tổng kết khóa học Sinh', '2024-04-10', '2024-04-20', 1),
 (5, N'Test tổng kết khóa học Văn', '2024-05-10', '2024-05-20', 4);
 
--- 10. Chèn dữ liệu vào bảng TestCourseSession
-INSERT INTO TestCourseSession (UserID, TestCourseID, Result, StartTime, TurnInTime)
-VALUES 
-(1, 1, 85.5, '2024-01-15 10:00:00', '2024-01-15 11:00:00'),
-(2, 2, 75.0, '2024-02-15 10:00:00', '2024-02-15 11:00:00'),
-(1, 3, 90.0, '2024-03-15 10:00:00', '2024-03-15 11:00:00'),
-(2, 4, 80.0, '2024-04-15 10:00:00', '2024-04-15 11:00:00'),
-(1, 5, 88.0, '2024-05-15 10:00:00', '2024-05-15 11:00:00');
 
 -- 11. Chèn dữ liệu vào bảng TestChapter
 INSERT INTO TestChapter (ChapterID, Name, StartDate, EndDate, Attemps)
@@ -92,14 +84,6 @@ VALUES
 (2, N'Test chương 1 Sinh', '2024-04-01', '2024-04-10', 2),
 (5, N'Test chương 1 Văn', '2024-05-01', '2024-05-10', 1);
 
--- 12. Chèn dữ liệu vào bảng TestChapterSession
-INSERT INTO TestChapterSession (UserID, TestChapterID, Result, StartTime, TurnInTime)
-VALUES 
-(1, 1, 70.0, '2024-01-05 10:00:00', '2024-01-05 10:30:00'),
-(2, 2, 65.0, '2024-02-05 10:00:00', '2024-02-05 10:30:00'),
-(2, 3, 85.0, '2024-03-05 10:00:00', '2024-03-05 10:30:00'),
-(1, 4, 75.0, '2024-04-05 10:00:00', '2024-04-05 10:30:00'),
-(2, 5, 80.0, '2024-05-05 10:00:00', '2024-05-05 10:30:00');
 
 -- 13. Chèn dữ liệu vào bảng Question
 INSERT INTO Question (Description, Type, TestChapterID, TestCourseID, Status)
@@ -122,21 +106,6 @@ VALUES
 (N'f''(x) = x^2', 5, NULL, 0),
 (N'Đáp án cho câu hỏi cơ học lượng tử', 6, N'Hạt electron có tính chất sóng', 1);
 
--- 15. Chèn dữ liệu vào bảng AnswerOfUser_TestChapter
-INSERT INTO AnswerOfUser_TestChapter (QuestionID, UserID, AnswerChoice, AnswerText, TestChapterSessionID)
-VALUES 
-(2, 1, 2, NULL, 4),
-(3, 1, 4, NULL, 4),
-(2, 2, 1, NULL, 5),
-(3, 1, 3, NULL, 7);
-
--- 15. Chèn dữ liệu vào bảng AnswerOfUser_TestCourse
-INSERT INTO AnswerOfUser_TestCourse (QuestionID, UserID, AnswerChoice, AnswerText, TestCourseSessionID)
-VALUES 
-(4, 1, NULL, N'∫(x^2)dx = (1/3)x^3 + C', 4),
-(5, 1, 7, NULL, 4),
-(4, 2, NULL, N'Hạt electron có tính chất sóng', 5),
-(5, 2, 7, NULL, 5)
 
 -- 16. Chèn dữ liệu vào bảng Reviews
 INSERT INTO Reviews (Content, Rating, ReviewText, UserID, CourseID)
