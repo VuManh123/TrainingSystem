@@ -6,6 +6,7 @@ import { getCourses, getAdminByEmail, getTeacherByEmail, getCourseByID, getCours
 import sql from 'mssql';
 import poolPromise from './dbConfig.mjs';
 import cors from 'cors'
+import { getHistoryTestChapter, setResults } from './Score.mjs';
 
 const app = express();
 app.use(cors());
@@ -271,18 +272,34 @@ app.get('/api/test-question/:testChapterID', async (req, res) =>{
 })
 
 app.post('/api/addAnswerOfUser', async (req, res) => {
-    const answers = req.body.answers;
-    const userID = req.body.userID;
-    const testChapterSessionID = req.body.testChapterSessionID;
+  const answers = req.body.answers;
+  const userID = req.body.userID;
+  const testChapterSessionID = req.body.testChapterSessionID;
+  const testChapterID = req.body.testChapterID;
 
-    try {
-        const result = await postAddAnswerOfUser(answers, userID, testChapterSessionID);
-        res.json(result);
-    } catch (error) {
+  try {
+      // Thực hiện thêm câu trả lời của người dùng
+      const result = await postAddAnswerOfUser(answers, userID, testChapterSessionID);
+
+      // Cập nhật kết quả bài kiểm tra
+      const resultUpdate = await setResults(testChapterID, testChapterSessionID);
+
+      // Gửi phản hồi với cả hai kết quả
+      res.json({
+          success: true,
+          message: 'Câu trả lời đã được thêm và kết quả đã được cập nhật.',
+          result: result,
+          resultUpdate: resultUpdate
+      });
+  } catch (error) {
       console.error('Error adding answers:', error);
-      res.status(500).json({ success: false, message: 'Có lỗi xảy ra khi thêm câu trả lời: ' + error.message });
-  }  
+      res.status(500).json({
+          success: false,
+          message: 'Có lỗi xảy ra khi thêm câu trả lời: ' + error.message
+      });
+  }
 });
+
 
 app.post('/api/addTestChapterSession', async (req, res) => {
   const { userID, testChapterID } = req.body;
@@ -296,9 +313,23 @@ app.post('/api/addTestChapterSession', async (req, res) => {
   }
 });
 
+// Lấy lịch sử thi cyar nguoif dùng:
+app.get('/api/history-testchapter/:userID/:testChapterID', async (req, res) =>{
+  const {userID} = req.params;
+  const {testChapterID} = req.params;
 
-
-
+  try{
+    const history = await getHistoryTestChapter(userID, testChapterID);
+    if (history) {
+      res.json(history);
+    } else {
+      res.status(404).json({ message: 'History not found'})
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to get history of this testchapter'})
+  }
+})
 
 
 

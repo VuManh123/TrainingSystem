@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useContext, useEffect, useState } from 'react';
-import { Tabs, Button, Modal } from 'antd';
+import { Tabs, Button, Modal, Table, Divider } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom';
 import { notify } from '../notification/Notification';
 import './ChapterTests.css';
@@ -10,17 +10,33 @@ const { TabPane } = Tabs;
 
 const ChapterTests = () => {
     const { theme } = useContext(ThemeContext);
-    const { userID, ID, chapterID } = useParams(); // Lấy chapterID từ params
+    const { userID, ID, chapterID } = useParams();
     const [tests, setTests] = useState([]);
+    const [history, setHistory] = useState([]);
+    // eslint-disable-next-line no-unused-vars
+    const [currentTestID, setCurrentTestID] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Fetch dữ liệu từ API
         fetch(`http://localhost:3000/api/chapter-test/${chapterID}`)
             .then(response => response.json())
-            .then(data => setTests(data))
-            .catch(error => console.error('Error fetching data:', error));
+            .then(data => {
+                setTests(data);
+                if (data.length > 0) {
+                    const firstTestID = data[0].ID;
+                    setCurrentTestID(firstTestID);
+                    fetchHistory(firstTestID);
+                }
+            })
+            .catch(error => console.error('Error fetching tests data:', error));
     }, [chapterID]);
+
+    const fetchHistory = (testID) => {
+        fetch(`http://localhost:3000/api/history-testchapter/${userID}/${testID}`)
+            .then(response => response.json())
+            .then(data => setHistory(data))
+            .catch(error => console.error('Error fetching history data:', error));
+    };
 
     const handleStartTest = (testChapterID, endDate) => {
         const endDateObject = new Date(endDate);
@@ -34,9 +50,8 @@ const ChapterTests = () => {
                         <p><strong>Chú ý:</strong> Sau khi xác nhận, bạn không thể thoát, nếu thoát coi như đã kết thúc bài thi.</p>
                     </div>
                 ),
-                onOk:async () => {
+                onOk: async () => {
                     try {
-                        // Gửi yêu cầu tạo session mới
                         const response = await fetch('http://localhost:3000/api/addTestChapterSession', {
                             method: 'POST',
                             headers: {
@@ -47,14 +62,12 @@ const ChapterTests = () => {
                                 testChapterID,
                             }),
                         });
-    
+
                         if (!response.ok) {
                             throw new Error('Failed to create session');
                         }
-    
+
                         const { testChapterSessionID } = await response.json();
-    
-                        // Chuyển hướng đến trang làm bài với testChapterSessionID
                         const path = `/learning-course/${userID}/${ID}/${chapterID}/testfinalchapter/${testChapterID}/${testChapterSessionID}`;
                         navigate(path);
                     } catch (error) {
@@ -69,10 +82,49 @@ const ChapterTests = () => {
         }
     };
 
+    const handleTabChange = (key) => {
+        setCurrentTestID(key);
+        fetchHistory(key);
+    };
+    const getRowClassName = (record) => {
+        return record.Result === 100 ? 'row-pass' : 'row-fail';
+    };
+
+    const historyColumns = [
+        {
+            title: 'Lần thi',
+            dataIndex: 'ID',
+            key: 'ID',
+            render: (text, record, index) => index + 1,
+        },
+        {
+            title: 'Thời gian bắt đầu',
+            dataIndex: 'StartTime',
+            key: 'StartTime',
+            render: (text) => new Date(text).toLocaleString(),
+        },
+        {
+            title: 'Thời gian nộp bài',
+            dataIndex: 'TurnInTime',
+            key: 'TurnInTime',
+            render: (text) => new Date(text).toLocaleString(),
+        },
+        {
+            title: 'Kết quả',
+            dataIndex: 'Result',
+            key: 'Result',
+        },
+        {
+            title: 'Trạng thái đạt',
+            key: 'Status',
+            render: (text, record) => (record.Result === 100 ? 'Đạt' : 'Không đạt'),
+        },
+    ];
+
     return (
         <div className={`chapter-tests-wrapper ${theme === 'dark' ? 'dark' : ''}`}>
             <div className='chapter-tests'>
-                <Tabs>
+                <Tabs onChange={handleTabChange}>
                     {tests.map(test => (
                         <TabPane tab={test.Name} key={test.ID}>
                             <p>Trước khi bắt đầu làm bài thi, xin quý vị lưu ý những quy chế quan trọng sau đây để đảm bảo quá trình thi được diễn ra một cách công bằng và hiệu quả:</p>
@@ -99,6 +151,17 @@ const ChapterTests = () => {
                         </TabPane>
                     ))}
                 </Tabs>
+                <Divider style={{marginTop: '30px'}}>Lịch sử làm bài</Divider>
+                <div className="history-section">
+                    <Table 
+                        dataSource={history} 
+                        columns={historyColumns} 
+                        rowKey="ID" 
+                        pagination={false}
+                        className="history-table"
+                        rowClassName={getRowClassName}
+                    />
+                </div>
             </div>
         </div>
     );

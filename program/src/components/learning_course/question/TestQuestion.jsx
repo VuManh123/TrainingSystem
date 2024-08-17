@@ -62,7 +62,7 @@ const TestQuestions = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const { testChapterID } = useParams();
     const [answers, setAnswers] = useState({});
-    const {userID, testChapterSessionID} = useParams();
+    const {userID, testChapterSessionID, ID} = useParams();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -102,11 +102,12 @@ const answersArray = Object.keys(answers).map(questionID => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ answers: answersArray, userID, testChapterSessionID }) 
+            body: JSON.stringify({ answers: answersArray, userID, testChapterSessionID, testChapterID }) 
         })
         .then(response => response.json())
         .then(data => {
             if (data.success) {
+                // eslint-disable-next-line no-unused-vars
                 const modal = Modal.success({
                     title: 'Cảm ơn bạn đã hoàn thành bài thi!',
                     content: (
@@ -128,7 +129,7 @@ const answersArray = Object.keys(answers).map(questionID => {
                         </Button>,
                         <Button key="home" onClick={() => {
                             Modal.destroyAll(); // Đóng popup trước khi chuyển hướng
-                            navigate('/home');
+                            navigate(`/learning-course/${userID}/${ID}`);
                         }}>
                             Trở về trang chủ
                         </Button>,

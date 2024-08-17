@@ -1,5 +1,11 @@
 /* TestQuestion.css */
+.row-pass {
+    background-color: #b6ecc2; /* Màu xanh nhẹ */
+}
 
+.row-fail {
+    background-color: #fff; /* Màu đỏ nhẹ */
+}
 /* Cấu hình cho container chính */
 .chapter-tests-wrapper {
     padding: 20px 40px;

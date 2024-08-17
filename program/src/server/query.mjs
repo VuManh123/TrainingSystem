@@ -222,15 +222,13 @@ export async function postAddSessionTestChapter(userID, testChapterID) {
         const pool = await poolPromise;
         const userIDInt = parseInt(userID, 10);
         const testChapterIDInt = parseInt(testChapterID, 10);
-        const startTime = new Date().toISOString();
         
         const result = await pool.request()
             .input('UserID', sql.Int, userIDInt)
             .input('TestChapterID', sql.Int, testChapterIDInt)
-            .input('StartTime', sql.VarChar, startTime)
             .query(`
                 INSERT INTO TestChapterSession (UserID, TestChapterID, StartTime)
-                VALUES (@UserID, @TestChapterID, @StartTime);
+                VALUES (@UserID, @TestChapterID, GETDATE());
                 SELECT SCOPE_IDENTITY() AS ID;
             `);
         
@@ -246,10 +244,10 @@ export async function postAddSessionTestChapter(userID, testChapterID) {
 export async function postAddAnswerOfUser(answers, userID, testChapterSessionID) {
     try {
         const pool = await poolPromise;
-        
+
         const userIDInt = parseInt(userID, 10);
         const testChapterSessionIDInt = parseInt(testChapterSessionID, 10);
-        
+
         if (isNaN(userIDInt) || isNaN(testChapterSessionIDInt)) {
             throw new Error('UserID hoặc TestChapterID không hợp lệ');
         }
@@ -257,7 +255,6 @@ export async function postAddAnswerOfUser(answers, userID, testChapterSessionID)
         const queries = answers.map(answer => {
             const { QuestionID, AnswerChoice, AnswerText } = answer;
 
-            // Chuyển đổi QuestionID sang số nguyên và kiểm tra tính hợp lệ
             const questionIDInt = parseInt(QuestionID, 10);
             if (isNaN(questionIDInt)) {
                 console.error(`Invalid data: QuestionID = ${QuestionID}`);
@@ -267,23 +264,28 @@ export async function postAddAnswerOfUser(answers, userID, testChapterSessionID)
             // Xử lý AnswerChoice
             let answerChoiceValue = 'NULL';
             if (typeof AnswerChoice === 'string' && AnswerChoice.trim() !== '') {
-                answerChoiceValue = `'${AnswerChoice.replace(/'/g, "''")}'`;
+                console.log('Answer choice before:' + AnswerChoice);
+                // Tách AnswerChoice thành mảng, chuyển đổi sang số và sắp xếp
+                let sortedChoices = AnswerChoice.split(',')
+                    .map(choice => parseInt(choice.trim(), 10)) // Chuyển đổi sang số nguyên
+                    .sort((a, b) => a - b) // Sắp xếp theo thứ tự số học
+                    .map(choice => choice.toString()); // Chuyển đổi lại thành chuỗi
+
+                answerChoiceValue = `'${sortedChoices.join(',').replace(/'/g, "''")}'`;
+                console.log('Answer choice after:' + answerChoiceValue);
             } else if (typeof AnswerChoice === 'number') {
-                answerChoiceValue = AnswerChoice;  // Không cần dấu nháy đơn với số
+                answerChoiceValue = AnswerChoice;
             }
 
-            // Xử lý AnswerText
             let answerTextValue = 'NULL';
             if (typeof AnswerText === 'string' && AnswerText.trim() !== '') {
                 answerTextValue = `'${AnswerText.replace(/'/g, "''")}'`;
             }
 
-            // Trả về câu lệnh SQL với giá trị đã xử lý và TestChapterSessionID
             return `INSERT INTO AnswerOfUser_TestChapter (QuestionID, UserID, AnswerChoice, AnswerText, TestChapterSessionID)
                     VALUES (${questionIDInt}, ${userIDInt}, ${answerChoiceValue}, ${answerTextValue}, ${testChapterSessionIDInt});`;
         }).join(' ');
 
-        // Bước 3: Thực thi các truy vấn
         await pool.request().query(queries);
 
         return { success: true, message: 'Thêm câu trả lời thành công' };
@@ -292,70 +294,3 @@ export async function postAddAnswerOfUser(answers, userID, testChapterSessionID)
         throw new Error('Có lỗi xảy ra khi thêm câu trả lời: ' + error.message);
     }
 }
-
-
- // const turnInTime = new Date().toISOString(); 
-        // const insertSessionQuery = `
-        //     UPDATE TestChapterSession
-        //     SET TurnInTime = ${turnInTime}, 
-        //     WHERE ID = ${testChapterSessionIDInt}
-        // `;
-
-        // Bước 2: Tạo truy vấn cho từng câu trả lời và chèn vào AnswerOfUser_TestChapter
-
-
-// -- Tính điểm cho từng TestChapterSessionID
-// WITH CorrectAnswers AS (
-//     SELECT 
-//         QuestionID,
-//         STRING_AGG(CONVERT(NVARCHAR(MAX), ID), ', ') AS CorrectAnswers
-//     FROM 
-//         AnswerForQuestion
-//     WHERE 
-//         IsCorrect = 1
-//     GROUP BY 
-//         QuestionID
-// ),
-// UserAnswers AS (
-//     SELECT 
-//         aou.QuestionID,
-//         STRING_AGG(CONVERT(NVARCHAR(MAX), aou.AnswerChoice), ', ') AS UserAnswersChoice,
-//         MAX(aou.AnswerText) AS AnswerText,
-//         aou.TestChapterSessionID
-//     FROM 
-//         AnswerOfUser_TestChapter aou
-//     WHERE 
-//         aou.TestChapterSessionID = 1011
-//     GROUP BY 
-//         aou.QuestionID, aou.TestChapterSessionID
-// ),
-// Comparison AS (
-//     SELECT 
-//         ua.TestChapterSessionID,
-//         ua.QuestionID,
-//         CASE 
-//             -- Nếu có đáp án văn bản không rỗng thì câu đó được coi là đúng
-//             WHEN ISNULL(ua.AnswerText, '') != '' THEN 1
-//             -- So sánh các đáp án của người dùng với các đáp án đúng
-//             WHEN ua.UserAnswersChoice = ca.CorrectAnswers THEN 1
-//             ELSE 0
-//         END AS IsCorrect
-//     FROM 
-//         UserAnswers ua
-//     LEFT JOIN 
-//         CorrectAnswers ca ON ua.QuestionID = ca.QuestionID
-// )
-// -- Tính điểm tổng hợp cho TestChapterSessionID
-// SELECT 
-//     TestChapterSessionID,
-//     COUNT(QuestionID) AS TotalQuestions,
-//     SUM(IsCorrect) AS CorrectAnswers,
-//     (SUM(IsCorrect) * 100.0) / COUNT(QuestionID) AS Score
-// FROM 
-//     Comparison
-// GROUP BY 
-//     TestChapterSessionID;
-
-
-
-

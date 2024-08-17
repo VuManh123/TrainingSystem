@@ -2,14 +2,14 @@ import sql from 'mssql';
 
 // Cấu hình kết nối
 const config = {
-    server: `MANHVU`,
+    server: `S-PC392`,
     database: 'Training_Management',
     port: 1433,
     authentication: {
         type: 'default',
         options: {
             userName: 'sa',
-            password: 'manhvu12345'
+            password: 'Manhvu123@@'
         }
     },
     options: {
