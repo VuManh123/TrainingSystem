@@ -108,7 +108,7 @@ GROUP BY
     q.ID, q.Description, atc.AnswerChoice, q.Type, atc.AnswerText;
 
 
-
+SELECT GETDATE()
 
 
 -- Tính điểm và lấy các thông tin cần thiết
