@@ -123,7 +123,7 @@ const answersArray = Object.keys(answers).map(questionID => {
                     footer: [
                         <Button key="results" type="primary" onClick={() => {
                             Modal.destroyAll(); // Đóng popup trước khi chuyển hướng
-                            navigate(`/results/${testChapterSessionID}`);
+                            navigate(`/results/${userID}/${ID}/${testChapterSessionID}`);
                         }}>
                             Xem kết quả
                         </Button>,

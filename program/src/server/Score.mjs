@@ -99,3 +99,65 @@ export async function getHistoryTestChapter(userID, testChapterID) {
         throw new Error('Failed to query gethistory: ' + err.message);
     }
 }
+
+
+export async function getResultsTestChapterCurrent(testChapterSessionID) {
+    try {
+        const testChapterSessionIDInt = parseInt(testChapterSessionID, 10);
+        const pool = await poolPromise;
+        
+        // Thực hiện truy vấn đầu tiên để lấy kết quả `Result` từ `TestChapterSession`
+        const resultSession = await pool.request()
+            .input('testChapterSessionID', sql.Int, testChapterSessionIDInt)
+            .query(`
+                SELECT tcs.Result
+                FROM TestChapterSession tcs
+                WHERE ID = @testChapterSessionID
+            `);
+
+        // Thực hiện truy vấn thứ hai để lấy chi tiết kết quả
+        const resultDetails = await pool.request()
+            .input('testChapterSessionID', sql.Int, testChapterSessionIDInt)
+            .query(`
+                SELECT 
+                    q.ID AS QuestionID,
+                    q.Description AS QuestionDescription,
+                    q.Type,
+                    (
+                        SELECT afq.ID, afq.Description 
+                        FROM AnswerForQuestion afq 
+                        WHERE afq.QuestionID = q.ID 
+                        FOR JSON PATH
+                    ) AS MergedAnswerDescription,
+                    STRING_AGG(CASE WHEN afq.IsCorrect = 1 THEN afq.ID ELSE NULL END, ', ') AS CorrectAnswer,
+                    atc.AnswerChoice,
+                    atc.AnswerText,
+                    CASE 
+                        WHEN q.Type = 0 AND atc.AnswerText IS NOT NULL THEN 'Correct'
+                        WHEN q.Type != 0 AND STRING_AGG(CASE WHEN afq.IsCorrect = 1 THEN afq.ID ELSE NULL END, ',') = atc.AnswerChoice 
+                        THEN 'Correct' 
+                        ELSE 'Incorrect' 
+                    END AS Status
+                FROM 
+                    Question q
+                LEFT JOIN 
+                    TestChapter tc ON q.TestChapterID = tc.ID
+                RIGHT JOIN 
+                    AnswerOfUser_TestChapter atc ON q.ID = atc.QuestionID
+                RIGHT JOIN 
+                    AnswerForQuestion afq ON afq.QuestionID = q.ID
+                WHERE 
+                    atc.TestChapterSessionID = @testChapterSessionID
+                GROUP BY 
+                    q.ID, q.Description, atc.AnswerChoice, q.Type, atc.AnswerText;
+            `);
+
+        // Kết hợp kết quả từ cả hai truy vấn
+        return {
+            sessionResult: resultSession.recordset[0], // Lấy `Result` từ truy vấn đầu tiên
+            details: resultDetails.recordset, // Kết quả từ truy vấn thứ hai
+        };
+    } catch (err) {
+        throw new Error('Failed to query getResultsTestChapterCurrent: ' + err.message);
+    }
+}

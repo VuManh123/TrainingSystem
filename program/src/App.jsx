@@ -38,7 +38,7 @@ function App() {
           <Route path='/learning-course/:userID/:ID/:chapterID/videos'element={<Videos_Learning />} />
           <Route path='/learning-course/:userID/:ID/:chapterID/document'element={<Document_Learning />} />
           <Route path='/learning-course/:userID/:ID/:chapterID/testfinalchapter'element={<QuizChapter />} />
-          <Route path='/results/:testChapterSessionID'element={<Results />} />
+          <Route path='/results/:userID/:ID/:testChapterSessionID'element={<Results />} />
           <Route path='/learning-course/:userID/:ID/:chapterID/testfinalchapter/:testChapterID/:testChapterSessionID' element={<ListQuestion_TestChapter />} />
         </Routes>
       </Router>

@@ -6,7 +6,7 @@ import { getCourses, getAdminByEmail, getTeacherByEmail, getCourseByID, getCours
 import sql from 'mssql';
 import poolPromise from './dbConfig.mjs';
 import cors from 'cors'
-import { getHistoryTestChapter, setResults } from './Score.mjs';
+import { getHistoryTestChapter, getResultsTestChapterCurrent, setResults } from './Score.mjs';
 
 const app = express();
 app.use(cors());
@@ -328,6 +328,21 @@ app.get('/api/history-testchapter/:userID/:testChapterID', async (req, res) =>{
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Failed to get history of this testchapter'})
+  }
+})
+app.get('/api/results-testchapter/:testChapterSessionID', async (req, res) =>{
+  const {testChapterSessionID} = req.params;
+
+  try{
+    const rs = await getResultsTestChapterCurrent(testChapterSessionID);
+    if (rs) { 
+      res.json(rs);
+    } else {
+      res.status(404).json({ message: 'Result not found'})
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to get Result of this testchapter'})
   }
 })
 

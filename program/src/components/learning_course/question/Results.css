@@ -1,12 +1,89 @@
-.results-container {
+/* Results.css */
+.test-results-wrapper {
     padding: 20px;
     background-color: #f0f2f5;
 }
 
-.results-container h1 {
-    margin-bottom: 20px;
+.test-results {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    position: relative;
 }
 
-.ant-tag {
-    margin-bottom: 5px;
+.result-item {
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #d9d9d9;
+}
+
+.result-item.dark {
+    background-color: #1d1d1d;
+    border-color: #444;
+    color: #fff;
+}
+
+.result-item.correct {
+    background-color: #e6ffed;
+    border-color: #b7eb8f;
+}
+
+.result-item.incorrect {
+    background-color: #fff1f0;
+    border-color: #ff4d4f;
+}
+
+.single-choice .ant-radio-wrapper.selected-answer {
+    background-color: #e6ffed;
+    border-color: #b7eb8f;
+}
+
+.multiple-choice .ant-checkbox-wrapper.selected-answer {
+    background-color: #e6ffed;
+    border-color: #b7eb8f;
+}
+
+.text-result p {
+    margin: 0;
+    padding: 0;
+}
+
+.ant-tabs-tab {
+    padding: 10px;
+}
+
+.ant-tabs-content {
+    padding: 10px;
+}
+
+.ant-radio-wrapper,
+.ant-checkbox-wrapper {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.pagination-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.back-to-course-button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+.result-status {
+    font-weight: bold;
+}
+
+.result-status.passed {
+    color: #52c41a; /* Green */
+}
+
+.result-status.failed {
+    color: #ff4d4f; /* Red */
 }

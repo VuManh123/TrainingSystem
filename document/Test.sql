@@ -2,7 +2,7 @@
 WITH TotalQuestions AS (
     SELECT COUNT(*) AS TotalQuestions
     FROM Question
-    WHERE TestChapterID = @TestChapterID
+    WHERE TestChapterID = 1
 ),
 CorrectAnswers AS (
     SELECT 
@@ -24,7 +24,7 @@ UserAnswers AS (
     FROM 
         AnswerOfUser_TestChapter aou
     WHERE 
-        aou.TestChapterSessionID = @TestChapterSession
+        aou.TestChapterSessionID = 1031
     GROUP BY 
         aou.QuestionID, aou.TestChapterSessionID
 ),
@@ -68,9 +68,47 @@ GROUP BY
 
 
 -- List kết quả:
-SELECT *
+SELECT q.*, atc.*, afq.*
 FROM Question q LEFT JOIN TestChapter tc
 ON q.TestChapterID = tc.ID
+RIGHT JOIN AnswerOfUser_TestChapter atc ON q.ID = atc.QuestionID
+RIGHT JOIN AnswerForQuestion afq ON afq.QuestionID = q.ID
+WHERE atc.TestChapterSessionID = 1031
+----------------------------------------------
+SELECT 
+    q.ID AS QuestionID,
+    q.Description AS QuestionDescription,
+    q.Type,
+    (
+        SELECT afq.ID, afq.Description 
+        FROM AnswerForQuestion afq 
+        WHERE afq.QuestionID = q.ID 
+        FOR JSON PATH
+    ) AS MergedAnswerDescription,
+    STRING_AGG(CASE WHEN afq.IsCorrect = 1 THEN afq.ID ELSE NULL END, ', ') AS CorrectAnswer,
+    atc.AnswerChoice,
+    atc.AnswerText,
+    CASE 
+        WHEN q.Type = 0 AND atc.AnswerText IS NOT NULL THEN 'Correct'
+        WHEN q.Type != 0 AND STRING_AGG(CASE WHEN afq.IsCorrect = 1 THEN afq.ID ELSE NULL END, ',') = atc.AnswerChoice 
+        THEN 'Correct' 
+        ELSE 'Incorrect' 
+    END AS Status
+FROM 
+    Question q
+LEFT JOIN 
+    TestChapter tc ON q.TestChapterID = tc.ID
+RIGHT JOIN 
+    AnswerOfUser_TestChapter atc ON q.ID = atc.QuestionID
+RIGHT JOIN 
+    AnswerForQuestion afq ON afq.QuestionID = q.ID
+WHERE 
+    atc.TestChapterSessionID = 1031
+GROUP BY 
+    q.ID, q.Description, atc.AnswerChoice, q.Type, atc.AnswerText;
+
+
+
 
 
 -- Tính điểm và lấy các thông tin cần thiết
@@ -144,3 +182,10 @@ JOIN
     ScoreCalculation sc ON tcs.ID = sc.TestChapterSessionID
 WHERE 
     tcs.ID = 1026;
+
+
+
+
+
+SELECT * FROM TestChapterSession
+WHERE UserID = 1 AND TestChapterID = 1
