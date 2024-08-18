@@ -1,11 +1,10 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState, useContext } from 'react';
-import { Button, Layout, Menu } from 'antd';
+import { Button, ConfigProvider, Layout, Menu } from 'antd';
 import { OpenAIFilled, MenuFoldOutlined, MenuUnfoldOutlined, HomeOutlined, AuditOutlined, ProductOutlined, FormOutlined, SettingOutlined, LineChartOutlined } from '@ant-design/icons';
 import { HiOutlineSun, HiOutlineMoon } from 'react-icons/hi';
 import { ThemeContext } from '../ThemeContext';
 import styles from './Sidebar.module.css';
-import { BodyHome } from '../admin/home';
 import {Avatar as AntdAvater} from 'antd'
 
 const { Sider, Header } = Layout;
@@ -15,6 +14,7 @@ const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
+    <ConfigProvider theme={{ hashed: false }}>
     <div>
       <Layout>
         <Sider className={`${styles.sidebar} ${theme === 'dark' ? styles.dark : ''}`} collapsed={collapsed} collapsible trigger={null}>
@@ -25,27 +25,52 @@ const Sidebar = () => {
           </div>
 
           <Menu theme={theme} className={styles.menu} mode="inline">
-            <Menu.Item key="home" icon={<HomeOutlined />}>
-              Home
-            </Menu.Item>
-            <Menu.Item key="student" icon={<AuditOutlined />}>
-              Student
-            </Menu.Item>
-            <Menu.SubMenu key="course" icon={<ProductOutlined />} title="Course">
-              <Menu.Item key="listcourse">List Course</Menu.Item>
-              <Menu.Item key="addcourse">Add Course</Menu.Item>
-            </Menu.SubMenu>
-            <Menu.SubMenu key="quiz" icon={<FormOutlined />} title="Quiz">
-              <Menu.Item key="listquiz">List Quiz</Menu.Item>
-              <Menu.Item key="addquiz">Add Quiz</Menu.Item>
-            </Menu.SubMenu>
-            <Menu.Item key="settings" icon={<SettingOutlined />}>
-              Settings
-            </Menu.Item>
-            <Menu.Item key="analysis" icon={<LineChartOutlined />}>
-              Analysis
-            </Menu.Item>
-          </Menu>
+  <Menu.Item key="home" icon={<HomeOutlined />} className={styles.menuItem}>
+    <div className={styles.menuItemWrapper}>
+      Home
+    </div>
+  </Menu.Item>
+  <Menu.Item key="student" icon={<AuditOutlined />}>
+    <div className={styles.menuItemWrapper}>
+      Student
+    </div>
+  </Menu.Item>
+  <Menu.SubMenu key="course" icon={<ProductOutlined />} title={<span className={styles.menuItemWrapper}>Course</span>}>
+    <Menu.Item key="listcourse">
+      <div className={styles.menuItemWrapper}>
+        List Course
+      </div>
+    </Menu.Item>
+    <Menu.Item key="addcourse">
+      <div className={styles.menuItemWrapper}>
+        Add Course
+      </div>
+    </Menu.Item>
+  </Menu.SubMenu>
+  <Menu.SubMenu key="quiz" icon={<FormOutlined />} title={<span className={styles.menuItemWrapper}>Quiz</span>}>
+    <Menu.Item key="listquiz">
+      <div className={styles.menuItemWrapper}>
+        List Quiz
+      </div>
+    </Menu.Item>
+    <Menu.Item key="addquiz">
+      <div className={styles.menuItemWrapper}>
+        Add Quiz
+      </div>
+    </Menu.Item>
+  </Menu.SubMenu>
+  <Menu.Item key="settings" icon={<SettingOutlined />}>
+    <div className={styles.menuItemWrapper}>
+      Settings
+    </div>
+  </Menu.Item>
+  <Menu.Item key="analysis" icon={<LineChartOutlined />}>
+    <div className={styles.menuItemWrapper}>
+      Analysis
+    </div>
+  </Menu.Item>
+</Menu>
+
 
           <div className={styles.toggleBtn}>
             <Button onClick={toggleTheme}>
@@ -63,10 +88,10 @@ const Sidebar = () => {
             />
             <AntdAvater className={`${styles.avatar} ${theme === 'dark' ? styles.dark : ''}`}>US</AntdAvater>
           </Header>
-          <BodyHome/>
         </Layout>
       </Layout>
     </div>
+    </ConfigProvider>
   );
 };
 

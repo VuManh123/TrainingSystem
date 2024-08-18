@@ -25,7 +25,6 @@ const ResultItem = ({ question }) => {
             {Type === 0 && (
                 <div className="text-result">
                     <p><strong>Đáp án của bạn:</strong> {AnswerText}</p>
-                    <p><strong>Trạng thái:</strong> {Status}</p>
                 </div>
             )}
             {Type === 1 && (
@@ -63,7 +62,7 @@ const TestResults = () => {
     const [results, setResults] = useState(null);
     const [currentTab, setCurrentTab] = useState('1');
     const [totalPages, setTotalPages] = useState(1);
-    const { testChapterSessionID } = useParams();
+    const { testChapterSessionID, userID, ID } = useParams();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -90,7 +89,7 @@ const TestResults = () => {
     };
 
     const handleBackToCourse = () => {
-        navigate(`/learning-course`);
+        navigate(`/learning-course/${userID}/${ID}`);
     };
 
     const resultsPerPage = 10;
@@ -108,39 +107,42 @@ const TestResults = () => {
     const isPassed = results.sessionResult.Result === 100;
 
     return (
-        <div className={`test-results-wrapper ${theme === 'dark' ? 'dark' : ''}`}>
-            <div className="test-results">
-                <h2>
-                    Kết quả của bạn: {results.sessionResult.Result} điểm
-                    <span className={`result-status ${isPassed ? 'passed' : 'failed'}`}>
-                        {isPassed ? ' - Đạt' : ' - Không đạt'}
-                    </span>
-                </h2>
-                <Tabs activeKey={currentTab} onChange={setCurrentTab}>
-                    {paginatedResults.map((resultsChunk, index) => (
-                        <TabPane tab={`Trang ${index + 1}`} key={`${index + 1}`}>
-                            {resultsChunk.map((question) => (
-                                <ResultItem
-                                    key={question.QuestionID}
-                                    question={question}
-                                />
-                            ))}
-                        </TabPane>
-                    ))}
-                </Tabs>
+        <div className={`test-wrapper ${theme === 'dark' ? 'dark-mode-container' : ''}`}>
+            <div className={`test-results-wrapper ${theme === 'dark' ? 'dark' : ''}`}>
+                <div className="test-results">
+                    <h2>
+                        Kết quả của bạn: {results.sessionResult.Result} điểm
+                        <span className={`result-status ${isPassed ? 'passed' : 'failed'}`}>
+                            {isPassed ? ' - Đạt' : ' - Không đạt'}
+                        </span>
+                    </h2>
+                    <Tabs activeKey={currentTab} onChange={setCurrentTab}>
+                        {paginatedResults.map((resultsChunk, index) => (
+                            <TabPane tab={`Trang ${index + 1}`} key={`${index + 1}`}>
+                                {resultsChunk.map((question) => (
+                                    <ResultItem
+                                        key={question.QuestionID}
+                                        question={question}
+                                    />
+                                ))}
+                            </TabPane>
+                        ))}
+                    </Tabs>
 
-                <div className="pagination-controls">
-                    <Button type="default" onClick={handlePrevPage} disabled={currentTab === '1'}>
-                        Trang trước
-                    </Button>
-                    <Button type="default" onClick={handleNextPage} disabled={currentTab === totalPages.toString()}>
-                        Trang sau
+                    {totalPages > 1 && ( <div className="pagination-controls">
+                        <Button type="default" onClick={handlePrevPage} disabled={currentTab === '1'}>
+                            Trang trước
+                        </Button>
+                        <Button type="default" onClick={handleNextPage} disabled={currentTab === totalPages.toString()}>
+                            Trang sau
+                        </Button>
+                    </div>
+                    )}
+
+                    <Button className="back-to-course-button" type="primary" onClick={handleBackToCourse}>
+                        Quay về khóa học
                     </Button>
                 </div>
-
-                <Button className="back-to-course-button" type="primary" onClick={handleBackToCourse}>
-                    Quay về khóa học
-                </Button>
             </div>
         </div>
     );

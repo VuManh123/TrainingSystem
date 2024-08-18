@@ -111,3 +111,27 @@
     flex: 0 1 !important; /* Hoặc flex: 0 1 auto; tùy thuộc vào nhu cầu của bạn */
     left: 0;
 }
+
+:where(.css-dev-only-do-not-override-1pg9a38).ant-menu-inline.ant-menu-root .ant-menu-item > .ant-menu-title-content, 
+:where(.css-dev-only-do-not-override-1pg9a38).ant-menu-inline.ant-menu-root .ant-menu-submenu-title > .ant-menu-title-content {
+    flex: auto !important;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.menuItemWrapper {
+    display: inline-block; /* Đảm bảo không sử dụng flex để giãn */
+    text-align: left; /* Căn chữ về bên trái */
+    width: 100%; /* Đảm bảo phần tử bao hết chiều rộng */
+    padding-left: 5px; /* Nếu muốn loại bỏ padding mặc định */
+    font-weight:normal;
+  }
+  
+  .ant-menu-item, .ant-menu-submenu-title {
+    padding-left: 24px; /* Điều chỉnh padding theo ý muốn để căn chữ */
+    text-align: left;
+    font-weight: bold;
+  }
+  
+  
+
