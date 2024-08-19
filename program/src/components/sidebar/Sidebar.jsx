@@ -7,11 +7,18 @@ import { ThemeContext } from '../ThemeContext';
 import styles from './Sidebar.module.css';
 import { Avatar as AntdAvatar } from 'antd';
 import { Content } from 'antd/es/layout/layout';
-import StudentManagement from '../body_teacher/MStudent';
+import StudentManagement from '../body_teacher/StudentManagement';
+import HomeTeacher from '../body_teacher/HomeTeacher';
+import CourseManagement from '../body_teacher/CourseManagement';
+import Settings from '../body_teacher/Settings';
+import Analysis from '../body_teacher/Analysis';
+
 
 const { Sider, Header } = Layout;
 
 const Sidebar = () => {
+  const [selectedMenu, setSelectedMenu] = useState('home'); // Mặc định là 'home'
+
   const { theme, toggleTheme } = useContext(ThemeContext);
   const [collapsed, setCollapsed] = useState(false);
 
@@ -53,44 +60,30 @@ const Sidebar = () => {
               </div>
             </div>
 
-            <Menu theme={theme} className={styles.menu} mode="inline">
-              <Menu.Item key="home" icon={<HomeOutlined className={styles.iconStyle} />} className={styles.menuItem}>
-                <div className={styles.menuItemWrapper}>
-                  Home
-                </div>
+            <Menu 
+            theme={theme} 
+            className={styles.menu} 
+            mode="inline" 
+            selectedKeys={[selectedMenu]} // Đánh dấu mục đã chọn
+            onClick={(e) => setSelectedMenu(e.key)} // Cập nhật trạng thái khi chọn
+          >
+              <Menu.Item key="home" icon={<HomeOutlined className={styles.iconStyle} />}>
+                  <div className={styles.menuItemWrapper}>Home</div>
               </Menu.Item>
               <Menu.Item key="student" icon={<AuditOutlined />}>
-                <div className={styles.menuItemWrapper}>
-                  Student
-                </div>
+                  <div className={styles.menuItemWrapper}>Student</div>
               </Menu.Item>
               <Menu.Item key="course" icon={<ProductOutlined />}>
-                <div className={styles.menuItemWrapper}>
-                  Courses
-                </div>
+                  <div className={styles.menuItemWrapper}>Courses</div>
               </Menu.Item>
-              <Menu.SubMenu
-                key="settings"
-                icon={<SettingOutlined />}
-                title={<span className={styles.menuItemWrapper}>Settings</span>}
-              >
-                <Menu.Item key="profile">
-                  <div className={styles.menuItemWrapper}>
-                    Profile Details
-                  </div>
-                </Menu.Item>
-                <Menu.Item key="changepassword">
-                  <div className={styles.menuItemWrapper}>
-                    Change Password
-                  </div>
-                </Menu.Item>
-              </Menu.SubMenu>
+              <Menu.Item key="settings" icon={<SettingOutlined />}>
+                  <div className={styles.menuItemWrapper}>Settings</div>
+              </Menu.Item>
               <Menu.Item key="analysis" icon={<LineChartOutlined />}>
-                <div className={styles.menuItemWrapper}>
-                  Analysis
-                </div>
+                  <div className={styles.menuItemWrapper}>Analysis</div>
               </Menu.Item>
-            </Menu>
+          </Menu>
+
 
             <div className={styles.toggleBtn}>
               <Button onClick={toggleTheme}>
@@ -111,8 +104,13 @@ const Sidebar = () => {
               </AntdAvatar>
             </Header>
             <Content className={styles.content}>
-              <StudentManagement /> {/* Sử dụng component mới */}
+                {selectedMenu === 'home' && <HomeTeacher />}
+                {selectedMenu === 'student' && <StudentManagement />}
+                {selectedMenu === 'course' && <CourseManagement />}
+                {selectedMenu === 'settings' && <Settings />}
+                {selectedMenu === 'analysis' && <Analysis />}
             </Content>
+
           </Layout>
         </Layout>
       </div>
