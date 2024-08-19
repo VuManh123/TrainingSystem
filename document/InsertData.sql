@@ -16,6 +16,25 @@ VALUES
 ('STUDENT001', N'Ngô Văn E', 'manh@gmail.com', 'manh123', '0901234567', '123 Main St, City A', 1),
 ('STUDENT002', N'Đặng Thị F', 'student2@example.com', '123456', '0976543210', '456 Maple Ave, City B', 1);
 
+INSERT INTO Student (Code, Name, Email, Password, Phone, Address, Status, WorkUnit)
+VALUES 
+('S001', N'Nguyễn Văn A', 'nguyenvana@example.com', 'password123', '0123456789', N'Hà Nội', 1, N'Company A'),
+('S002', N'Lê Thị B', 'lethib@example.com', 'password123', '0987654321', N'Hồ Chí Minh', 1, N'Company B'),
+('S003', N'Trần Văn C', 'tranvanc@example.com', 'password123', '0912345678', N'Đà Nẵng', 1, N'Company C'),
+('S004', N'Phạm Thị D', 'phamthid@example.com', 'password123', '0934567890', N'Hải Phòng', 1, N'Company D'),
+('S005', N'Hoàng Văn E', 'hoangvane@example.com', 'password123', '090123456', N'Cần Thơ', 1, N'Company E'),
+('S006', N'Vũ Thị F', 'vuthif@example.com', 'password123', '0967890123', N'Quảng Ninh', 1, N'Company F'),
+('S007', N'Đỗ Văn G', 'dovang@example.com', 'password123', '0923456789', N'Bắc Ninh', 1, N'Company G'),
+('S008', N'Ngô Thị H', 'ngothih@example.com', 'password123', '0996543210', N'Nghệ An', 1, N'Company H'),
+('S009', N'Bùi Văn I', 'buivani@example.com', 'password123', '0945678901', N'Hà Tĩnh', 1, N'Company I'),
+('S010', N'Phan Thị J', 'phanthij@example.com', 'password123', '0932109876', N'Bình Định', 1, N'Company J'),
+('S011', N'Tô Văn K', 'tovank@example.com', 'password123', '0989012345', N'Thái Nguyên', 1, N'Company K'),
+('S012', N'Chu Thị L', 'chuthil@example.com', 'password123', '0978901234', N'Lâm Đồng', 1, N'Company L'),
+('S013', N'Trịnh Văn M', 'trinhvanm@example.com', 'password123', '0910987654', N'Quảng Bình', 1, N'Company M'),
+('S014', N'Đinh Thị N', 'dinhthin@example.com', 'password123', '0930123456', N'Gia Lai', 1, N'Company N'),
+('S015', N'Phùng Văn O', 'phungvano@example.com', 'password123', '0956789012', N'Bình Dương', 1, N'Company O');
+
+
 -- 4. Chèn dữ liệu vào bảng Course
 INSERT INTO Course (Title, Description, Image, CreatedBy, StartDate, EndDate)
 VALUES 

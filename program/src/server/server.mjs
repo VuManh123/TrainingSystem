@@ -7,6 +7,7 @@ import sql from 'mssql';
 import poolPromise from './dbConfig.mjs';
 import cors from 'cors'
 import { getHistoryTestChapter, getResultsTestChapterCurrent, setResults } from './Score.mjs';
+import { getStudentAll } from './management.mjs';
 
 const app = express();
 app.use(cors());
@@ -346,6 +347,15 @@ app.get('/api/results-testchapter/:testChapterSessionID', async (req, res) =>{
   }
 })
 
+// API lấy danh sách học sinh 
+app.get('/api/studentall', async (req, res) => {
+  try {
+      const students = await getStudentAll();
+      res.json(students);
+  } catch (err) {
+      res.status(500).send(err.message);
+  }
+});
 
 
 

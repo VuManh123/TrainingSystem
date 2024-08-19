@@ -32,6 +32,10 @@
     color: #fff;
     background: #0a112b;
 }
+.dark .menuItemWrapper {
+    color: #fff;
+}
+  
 
 .logoIcon {
     width: 60px;
@@ -50,6 +54,7 @@
 
 .menu {
     height: 85vh;
+    min-height: 86.3vh;
     padding-top: 4rem;
     display: flex;
     flex-direction: column;
@@ -131,6 +136,10 @@
     padding-left: 24px; /* Điều chỉnh padding theo ý muốn để căn chữ */
     text-align: left;
     font-weight: bold;
+  }
+  .header {
+    opacity: 0;
+    animation: right 1s forwards;
   }
   
   

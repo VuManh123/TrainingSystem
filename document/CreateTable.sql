@@ -34,6 +34,8 @@ CREATE TABLE Student (
     Address NVARCHAR(255) NOT NULL,
     Status BIT NOT NULL
 ); -- OK
+ALTER TABLE Student
+ADD WorkUnit NVARCHAR(50) NOT NULL DEFAULT 0;
 
 -- 4. Tạo bảng khóa học
 CREATE TABLE Course (
