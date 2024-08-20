@@ -77,7 +77,7 @@ const Sidebar = () => {
                   <div className={styles.menuItemWrapper}>Courses</div>
               </Menu.Item>
               <Menu.Item key="settings" icon={<SettingOutlined />}>
-                  <div className={styles.menuItemWrapper}>Settings</div>
+                  <div className={styles.menuItemWrapper}>Account</div>
               </Menu.Item>
               <Menu.Item key="analysis" icon={<LineChartOutlined />}>
                   <div className={styles.menuItemWrapper}>Analysis</div>

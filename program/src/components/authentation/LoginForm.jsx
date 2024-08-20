@@ -54,9 +54,9 @@ const LoginForm = () => {
   
         // Redirect to the appropriate page based on the role
         if (role === 'teacher') {
-          navigate('/teacher');
+          navigate(`/teacher/${userID}`);
         } else if (role === 'admin') {
-          navigate('/adminAM');
+          navigate(`/adminAM/${userID}`);
         } else {
           navigate(`/student/${userID}`);  // Include the user ID in the URL for students
         }

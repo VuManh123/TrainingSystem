@@ -7,7 +7,7 @@ import sql from 'mssql';
 import poolPromise from './dbConfig.mjs';
 import cors from 'cors'
 import { getHistoryTestChapter, getResultsTestChapterCurrent, setResults } from './Score.mjs';
-import { getStudentAll } from './management.mjs';
+import { addCourse, getCourseAll, getStudentAll, searchCourseByName, searchCourseByTeacher, searchCourseByWorkUnit, searchStudentByCode, searchStudentByName, searchStudentByStatus, searchStudentByWorkUnit } from './management.mjs';
 
 const app = express();
 app.use(cors());
@@ -353,9 +353,147 @@ app.get('/api/studentall', async (req, res) => {
       const students = await getStudentAll();
       res.json(students);
   } catch (err) {
+    console.error('Error fetching courses:', error);
       res.status(500).send(err.message);
   }
 });
+
+// API lấy danh sách học sinh 
+app.get('/api/coursesall', async (req, res) => {
+  try {
+      const courses = await getCourseAll();
+      res.json(courses);
+  } catch (err) {
+    console.error('Error fetching courses:', error);
+      res.status(500).send(err.message);
+  }
+});
+//api search course:
+app.get('/api/search-course-by-name', async (req, res) => {
+  const { name } = req.query;
+  try {
+      const result = await searchCourseByName(`%${name}%`);
+      res.json(result);
+  } catch (error) {
+    console.error('Error fetching courses:', error);
+      res.status(500).send(error.message);
+  }
+});
+
+app.get('/api/search-course-by-teacher', async (req, res) => {
+  const { teacher } = req.query;
+  try {
+      const result = await searchCourseByTeacher(`%${teacher}%`);
+      res.json(result);
+  } catch (error) {
+    console.error('Error fetching courses:', error);
+      res.status(500).send(error.message);
+  }
+});
+
+app.get('/api/search-course-by-workunit', async (req, res) => {
+  const { workUnit } = req.query;
+  try {
+      const result = await searchCourseByWorkUnit(`%${workUnit}%`);
+      res.json(result);
+  } catch (error) {
+    console.error('Error fetching courses:', error);
+      res.status(500).send(error.message);
+  }
+});
+
+//api search student
+app.get('/api/search-student-by-code', async (req, res) => {
+  const { code } = req.query;
+  try {
+      const result = await searchStudentByCode(`%${code}%`);
+      res.json(result);
+  } catch (error) {
+    console.error('Error fetching students:', error);
+      res.status(500).send(error.message);
+  }
+});
+app.get('/api/search-student-by-name', async (req, res) => {
+  const { name } = req.query;
+  try {
+      const result = await searchStudentByName(`%${name}%`);
+      res.json(result);
+  } catch (error) {
+    console.error('Error fetching students:', error);
+      res.status(500).send(error.message);
+  }
+});
+
+app.get('/api/search-student-by-workunit', async (req, res) => {
+  const { workUnit } = req.query;
+  try {
+      const result = await searchStudentByWorkUnit(`%${workUnit}%`);
+      res.json(result);
+  } catch (error) {
+    console.error('Error fetching students:', error);
+      res.status(500).send(error.message);
+  }
+});
+
+app.get('/api/search-student-by-status', async (req, res) => {
+  const { status } = req.query;
+  try {
+      const result = await searchStudentByStatus(`%${status}%`);
+      res.json(result);
+  } catch (error) {
+    console.error('Error fetching students:', error);
+      res.status(500).send(error.message);
+  }
+});
+
+// Course:
+import multer from 'multer';
+import path from 'path';
+
+// Cấu hình nơi lưu trữ hình ảnh
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'public/images/');
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + path.extname(file.originalname));
+    }
+});
+
+// Cấu hình giới hạn kích thước file
+const upload = multer({
+    storage: storage,
+    limits: { fileSize: 2 * 1024 * 1024 }, // Giới hạn 2MB
+}).single('image');
+
+// API để thêm khóa học với upload file
+app.post('/api/addCourses', (req, res) => {
+    upload(req, res, async (err) => {
+        if (err) {
+            return res.status(400).json({ message: 'Image upload failed' });
+        }
+
+        const { name, startDate, endDate, description, userID } = req.body;
+        const imagePath = req.file ? `/images/${req.file.filename}` : null;
+
+        try {
+            const course = {
+                name,
+                startDate,
+                endDate,
+                description,
+                image: imagePath,
+            };
+            await addCourse(course, userID);
+            res.status(200).json({ message: 'Course added successfully' });
+        } catch (error) {
+            console.log('Faied' + error);
+            res.status(500).json({ message: error.message });
+        }
+    });
+});
+
+
 
 
 

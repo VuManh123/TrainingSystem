@@ -53,6 +53,75 @@ const handleCancel = () => {
         fetchStudents();
     }, []);
 
+    //Search
+    const fetchSearchResults = async (searchValue, searchType) => {
+        setStudents([]); // Xóa dữ liệu cũ trước khi fetch dữ liệu mới
+        let apiUrl = '';
+        switch (searchType) {
+            case 'name':
+                apiUrl = `http://localhost:3000/api/search-student-by-name?name=${searchValue}`;
+                break;
+            case 'code':
+                apiUrl = `http://localhost:3000/api/search-student-by-code?code=${searchValue}`;
+                break;
+            case 'status':
+                apiUrl = `http://localhost:3000/api/search-student-by-status?status=${searchValue}`;
+                break;
+            case 'workUnit':
+                apiUrl = `http://localhost:3000/api/search-student-by-workunit?workUnit=${searchValue}`;
+                break;
+            default:
+                return;
+        }
+    
+        try {
+            const response = await fetch(apiUrl);
+            const data = await response.json();
+    
+            console.log(data); // Kiểm tra cấu trúc dữ liệu trả về
+    
+            // Nếu API trả về một đối tượng thay vì mảng, hãy lấy mảng từ đối tượng đó
+            const coursesArray = Array.isArray(data) ? data : (data && Array.isArray(data.courses)) ? data.courses : [];
+    
+            if (Array.isArray(coursesArray)) {
+                const formattedData = data.map(student => ({
+                    key: student.ID,
+                    code: student.Code,
+                    name: student.Name,
+                    email: student.Email,
+                    phone: student.Phone,
+                    address: student.Address,
+                    status: student.Status ? 'Hoạt động' : 'Không hoạt động',
+                    workunit: student.WorkUnit
+                }));
+                console.log("Formatted Search Data:", formattedData);
+                setStudents(formattedData);
+                console.log(students);
+            } else {
+                message.error('Dữ liệu khóa học không đúng định dạng');
+            }
+        } catch (error) {
+            message.error('Không thể tải dữ liệu khóa học');
+            console.error('Fail to get course by search:', error);
+        }
+    };    
+    
+    const [searchType, setSearchType] = useState('code');
+    const [searchValue, setSearchValue] = useState('');
+
+    const handleSearch = () => {
+        fetchSearchResults(searchValue, searchType);
+    };
+
+    const handleSearchTypeChange = (value) => {
+        setSearchType(value);
+    };
+
+    const handleSearchInputChange = (e) => {
+        setSearchValue(e.target.value);
+    };
+
+
     const handleSelectChange = newSelectedRowKeys => {
         setSelectedRowKeys(newSelectedRowKeys);
     };
@@ -127,12 +196,20 @@ const handleCancel = () => {
         <div className={`${styles.bodyWrapper} ${theme === 'dark' ? styles.darkBody : ''}`}>
             <div className={styles.body}>
                 <div className={styles.searchFilterContainer}>
-                    <Search placeholder="Tìm kiếm học viên" style={{ width: 300, marginRight: 16 }} />
-                    <Select placeholder="Tìm theo theo mã NV" style={{ width: 200 }}>
-                        <Option value="it">Mã học viên</Option>
-                        <Option value="adm">Tên học viên</Option>
-                        <Option value="pp">Trạng thái</Option>
-                        <Option value="pv">Bộ phận</Option>
+                    <Search placeholder="Tìm kiếm học viên" 
+                    style={{ width: 300, marginRight: 16 }} 
+                    onSearch={handleSearch} 
+                    onChange={handleSearchInputChange} 
+                    value={searchValue} 
+                    />
+                    <Select placeholder="Tìm theo theo mã NV" 
+                    style={{ width: 200 }}
+                    onChange={handleSearchTypeChange} 
+                    value={searchType}>
+                        <Option value="code">Mã học viên</Option>
+                        <Option value="name">Tên học viên</Option>
+                        <Option value="status">Trạng thái</Option>
+                        <Option value="workUnit">Bộ phận</Option>
                     </Select>
                     <Button 
                         type="default" 
@@ -141,10 +218,6 @@ const handleCancel = () => {
                     >
                         Xuất Excel
                     </Button>
-
-                    <Upload>
-                        <Button icon={<UploadOutlined />} className={styles.uploadButton}>Tải lên danh sách</Button>
-                    </Upload>
                 </div>
                 
                 <Table
