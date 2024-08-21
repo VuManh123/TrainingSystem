@@ -462,15 +462,27 @@ const storage = multer.diskStorage({
 
 // Cấu hình giới hạn kích thước file
 const upload = multer({
-    storage: storage,
-    limits: { fileSize: 2 * 1024 * 1024 }, // Giới hạn 2MB
+  storage: storage,
+  limits: { fileSize: 2 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+      const fileTypes = /jpeg|jpg|png|gif/;
+      const extname = fileTypes.test(path.extname(file.originalname).toLowerCase());
+      const mimetype = fileTypes.test(file.mimetype);
+
+      if (mimetype && extname) {
+          return cb(null, true);
+      } else {
+          cb('Error: Only images are allowed!');
+      }
+  }
 }).single('image');
 
 // API để thêm khóa học với upload file
 app.post('/api/addCourses', (req, res) => {
     upload(req, res, async (err) => {
-        if (err) {
-            return res.status(400).json({ message: 'Image upload failed' });
+          if (err) {
+            console.error('Multer error:', err);
+            return res.status(400).json({ message: 'Image upload failed', error: err });
         }
 
         const { name, startDate, endDate, description, userID } = req.body;

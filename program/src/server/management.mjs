@@ -134,6 +134,28 @@ export async function addCourse(course, userID) {
             .input('description', sql.NVarChar(sql.MAX), course.description) // Lưu HTML vào DB
             .input('image', sql.NVarChar, image) // Thêm hình ảnh
             .input('userID', sql.Int, userIDInt)
+            .query(`INSERT INTO Course (Title, Image, StartDate, EndDate, Description, CreatedBy)
+                    VALUES (@name, @image, @startDate, @endDate, @description, @userID)`);
+        return result.recordset;
+    } catch (err) {
+        throw new Error('Failed to add course: ' + err.message);
+    }
+}
+export async function updateCourse(course, userID) {
+    try {
+        const pool = await poolPromise;
+        const userIDInt = parseInt(userID, 10);
+        
+        // Nếu course.image là null hoặc undefined, gán giá trị mặc định
+        const image = course.image ? course.image : 'images/banner5.png';
+
+        const result = await pool.request()
+            .input('name', sql.NVarChar, course.name)
+            .input('startDate', sql.Date, course.startDate)
+            .input('endDate', sql.Date, course.endDate)
+            .input('description', sql.NVarChar(sql.MAX), course.description) // Lưu HTML vào DB
+            .input('image', sql.NVarChar, image) // Thêm hình ảnh
+            .input('userID', sql.Int, userIDInt)
             .query(`INSERT INTO Course (Name, Image, StartDate, EndDate, Description, CreatedBy)
                     VALUES (@name, @image, @startDate, @endDate, @description, @userID)`);
         return result.recordset;

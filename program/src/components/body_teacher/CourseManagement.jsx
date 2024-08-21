@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { ThemeContext } from '../ThemeContext';
 import { Button, Table, Input, Select, Upload, message, Modal } from 'antd';
-import { UploadOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { UploadOutlined, EditOutlined, DeleteOutlined, ExportOutlined, PlusOutlined } from '@ant-design/icons';
 import * as XLSX from 'xlsx';
 import styles from './StudentManagement.module.css';
 import AddCourseModal from '../courses/AddCourseModal';
@@ -203,7 +203,7 @@ const CourseManagement = () => {
             title: '',
             key: 'edit',
             render: (_, record) => (
-                <Button type="text" icon={<EditOutlined />} className={styles.iconButton} />
+                <Button type="text" icon={<EditOutlined />} className={styles.iconButton} onClick={() => handleEdit(record.courseID)}/>
             ),
             className: styles.actionCell,
         },
@@ -246,13 +246,14 @@ const CourseManagement = () => {
                         <Option value="workUnit">Bộ phận</Option>
                     </Select>
 
-                    <Button className={styles.addButton} onClick={showAddCourseModal}>Thêm khóa học</Button>
+                    <Button className={styles.addButton} icon={<PlusOutlined/>} onClick={showAddCourseModal}>Thêm khóa học</Button>
                     <Button 
                         type="default" 
                         className={styles.exportButton} 
                         onClick={showModal}
+                        icon={<ExportOutlined/>}
                     >
-                        Xuất Excel
+                        Export danh sách
                     </Button>
                 </div>
                 

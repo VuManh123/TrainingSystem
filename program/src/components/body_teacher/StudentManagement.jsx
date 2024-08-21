@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { ThemeContext } from '../ThemeContext';
 import { Button, Table, Input, Select, Upload, message, Modal } from 'antd';
-import { UploadOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { UploadOutlined, EditOutlined, DeleteOutlined, ExportOutlined } from '@ant-design/icons';
 import * as XLSX from 'xlsx';
 import styles from './StudentManagement.module.css';
 
@@ -215,8 +215,9 @@ const handleCancel = () => {
                         type="default" 
                         className={styles.exportButton} 
                         onClick={showModal}
+                        icon={<ExportOutlined />}
                     >
-                        Xuất Excel
+                        Export danh sách
                     </Button>
                 </div>
                 
